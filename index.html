@@ -61,6 +61,7 @@ td{padding:9px 12px;white-space:nowrap;}
 .pb{display:flex;align-items:center;gap:6px;min-width:88px;}
 .bt{flex:1;height:3px;background:var(--surface2);}
 .bf{height:100%;}.plbl{font-size:11px;color:var(--muted);min-width:32px;text-align:right;}
+.pnv{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);min-width:52px;text-align:right;line-height:1;}
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
 .cc{background:var(--surface);border:1px solid var(--border);padding:20px;}
 .ctitle{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px;}
@@ -192,12 +193,13 @@ const ABR = {
 const COLUMNS = [
   {key:'rank',           label:'#',          fmt:v=>v,                         always:true, on:true },
   {key:'nombre',         label:'Franquicia', fmt:null,                         always:true, on:true },
-  {key:'puntos',         label:'Puntos',     fmt:v=>v?.toFixed(2),             always:false,on:true },
+  {key:'puntos',         label:'Puntos',     fmt:v=>v?.toFixed(2),             always:true, on:true },
+  {key:'champ',          label:'Champ.',     fmt:v=>v??'—',                    always:false,on:true },
+  {key:'finals',         label:'Finals',     fmt:v=>v??'—',                    always:false,on:true },
   {key:'conf_fin',       label:'Conf. Fin.', fmt:v=>v??'—',                    always:false,on:true },
   {key:'conf_sf',        label:'Conf. SF',   fmt:v=>v??'—',                    always:false,on:true },
   {key:'primera_ronda',  label:'1ª Ronda',   fmt:v=>v??'—',                    always:false,on:true },
   {key:'play_in',        label:'Play-In',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pend',           label:'Pend.',      fmt:v=>v??'—',                    always:false,on:false},
   {key:'copa',           label:'Copa',       fmt:v=>v??'—',                    always:false,on:false},
   {key:'tot_po',         label:'Tot. PO',    fmt:v=>v??'—',                    always:false,on:true },
   {key:'pct_80',         label:'+80%',       fmt:v=>v??'—',                    always:false,on:false},
@@ -211,14 +213,11 @@ const COLUMNS = [
   {key:'coy',            label:'COY',        fmt:v=>v??'—',                    always:false,on:false},
   {key:'anos',           label:'Años',       fmt:v=>v??'—',                    always:false,on:true },
   {key:'anos_po',        label:'Años PO',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_po',         label:'% PO',       fmt:v=>v!=null?v+'%':'—',         always:false,on:true },
+  {key:'pct_po',         label:'% PO',       fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—',         always:false,on:true },
   {key:'games',          label:'Partidos',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'wins',           label:'Victorias',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'loses',          label:'Derrotas',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?v+'%':'—',         always:false,on:true },
-  {key:'wins_sin_mejor', label:'W s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'loses_sin_mejor',label:'L s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'who',            label:'Mejor',      fmt:v=>v||'—',                    always:false,on:true },
+  {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
@@ -255,12 +254,12 @@ function buildStats() {
   const f=DB.franquicias;
   const leader=f[0];
   const totalG=f.reduce((s,d)=>s+(d.games||0),0);
-  const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length).toFixed(1);
+  const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length*100).toFixed(2);
   const maxPO=f.reduce((a,b)=>(parseFloat(a.pct_po)||0)>(parseFloat(b.pct_po)||0)?a:b);
   const mostMVP=f.reduce((a,b)=>(a.mvp||0)>(b.mvp||0)?a:b);
   const cards=[
     {label:'Franquicia líder', val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Mayor % playoffs',  val:maxPO.pct_po+'%', sub:abr(maxPO.nombre)},
+    {label:'Mayor % playoffs',  val:parseFloat(maxPO.pct_po).toFixed(2)+'%', sub:abr(maxPO.nombre)},
     {label:'Más MVPs',          val:mostMVP.mvp, sub:abr(mostMVP.nombre)},
     {label:'Partidos totales',  val:(totalG/1000).toFixed(0)+'K', sub:totalG.toLocaleString('es')},
     {label:'W-L% medio',        val:avgWL+'%', sub:'promedio 30 franquicias'},
@@ -300,19 +299,19 @@ function renderTable(data){
       if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${d.rank}</div></td>`;
       if(c.key==='nombre') return `<td class="tc"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
-        <div><div class="tn">${d.nombre}</div><div class="tw2">${d.who||''}</div></div>
+        <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="plbl pn">${d.puntos?.toFixed(2)}</span></div></td>`;
+        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
       if(c.key==='wl_pct'){
-        const v=parseFloat(d.wl_pct)||0,col=v>=50?'var(--pos)':'var(--neg)';
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v}%</span></div></td>`;
+        const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
+        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${v}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v}%</span></div></td>`;
+        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       const raw=d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
@@ -405,7 +404,7 @@ function updateCompare(){
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
-  const fields=COLUMNS.filter(c=>!['rank','nombre','who'].includes(c.key));
+  const fields=COLUMNS.filter(c=>!['rank','nombre'].includes(c.key));
   const half=Math.ceil(fields.length/2);
   const makeRows=flds=>flds.map(f=>{
     const v1=t1[f.key],v2=t2[f.key],n1=parseFloat(v1),n2=parseFloat(v2);
@@ -443,7 +442,7 @@ function updateCompare(){
     </div>`;
   if(compareChart) compareChart.destroy();
   const isDay=document.body.classList.contains('day');
-  const maxes={puntos:701,conf_fin:16,tot_po:66,wl_pct:60,mvp:10,pct_po:85};
+  const maxes={puntos:701,conf_fin:16,tot_po:66,wl_pct:0.75,mvp:10,pct_po:85};
   const norm=(v,m)=>Math.round((parseFloat(v)||0)/m*100);
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:['Puntos','Conf. Finals','Playoffs','W-L%','MVPs','% PO'],
