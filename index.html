@@ -47,11 +47,11 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
-th{padding:10px 12px;text-align:left;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
+th{padding:10px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
-tr.dr{border-bottom:1px solid var(--border);transition:background .1s;}tr.dr:hover{background:var(--accent-glow);}
-td{padding:9px 12px;white-space:nowrap;}
+tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
+td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:190px;}.tci{display:flex;align-items:center;gap:9px;}
 .logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
@@ -73,23 +73,23 @@ td{padding:9px 12px;white-space:nowrap;}
 .vs{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--muted);text-align:center;}
 .cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
 .chc{padding:20px 22px;border:1px solid var(--border);position:relative;overflow:hidden;}
-.chc-logo{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:54px;height:54px;object-fit:contain;opacity:.15;}
+.chc-logo{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:64px;height:64px;object-fit:contain;opacity:.2;}
 .chc-name{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;margin-bottom:4px;}
-.chc-pts{font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:1;}
-.chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;opacity:.4;}
-.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.cmp-card{background:var(--surface);border:1px solid var(--border);padding:16px;}
-.cmp-card-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;margin-bottom:10px;opacity:.35;text-transform:uppercase;}
-.crow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:center;gap:6px;}
+.chc-pts{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:var(--text);}
+.chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;opacity:.4;}
+.cmp-card{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.cmp-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface2);border-bottom:2px solid var(--border);gap:6px;}
+.crow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;gap:6px;}
 .crow:last-child{border-bottom:none;}
+.crow:nth-child(even){background:var(--surface2);}
 .clbl{color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;text-align:center;flex:1;}
-.cv{min-width:64px;font-weight:600;font-size:13px;}.cv.l{text-align:left;}.cv.r{text-align:right;}
+.cv{min-width:64px;font-weight:500;font-size:13px;}.cv.l{text-align:left;}.cv.r{text-align:right;}
 .cv.win{font-weight:700;}.cv.lose{color:var(--muted);font-weight:400;}
 .cmp-radar{background:var(--surface);border:1px solid var(--border);padding:20px;margin-top:14px;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
-@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg,.cmp-heads,.cmp-grid{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}}
+@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg,.cmp-heads{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}}
 </style>
 </head>
 <body>
@@ -189,39 +189,38 @@ const ABR = {
   'Memphis Grizzlies':'MEM','Charlotte Hornets':'CHA','New Orleans Pelicans':'NOP'
 };
 
-// ── COLUMNAS (excluye D=PTS/AÑO, F=CHAMP, G=FINALS) ──────────────────────
 const COLUMNS = [
-  {key:'rank',           label:'#',          fmt:v=>v,                         always:true, on:true },
-  {key:'nombre',         label:'Franquicia', fmt:null,                         always:true, on:true },
-  {key:'puntos',         label:'Puntos',     fmt:v=>v?.toFixed(2),             always:true, on:true },
-  {key:'champ',          label:'Champ.',     fmt:v=>v??'—',                    always:false,on:true },
-  {key:'finals',         label:'Finals',     fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_fin',       label:'Conf. Fin.', fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_sf',        label:'Conf. SF',   fmt:v=>v??'—',                    always:false,on:true },
-  {key:'primera_ronda',  label:'1ª Ronda',   fmt:v=>v??'—',                    always:false,on:true },
-  {key:'play_in',        label:'Play-In',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'copa',           label:'Copa',       fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_po',         label:'Tot. PO',    fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_80',         label:'+80%',       fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_70',         label:'+70%',       fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_50',         label:'+50%',       fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_menos20',    label:'-20%',       fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_temporadas', label:'Tot. T.',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'mvp',            label:'MVP',        fmt:v=>v??'—',                    always:false,on:true },
-  {key:'dpoy',           label:'DPOY',       fmt:v=>v??'—',                    always:false,on:false},
-  {key:'roy',            label:'ROY',        fmt:v=>v??'—',                    always:false,on:false},
-  {key:'coy',            label:'COY',        fmt:v=>v??'—',                    always:false,on:false},
-  {key:'anos',           label:'Años',       fmt:v=>v??'—',                    always:false,on:true },
-  {key:'anos_po',        label:'Años PO',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_po',         label:'% PO',       fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—',         always:false,on:true },
-  {key:'games',          label:'Partidos',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wins',           label:'Victorias',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'loses',          label:'Derrotas',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
+  {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true },
+  {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true },
+  {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true },
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true },
+  {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true },
+  {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true },
+  {key:'conf_sf',        label:'Conference Semifinals',fmt:v=>v??'—',                    always:false,on:true },
+  {key:'primera_ronda',  label:'1st Round',            fmt:v=>v??'—',                    always:false,on:true },
+  {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true },
+  {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true },
+  {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true },
+  {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false},
+  {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false},
+  {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false},
+  {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true },
+  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false},
+  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true },
+  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
+  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
+  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
+  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
-let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null;
+let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 const tc = n => (TEAM_COLORS[n]||['#888'])[0];
@@ -296,7 +295,7 @@ function renderTable(data){
   document.getElementById('tableBody').innerHTML=data.map((d,i)=>{
     const rankColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'';
     const cells=vis.map(c=>{
-      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${d.rank}</div></td>`;
+      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${i+1}</div></td>`;
       if(c.key==='nombre') return `<td class="tc"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
         <div><div class="tn">${d.nombre}</div></div>
@@ -317,8 +316,13 @@ function renderTable(data){
       const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
       return `<td class="${isNum?'nb':''}">${val??'—'}</td>`;
     }).join('');
-    return `<tr class="dr">${cells}</tr>`;
+    return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
+}
+
+function selectRow(el,nombre){
+  if(selectedTeam===nombre){selectedTeam=null;el.classList.remove('selected');}
+  else{document.querySelectorAll('.dr.selected').forEach(r=>r.classList.remove('selected'));selectedTeam=nombre;el.classList.add('selected');}
 }
 
 function sortBy(key){
@@ -405,7 +409,6 @@ function updateCompare(){
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
   const fields=COLUMNS.filter(c=>!['rank','nombre'].includes(c.key));
-  const half=Math.ceil(fields.length/2);
   const makeRows=flds=>flds.map(f=>{
     const v1=t1[f.key],v2=t2[f.key],n1=parseFloat(v1),n2=parseFloat(v2);
     const w1=!isNaN(n1)&&!isNaN(n2)?(n1>n2?'win':n1<n2?'lose':''):'';
@@ -418,22 +421,26 @@ function updateCompare(){
   }).join('');
   el.innerHTML=`
     <div class="cmp-heads">
-      <div class="chc" style="border-color:${c1}55;background:${c1}0f">
+      <div class="chc" style="border-left:3px solid ${c1};background:${c1}0f">
         <img class="chc-logo" src="${logo(t1.nombre)}" alt="" onerror="this.style.display='none'">
-        <div class="chc-name">${t1.nombre}</div>
-        <div class="chc-pts" style="color:${c1}">${t1.puntos?.toFixed(2)}</div>
+        <div class="chc-name" style="color:${c1}">${t1.nombre}</div>
+        <div class="chc-pts">${t1.puntos?.toFixed(2)}</div>
         <div class="chc-rank">Puesto #${t1.rank}</div>
       </div>
-      <div class="chc" style="border-color:${c2}55;background:${c2}0f">
+      <div class="chc" style="border-left:3px solid ${c2};background:${c2}0f">
         <img class="chc-logo" src="${logo(t2.nombre)}" alt="" onerror="this.style.display='none'">
-        <div class="chc-name">${t2.nombre}</div>
-        <div class="chc-pts" style="color:${c2}">${t2.puntos?.toFixed(2)}</div>
+        <div class="chc-name" style="color:${c2}">${t2.nombre}</div>
+        <div class="chc-pts">${t2.puntos?.toFixed(2)}</div>
         <div class="chc-rank">Puesto #${t2.rank}</div>
       </div>
     </div>
-    <div class="cmp-grid">
-      <div class="cmp-card"><div class="cmp-card-title">${abr(t1.nombre)} vs ${abr(t2.nombre)}</div>${makeRows(fields.slice(0,half))}</div>
-      <div class="cmp-card"><div class="cmp-card-title">&nbsp;</div>${makeRows(fields.slice(half))}</div>
+    <div class="cmp-card">
+      <div class="cmp-hdr">
+        <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
+        <span class="clbl">Estadística</span>
+        <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
+      </div>
+      ${makeRows(fields)}
     </div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
