@@ -295,7 +295,7 @@ function renderTable(data){
   document.getElementById('tableBody').innerHTML=data.map((d,i)=>{
     const rankColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'';
     const cells=vis.map(c=>{
-      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${d.rank}</div></td>`;
+      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${i+1}</div></td>`;
       if(c.key==='nombre') return `<td class="tc"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
         <div><div class="tn">${d.nombre}</div></div>
