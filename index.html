@@ -194,6 +194,8 @@ const COLUMNS = [
   {key:'rank',           label:'#',          fmt:v=>v,                         always:true, on:true },
   {key:'nombre',         label:'Franquicia', fmt:null,                         always:true, on:true },
   {key:'puntos',         label:'Puntos',     fmt:v=>v?.toFixed(2),             always:true, on:true },
+  {key:'champ',          label:'Champ.',     fmt:v=>v??'—',                    always:false,on:true },
+  {key:'finals',         label:'Finals',     fmt:v=>v??'—',                    always:false,on:true },
   {key:'conf_fin',       label:'Conf. Fin.', fmt:v=>v??'—',                    always:false,on:true },
   {key:'conf_sf',        label:'Conf. SF',   fmt:v=>v??'—',                    always:false,on:true },
   {key:'primera_ronda',  label:'1ª Ronda',   fmt:v=>v??'—',                    always:false,on:true },
