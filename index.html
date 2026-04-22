@@ -212,11 +212,11 @@ const COLUMNS = [
   {key:'coy',            label:'COY',        fmt:v=>v??'—',                    always:false,on:false},
   {key:'anos',           label:'Años',       fmt:v=>v??'—',                    always:false,on:true },
   {key:'anos_po',        label:'Años PO',    fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_po',         label:'% PO',       fmt:v=>v!=null?v+'%':'—',         always:false,on:true },
+  {key:'pct_po',         label:'% PO',       fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—',         always:false,on:true },
   {key:'games',          label:'Partidos',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'wins',           label:'Victorias',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'loses',          label:'Derrotas',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?v+'%':'—',         always:false,on:true },
+  {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
   {key:'wins_sin_mejor', label:'W s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'loses_sin_mejor',label:'L s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'who',            label:'Mejor',      fmt:v=>v||'—',                    always:false,on:true },
@@ -256,12 +256,12 @@ function buildStats() {
   const f=DB.franquicias;
   const leader=f[0];
   const totalG=f.reduce((s,d)=>s+(d.games||0),0);
-  const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length).toFixed(1);
+  const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length*100).toFixed(2);
   const maxPO=f.reduce((a,b)=>(parseFloat(a.pct_po)||0)>(parseFloat(b.pct_po)||0)?a:b);
   const mostMVP=f.reduce((a,b)=>(a.mvp||0)>(b.mvp||0)?a:b);
   const cards=[
     {label:'Franquicia líder', val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Mayor % playoffs',  val:maxPO.pct_po+'%', sub:abr(maxPO.nombre)},
+    {label:'Mayor % playoffs',  val:parseFloat(maxPO.pct_po).toFixed(2)+'%', sub:abr(maxPO.nombre)},
     {label:'Más MVPs',          val:mostMVP.mvp, sub:abr(mostMVP.nombre)},
     {label:'Partidos totales',  val:(totalG/1000).toFixed(0)+'K', sub:totalG.toLocaleString('es')},
     {label:'W-L% medio',        val:avgWL+'%', sub:'promedio 30 franquicias'},
@@ -308,12 +308,12 @@ function renderTable(data){
         return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
       if(c.key==='wl_pct'){
-        const v=parseFloat(d.wl_pct)||0,col=v>=50?'var(--pos)':'var(--neg)';
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v}%</span></div></td>`;
+        const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
+        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${v}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v}%</span></div></td>`;
+        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       const raw=d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
