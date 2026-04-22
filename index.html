@@ -50,7 +50,7 @@ thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
 th{padding:10px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
-tr.dr{border-bottom:1px solid var(--border);transition:background .1s;}tr.dr:hover{background:var(--accent-glow);}
+tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:hover{background:var(--accent-glow);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:190px;}.tci{display:flex;align-items:center;gap:9px;}
@@ -220,7 +220,7 @@ const COLUMNS = [
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
-let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null;
+let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 const tc = n => (TEAM_COLORS[n]||['#888'])[0];
@@ -316,8 +316,13 @@ function renderTable(data){
       const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
       return `<td class="${isNum?'nb':''}">${val??'—'}</td>`;
     }).join('');
-    return `<tr class="dr">${cells}</tr>`;
+    return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
+}
+
+function selectRow(el,nombre){
+  if(selectedTeam===nombre){selectedTeam=null;el.classList.remove('selected');}
+  else{document.querySelectorAll('.dr.selected').forEach(r=>r.classList.remove('selected'));selectedTeam=nombre;el.classList.add('selected');}
 }
 
 function sortBy(key){
