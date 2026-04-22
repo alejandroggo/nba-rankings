@@ -207,7 +207,6 @@ const COLUMNS = [
   {key:'pct_menos20',    label:'-20%',       fmt:v=>v??'—',                    always:false,on:false},
   {key:'tot_temporadas', label:'Tot. T.',    fmt:v=>v??'—',                    always:false,on:false},
   {key:'mvp',            label:'MVP',        fmt:v=>v??'—',                    always:false,on:true },
-  {key:'dpoy',           label:'DPOY',       fmt:v=>v??'—',                    always:false,on:false},
   {key:'roy',            label:'ROY',        fmt:v=>v??'—',                    always:false,on:false},
   {key:'coy',            label:'COY',        fmt:v=>v??'—',                    always:false,on:false},
   {key:'anos',           label:'Años',       fmt:v=>v??'—',                    always:false,on:true },
@@ -217,9 +216,6 @@ const COLUMNS = [
   {key:'wins',           label:'Victorias',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'loses',          label:'Derrotas',   fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'wl_pct',         label:'W-L%',       fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
-  {key:'wins_sin_mejor', label:'W s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'loses_sin_mejor',label:'L s/mejor',  fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'who',            label:'Mejor',      fmt:v=>v||'—',                    always:false,on:true },
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
@@ -301,7 +297,7 @@ function renderTable(data){
       if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${d.rank}</div></td>`;
       if(c.key==='nombre') return `<td class="tc"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
-        <div><div class="tn">${d.nombre}</div><div class="tw2">${d.who||''}</div></div>
+        <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
@@ -406,7 +402,7 @@ function updateCompare(){
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
-  const fields=COLUMNS.filter(c=>!['rank','nombre','who'].includes(c.key));
+  const fields=COLUMNS.filter(c=>!['rank','nombre'].includes(c.key));
   const half=Math.ceil(fields.length/2);
   const makeRows=flds=>flds.map(f=>{
     const v1=t1[f.key],v2=t2[f.key],n1=parseFloat(v1),n2=parseFloat(v2);
@@ -444,7 +440,7 @@ function updateCompare(){
     </div>`;
   if(compareChart) compareChart.destroy();
   const isDay=document.body.classList.contains('day');
-  const maxes={puntos:701,conf_fin:16,tot_po:66,wl_pct:60,mvp:10,pct_po:85};
+  const maxes={puntos:701,conf_fin:16,tot_po:66,wl_pct:0.75,mvp:10,pct_po:85};
   const norm=(v,m)=>Math.round((parseFloat(v)||0)/m*100);
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:['Puntos','Conf. Finals','Playoffs','W-L%','MVPs','% PO'],
