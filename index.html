@@ -312,13 +312,12 @@ function buildStats() {
   const totalG=f.reduce((s,d)=>s+(d.games||0),0);
   const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length*100).toFixed(2);
   const mostChamp=f.reduce((a,b)=>(a.champ||0)>(b.champ||0)?a:b);
-  const mostMVP=f.reduce((a,b)=>(a.mvp||0)>(b.mvp||0)?a:b);
+  const max80=Math.max(...f.map(d=>d.pct_80||0));
+  const top80=f.filter(d=>(d.pct_80||0)>=max80);
   const cards=[
-    {label:'Franquicia líder', val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Más Anillos',      val:mostChamp.champ, sub:abr(mostChamp.nombre)},
-    {label:'Más MVPs',          val:mostMVP.mvp, sub:abr(mostMVP.nombre)},
-    {label:'Partidos totales',  val:(totalG/1000).toFixed(0)+'K', sub:totalG.toLocaleString('es')},
-    {label:'W-L% medio',        val:avgWL+'%', sub:'promedio 30 franquicias'},
+    {label:'Franquicia líder',        val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
+    {label:'Más Anillos',             val:mostChamp.champ, sub:abr(mostChamp.nombre)},
+    {label:'Temporadas +80% victorias', val:max80, sub:top80.map(d=>abr(d.nombre)).join(' · ')},
   ];
   document.getElementById('statsBar').innerHTML=cards.map(c=>`
     <div class="sc"><div class="sc-lbl">${c.label}</div><div class="sc-val">${c.val}</div><div class="sc-sub">${c.sub}</div></div>`).join('');
