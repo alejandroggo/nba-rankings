@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Mejor franquicia NBA? · #aleggoritmo</title>
+<title>¿Cuál es la mejor franquicia de la historia de la NBA? · #aleggoritmo</title>
+<meta name="description" content="Ranking histórico de las 30 franquicias NBA basado en un sistema propio de puntuación: anillos, finales, playoffs, premios y temporada regular. Por #aleggoritmo.">
+<meta property="og:title" content="¿Cuál es la mejor franquicia de la historia de la NBA?">
+<meta property="og:description" content="Ranking histórico de las 30 franquicias NBA con sistema propio de puntuación. Compara franquicias y analiza su trayectoria.">
+<meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -605,16 +609,24 @@ function updateCompare(){
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
   const toNum=v=>(!v||v==='—'||v==='–')?0:(parseFloat(v)||0);
+  const rankOf=(col,team)=>{
+    const vals=[...DB.franquicias].map(d=>({n:d.nombre,v:toNum(col.calc?col.calc(d):d[col.key])}));
+    vals.sort((a,b)=>b.v-a.v);
+    const pos=vals.findIndex(x=>x.n===team.nombre)+1;
+    return pos||'—';
+  };
+  const rnk=n=>`<span style="font-size:10px;color:var(--muted);margin-left:3px">(#${n})</span>`;
   const makeRows=keys=>keys.map(key=>{
     const f=COLUMNS.find(c=>c.key===key); if(!f) return '';
     const v1=f.calc?f.calc(t1):t1[key], v2=f.calc?f.calc(t2):t2[key];
     const n1=toNum(v1),n2=toNum(v2);
     const w1=n1!==n2?(n1>n2?'win':'lose'):'';
     const w2=n1!==n2?(n2>n1?'win':'lose'):'';
+    const r1=rankOf(f,t1), r2=rankOf(f,t2);
     return `<div class="crow">
-      <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}</span>
+      <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}${r1!=='—'?rnk(r1):''}</span>
       <span class="clbl">${f.label}</span>
-      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
+      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?rnk(r2):''}${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
   // Contar duelos ganados sobre todos los bloques
