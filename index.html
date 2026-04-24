@@ -35,7 +35,17 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
 .sc-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.conf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center;}
+.conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
+.cbtn{padding:4px 11px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
+.cbtn:hover{border-color:var(--accent);}
+.cbtn.este  {background:rgba(29,66,138,.25);border-color:#1D428A;color:#7aabea;}
+.cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
+.cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
+.cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
+.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;row-gap:8px;}
+.cf-grp{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.cf-glbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:0 4px 0 2px;opacity:.7;}
 .cf-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-right:4px;flex-shrink:0;}
 .ctog{padding:4px 9px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
 .ctog.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
@@ -44,15 +54,20 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .srch{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
 .srch:focus{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
 .hint{font-size:11px;color:var(--muted);}
+.tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:10px;}
+.tw-top::-webkit-scrollbar{height:6px;}.tw-top::-webkit-scrollbar-thumb{background:var(--border);}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
-th{padding:10px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
+th{padding:16px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
+th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
+body.day th.sep-r{border-right-color:rgba(0,0,0,0.14);}
+td.sep-r{border-right:2px solid var(--border);}
 tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
-.rc{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--muted);width:38px;text-align:center;}
+.rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:190px;}.tci{display:flex;align-items:center;gap:9px;}
 .logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
 .tn{font-weight:500;}.tw2{font-size:11px;color:var(--muted);font-style:italic;}
@@ -61,7 +76,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .pb{display:flex;align-items:center;gap:6px;min-width:88px;}
 .bt{flex:1;height:3px;background:var(--surface2);}
 .bf{height:100%;}.plbl{font-size:11px;color:var(--muted);min-width:32px;text-align:right;}
-.pnv{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);min-width:52px;text-align:right;line-height:1;}
+.pnv{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);min-width:52px;text-align:right;line-height:1;}
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
 .cc{background:var(--surface);border:1px solid var(--border);padding:20px;}
 .ctitle{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px;}
@@ -86,6 +101,13 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cv{min-width:64px;font-weight:500;font-size:13px;}.cv.l{text-align:left;}.cv.r{text-align:right;}
 .cv.win{font-weight:700;}.cv.lose{color:var(--muted);font-weight:400;}
 .cmp-radar{background:var(--surface);border:1px solid var(--border);padding:20px;margin-top:14px;}
+.info-block{margin-top:16px;padding:14px 18px;border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--muted);line-height:2;display:flex;flex-wrap:wrap;gap:0 28px;}
+.info-title{width:100%;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;}
+.info-block b{color:var(--text);font-weight:500;}
+td.best-cell{color:var(--pos)!important;font-weight:700;}
+td.best-cell .nb{color:var(--pos)!important;}
+td.best-cell .plbl{color:var(--pos)!important;}
+td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
@@ -113,19 +135,29 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div id="appContent" style="display:none">
     <div id="tab-ranking" class="section active">
       <div class="stats-bar" id="statsBar"></div>
+      <div class="conf-bar" id="confBar"></div>
       <div class="cf-bar" id="colFilterBar"><span class="cf-lbl">Columnas:</span></div>
+      <!-- Edit 13: bloque de texto TBD -->
+      <div id="textBlockTop" style="display:none"></div>
       <div class="controls">
         <input class="srch" type="text" id="search" placeholder="Buscar franquicia…" oninput="filterTable()">
         <span class="hint">Clic en columna para ordenar</span>
       </div>
-      <div class="tw"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
+      <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
+      <div class="tw" id="tableWrapper"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
+      <div class="info-block">
+        <div class="info-title">Equivalencias históricas de rondas</div>
+        <span><b>Division Finals</b> = Conference Finals</span>
+        <span><b>Semifinals</b> = Conference Finals <em style="opacity:.6">(sin filtro por división)</em></span>
+        <span><b>Division Semifinals</b> = Conference Semifinals</span>
+        <span><b>Quarterfinals</b> = Conference Semifinals</span>
+      </div>
     </div>
     <div id="tab-graficos" class="section">
       <div class="cg">
         <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason</div><div class="ch"><canvas id="cPOPct"></canvas></div></div>
         <div class="cc"><div class="ctitle">% Temporadas en CF+</div><div class="csub">Porcentaje de años llegando a Conference Finals o más</div><div class="ch"><canvas id="cFinPct"></canvas></div></div>
-        <div class="cc"><div class="ctitle">Evolución 2024 → 2026</div><div class="csub">Quién ha subido y quién ha bajado en las últimas actualizaciones</div><div class="ch tall"><canvas id="cEvol"></canvas></div></div>
-        <div class="cc"><div class="ctitle">% Playoffs vs % Finals+</div><div class="csub">Scatter: llegar a playoffs versus llegar lejos — todas las franquicias</div><div class="ch"><canvas id="cBubble"></canvas></div></div>
+<div class="cc"><div class="ctitle">% Playoffs vs % Finals+</div><div class="csub">Scatter: llegar a playoffs versus llegar lejos — todas las franquicias</div><div class="ch"><canvas id="cBubble"></canvas></div></div>
       </div>
     </div>
     <div id="tab-comparar" class="section">
@@ -190,37 +222,64 @@ const ABR = {
 };
 
 const COLUMNS = [
-  {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true },
-  {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true },
-  {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true },
-  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true },
-  {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_sf',        label:'Conference Semifinals',fmt:v=>v??'—',                    always:false,on:true },
-  {key:'primera_ronda',  label:'1st Round',            fmt:v=>v??'—',                    always:false,on:true },
-  {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true },
-  {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false},
-  {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false},
-  {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false},
-  {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true },
-  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true },
-  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
+  {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true,  group:''},
+  {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
+  {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_sf',        label:'Conference Semifinals',fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'primera_ronda',  label:'1st Round',            fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'GAMES',          label:'PO Partidos',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
+  {key:'WINS',           label:'PO Victorias',         fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
+  {key:'LOSES',          label:'PO Derrotas',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
+  {key:'W-L%',           label:'PO W-L%',              fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true, group:'playoffs'},
+  {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true,  group:'rs'},
+  {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
+  {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'A-STAR',         label:'All-Star',             fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
+  {key:'A-NBA',          label:'All-NBA',              fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
+  {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
+  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false, group:'general'},
+  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
+  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
+  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true,  group:'general', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
+
+// ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
+const CONFERENCES = {
+  'Este': ['Boston Celtics','Brooklyn Nets','New York Knicks','Philadelphia 76ers','Toronto Raptors',
+           'Chicago Bulls','Cleveland Cavaliers','Detroit Pistons','Indiana Pacers','Milwaukee Bucks',
+           'Atlanta Hawks','Charlotte Hornets','Miami Heat','Orlando Magic','Washington Wizards'],
+  'Oeste':['Denver Nuggets','Minnesota Timberwolves','Oklahoma City Thunder','Portland Trail Blazers','Utah Jazz',
+           'Golden State Warriors','Los Angeles Clippers','Los Angeles Lakers','Phoenix Suns','Sacramento Kings',
+           'Dallas Mavericks','Houston Rockets','Memphis Grizzlies','New Orleans Pelicans','San Antonio Spurs'],
+};
+const DIVISIONS = {
+  'Atlántico': ['Boston Celtics','Brooklyn Nets','New York Knicks','Philadelphia 76ers','Toronto Raptors'],
+  'Central':   ['Chicago Bulls','Cleveland Cavaliers','Detroit Pistons','Indiana Pacers','Milwaukee Bucks'],
+  'Sureste':   ['Atlanta Hawks','Charlotte Hornets','Miami Heat','Orlando Magic','Washington Wizards'],
+  'Noroeste':  ['Denver Nuggets','Minnesota Timberwolves','Oklahoma City Thunder','Portland Trail Blazers','Utah Jazz'],
+  'Pacífico':  ['Golden State Warriors','Los Angeles Clippers','Los Angeles Lakers','Phoenix Suns','Sacramento Kings'],
+  'Suroeste':  ['Dallas Mavericks','Houston Rockets','Memphis Grizzlies','New Orleans Pelicans','San Antonio Spurs'],
+};
+const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroeste':'Oeste','Pacífico':'Oeste','Suroeste':'Oeste'};
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
+let filterConf=null, filterDiv=null;
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 const tc = n => (TEAM_COLORS[n]||['#888'])[0];
@@ -243,9 +302,9 @@ async function init() {
   document.getElementById('mainTabs').style.display='flex';
   const d=new Date(DB.actualizado);
   const fmt=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Actualizado el ${fmt}</b>`;
+  document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
-  buildStats(); buildColFilters(); renderTable(DB.franquicias); populateSelects();
+  buildStats(); buildConfFilters(); buildColFilters(); renderTable(DB.franquicias); populateSelects(); setupScrollSync();
 }
 
 // ── STAT CARDS ──────────────────────────────────────────────────────────────
@@ -270,51 +329,133 @@ function buildStats() {
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
-  COLUMNS.filter(c=>!c.always).forEach(col=>{
+  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
+  const groups={};
+  COLUMNS.filter(c=>!c.always&&c.group).forEach(col=>{
+    if(!groups[col.group]) groups[col.group]=[];
+    groups[col.group].push(col);
+  });
+  Object.entries(GROUP_LABELS).forEach(([grp,lbl])=>{
+    if(!groups[grp]) return;
+    const wrap=document.createElement('div'); wrap.className='cf-grp';
+    const glbl=document.createElement('span'); glbl.className='cf-glbl'; glbl.textContent=lbl;
+    wrap.appendChild(glbl);
+    groups[grp].forEach(col=>{
+      const btn=document.createElement('button');
+      btn.className='ctog'+(col.on?' on':'');
+      btn.textContent=col.label;
+      btn.onclick=()=>{ col.on=!col.on; btn.classList.toggle('on',col.on); renderTable(getCurrentData()); };
+      wrap.appendChild(btn);
+    });
+    bar.appendChild(wrap);
+  });
+}
+
+// ── SCROLL SYNC ─────────────────────────────────────────────────────────────
+function setupScrollSync(){
+  const top=document.getElementById('scrollTop');
+  const wrap=document.getElementById('tableWrapper');
+  const inner=document.getElementById('scrollTopInner');
+  const sync=()=>{ inner.style.width=wrap.scrollWidth+'px'; };
+  sync();
+  let busy=false;
+  top.addEventListener('scroll',()=>{ if(busy)return; busy=true; wrap.scrollLeft=top.scrollLeft; busy=false; });
+  wrap.addEventListener('scroll',()=>{ if(busy)return; busy=true; top.scrollLeft=wrap.scrollLeft; busy=false; });
+  new MutationObserver(sync).observe(document.getElementById('rankingTable'),{childList:true,subtree:true});
+}
+
+// ── CONF FILTERS ─────────────────────────────────────────────────────────────
+function buildConfFilters(){
+  const bar=document.getElementById('confBar');
+  const lbl=document.createElement('span');
+  lbl.className='cf-lbl'; lbl.textContent='Filtrar:'; bar.appendChild(lbl);
+  ['Este','Oeste'].forEach(conf=>{
     const btn=document.createElement('button');
-    btn.className='ctog'+(col.on?' on':'');
-    btn.textContent=col.label;
-    btn.onclick=()=>{ col.on=!col.on; btn.classList.toggle('on',col.on); renderTable(getCurrentData()); };
+    btn.className='cbtn'; btn.textContent=conf; btn.dataset.conf=conf;
+    btn.onclick=()=>{ filterConf=filterConf===conf?null:conf; filterDiv=null; refreshConfBtns(); renderTable(getCurrentData()); };
     bar.appendChild(btn);
+  });
+  const sep=document.createElement('span'); sep.className='conf-sep'; sep.textContent='|'; bar.appendChild(sep);
+  Object.keys(DIVISIONS).forEach(div=>{
+    const btn=document.createElement('button');
+    btn.className='cbtn'; btn.textContent=div; btn.dataset.div=div;
+    btn.onclick=()=>{ filterDiv=filterDiv===div?null:div; filterConf=filterDiv?DIV_CONF[filterDiv]:null; refreshConfBtns(); renderTable(getCurrentData()); };
+    bar.appendChild(btn);
+  });
+  refreshConfBtns();
+}
+
+function refreshConfBtns(){
+  document.querySelectorAll('#confBar [data-conf]').forEach(btn=>{
+    const c=btn.dataset.conf;
+    btn.className='cbtn'+(filterConf===c&&!filterDiv?' '+(c==='Este'?'este':'oeste'):'');
+  });
+  document.querySelectorAll('#confBar [data-div]').forEach(btn=>{
+    const d=btn.dataset.div, conf=DIV_CONF[d];
+    const active=filterDiv===d, confActive=filterConf===conf&&!filterDiv;
+    btn.className='cbtn'+(active?' '+(conf==='Este'?'este':'oeste'):confActive?' '+(conf==='Este'?'div-e':'div-o'):'');
   });
 }
 
 // ── TABLE ───────────────────────────────────────────────────────────────────
 function getCurrentData(){
   const q=document.getElementById('search').value.toLowerCase();
-  return DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
+  let data=DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
+  if(filterDiv)   data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
+  else if(filterConf) data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
+  return data;
 }
 function filterTable(){ renderTable(getCurrentData()); }
 
 function renderTable(data){
   const vis=COLUMNS.filter(c=>c.always||c.on);
   const maxPts=Math.max(...DB.franquicias.map(d=>parseFloat(d.puntos)||0));
+  // Máximos para marcar el mejor de cada columna
+  const colMax={};
+  COLUMNS.filter(c=>!['rank','nombre'].includes(c.key)).forEach(c=>{
+    const vals=DB.franquicias.map(d=>parseFloat(c.calc?c.calc(d):d[c.key])||0).filter(v=>v>0);
+    if(vals.length) colMax[c.key]=Math.max(...vals);
+  });
+  const isBest=(c,d)=>{
+    const v=parseFloat(c.calc?c.calc(d):d[c.key])||0;
+    return colMax[c.key]!==undefined&&v>0&&v>=colMax[c.key]-0.0001;
+  };
+  // Separadores: última columna visible de cada grupo antes de un cambio de grupo
+  const sepKeys=new Set();
+  for(let i=0;i<vis.length-1;i++){
+    if(vis[i].group&&vis[i+1].group&&vis[i].group!==vis[i+1].group) sepKeys.add(vis[i].key);
+  }
+  const sc=k=>sepKeys.has(k)?' sep-r':'';
   document.getElementById('tableHead').innerHTML='<tr>'+vis.map(c=>
-    `<th class="${sortKey===c.key?'sorted':''}" onclick="sortBy('${c.key}')">${c.label}<span class="sico">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
+    `<th class="${sortKey===c.key?'sorted':''}${sc(c.key)}" onclick="sortBy('${c.key}')">${c.label}<span class="sico">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
   ).join('')+'</tr>';
   document.getElementById('tableBody').innerHTML=data.map((d,i)=>{
     const rankColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'';
     const cells=vis.map(c=>{
-      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${i+1}</div></td>`;
-      if(c.key==='nombre') return `<td class="tc"><div class="tci">
+      if(c.key==='rank') return `<td class="${sc(c.key)}"><div class="rc" style="color:${rankColor||'var(--muted)'}">${i+1}</div></td>`;
+      if(c.key==='nombre') return `<td class="tc${sc(c.key)}"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
         <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
-      if(c.key==='wl_pct'){
-        const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+      if(c.key==='wl_pct'||c.key==='W-L%'){
+        const v=(parseFloat(d[c.key])||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
-      const raw=d[c.key], val=c.fmt?c.fmt(raw):raw;
-      const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
-      return `<td class="${isNum?'nb':''}">${val??'—'}</td>`;
+      const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
+      const isNum=typeof raw==='number'||c.calc!=null;
+      const bc=isBest(c,d)?' best-cell':'';
+      return `<td class="${isNum?'nb':''}${sc(c.key)}${bc}">${val??'—'}</td>`;
     }).join('');
     return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
@@ -327,9 +468,10 @@ function selectRow(el,nombre){
 
 function sortBy(key){
   if(sortKey===key) sortAsc=!sortAsc; else{sortKey=key;sortAsc=key==='rank';}
+  const col=COLUMNS.find(c=>c.key===key);
   DB.franquicias.sort((a,b)=>{
-    const av=a[key],bv=b[key];
-    if(typeof av==='number') return sortAsc?av-bv:bv-av;
+    const av=col?.calc?col.calc(a):a[key], bv=col?.calc?col.calc(b):b[key];
+    if(typeof av==='number'||col?.calc) return sortAsc?(av||0)-(bv||0):(bv||0)-(av||0);
     return sortAsc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
   });
   renderTable(getCurrentData());
@@ -364,25 +506,7 @@ function initCharts(){
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
     scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'}}}}});
 
-  // 3. Evolución 2024→2026
-  if(DB.evolucion&&DB.evolucion.length){
-    const evo=[...DB.evolucion].filter(d=>d.pts_2024&&d.pts_2026)
-      .sort((a,b)=>Math.abs(b.delta_25_26||0)-Math.abs(a.delta_25_26||0)).slice(0,15);
-    new Chart(document.getElementById('cEvol'),{type:'bar',data:{
-      labels:evo.map(d=>abr(d.nombre)),
-      datasets:[
-        {label:'2024',data:evo.map(d=>d.pts_2024),backgroundColor:'rgba(128,128,128,0.2)',borderWidth:0,borderRadius:2},
-        {label:'2025',data:evo.map(d=>d.pts_2025),backgroundColor:'rgba(128,128,128,0.4)',borderWidth:0,borderRadius:2},
-        {label:'2026',data:evo.map(d=>d.pts_2026),backgroundColor:evo.map(d=>tc(d.nombre)+'cc'),borderWidth:0,borderRadius:2},
-      ]
-    },options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{font:{size:11},color:accent}}},
-      scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:gridColor}}}}});
-  } else {
-    document.getElementById('cEvol').closest('.cc').querySelector('.ch').innerHTML='<div class="ph">Sin datos de evolución</div>';
-  }
-
-  // 4. Scatter %PO vs %CF+
+  // 3. Scatter %PO vs %CF+
   const scat=DB.franquicias.map(d=>({x:parseFloat(d.pct_po)||0,y:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1),nombre:d.nombre}));
   new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
     data:scat,backgroundColor:scat.map(d=>tc(d.nombre)+'bb'),borderColor:scat.map(d=>tc(d.nombre)),borderWidth:1,pointRadius:7,pointHoverRadius:10
@@ -402,15 +526,23 @@ function populateSelects(){
   });
 }
 
+const CMP_BLOCKS=[
+  {title:null,                     keys:['puntos','pts_ano']},
+  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
+  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','tot_temporadas','anos','anos_po','games','wins','loses','wl_pct']},
+  {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy','A-STAR','A-NBA']},
+];
+
 function updateCompare(){
   const t1=DB.franquicias.find(d=>d.nombre===document.getElementById('team1').value);
   const t2=DB.franquicias.find(d=>d.nombre===document.getElementById('team2').value);
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
-  const fields=COLUMNS.filter(c=>!['rank','nombre'].includes(c.key));
-  const makeRows=flds=>flds.map(f=>{
-    const v1=t1[f.key],v2=t2[f.key],n1=parseFloat(v1),n2=parseFloat(v2);
+  const makeRows=keys=>keys.map(key=>{
+    const f=COLUMNS.find(c=>c.key===key); if(!f) return '';
+    const v1=f.calc?f.calc(t1):t1[key], v2=f.calc?f.calc(t2):t2[key];
+    const n1=parseFloat(v1),n2=parseFloat(v2);
     const w1=!isNaN(n1)&&!isNaN(n2)?(n1>n2?'win':n1<n2?'lose':''):'';
     const w2=!isNaN(n1)&&!isNaN(n2)?(n2>n1?'win':n2<n1?'lose':''):'';
     return `<div class="crow">
@@ -419,6 +551,15 @@ function updateCompare(){
       <span class="cv r ${w2}" ${w2==='win'?`style="color:${c2}"`:''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
+  const makeBlock=b=>`
+    <div style="margin-bottom:14px">
+      ${b.title!==null?`<div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
+        <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
+        <span class="clbl" style="font-size:10px;letter-spacing:1.5px">${b.title}</span>
+        <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
+      </div>`:''}
+      <div class="cmp-card">${makeRows(b.keys)}</div>
+    </div>`;
   el.innerHTML=`
     <div class="cmp-heads">
       <div class="chc" style="border-left:3px solid ${c1};background:${c1}0f">
@@ -434,14 +575,7 @@ function updateCompare(){
         <div class="chc-rank">Puesto #${t2.rank}</div>
       </div>
     </div>
-    <div class="cmp-card">
-      <div class="cmp-hdr">
-        <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
-        <span class="clbl">Estadística</span>
-        <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
-      </div>
-      ${makeRows(fields)}
-    </div>
+    ${CMP_BLOCKS.map(makeBlock).join('')}
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Métricas clave normalizadas al máximo histórico</div>
