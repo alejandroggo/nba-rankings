@@ -224,6 +224,7 @@ const COLUMNS = [
   {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true,  group:''},
   {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
   {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
+  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
   {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
@@ -253,7 +254,6 @@ const COLUMNS = [
   {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
   {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
   {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
-  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true,  group:'general', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
 
 // ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
