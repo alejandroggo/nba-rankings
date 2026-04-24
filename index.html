@@ -505,15 +505,22 @@ function populateSelects(){
   });
 }
 
+const CMP_BLOCKS=[
+  {title:'Logros de playoffs',     keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po']},
+  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','tot_temporadas','anos','anos_po','pts_ano','games','wins','loses','wl_pct']},
+  {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy']},
+];
+
 function updateCompare(){
   const t1=DB.franquicias.find(d=>d.nombre===document.getElementById('team1').value);
   const t2=DB.franquicias.find(d=>d.nombre===document.getElementById('team2').value);
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
-  const fields=COLUMNS.filter(c=>!['rank','nombre'].includes(c.key));
-  const makeRows=flds=>flds.map(f=>{
-    const v1=t1[f.key],v2=t2[f.key],n1=parseFloat(v1),n2=parseFloat(v2);
+  const makeRows=keys=>keys.map(key=>{
+    const f=COLUMNS.find(c=>c.key===key); if(!f) return '';
+    const v1=f.calc?f.calc(t1):t1[key], v2=f.calc?f.calc(t2):t2[key];
+    const n1=parseFloat(v1),n2=parseFloat(v2);
     const w1=!isNaN(n1)&&!isNaN(n2)?(n1>n2?'win':n1<n2?'lose':''):'';
     const w2=!isNaN(n1)&&!isNaN(n2)?(n2>n1?'win':n2<n1?'lose':''):'';
     return `<div class="crow">
@@ -522,6 +529,15 @@ function updateCompare(){
       <span class="cv r ${w2}" ${w2==='win'?`style="color:${c2}"`:''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
+  const makeBlock=b=>`
+    <div style="margin-bottom:14px">
+      <div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
+        <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
+        <span class="clbl" style="font-size:10px;letter-spacing:1.5px">${b.title}</span>
+        <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
+      </div>
+      <div class="cmp-card">${makeRows(b.keys)}</div>
+    </div>`;
   el.innerHTML=`
     <div class="cmp-heads">
       <div class="chc" style="border-left:3px solid ${c1};background:${c1}0f">
@@ -537,14 +553,7 @@ function updateCompare(){
         <div class="chc-rank">Puesto #${t2.rank}</div>
       </div>
     </div>
-    <div class="cmp-card">
-      <div class="cmp-hdr">
-        <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
-        <span class="clbl">Estadística</span>
-        <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
-      </div>
-      ${makeRows(fields)}
-    </div>
+    ${CMP_BLOCKS.map(makeBlock).join('')}
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Métricas clave normalizadas al máximo histórico</div>
