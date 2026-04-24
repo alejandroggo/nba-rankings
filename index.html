@@ -372,8 +372,13 @@ function buildConfFilters(){
     btn.onclick=()=>{ filterConf=filterConf===conf?null:conf; filterDiv=null; refreshConfBtns(); renderTable(getCurrentData()); };
     bar.appendChild(btn);
   });
-  const sep=document.createElement('span'); sep.className='conf-sep'; sep.textContent='|'; bar.appendChild(sep);
+  const addSep=()=>{ const s=document.createElement('span'); s.className='conf-sep'; s.textContent='|'; bar.appendChild(s); };
+  addSep();
+  let lastConf=null;
   Object.keys(DIVISIONS).forEach(div=>{
+    const conf=DIV_CONF[div];
+    if(lastConf&&conf!==lastConf) addSep();
+    lastConf=conf;
     const btn=document.createElement('button');
     btn.className='cbtn'; btn.textContent=div; btn.dataset.div=div;
     btn.onclick=()=>{ filterDiv=filterDiv===div?null:div; filterConf=filterDiv?DIV_CONF[filterDiv]:null; refreshConfBtns(); renderTable(getCurrentData()); };
