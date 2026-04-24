@@ -52,7 +52,7 @@ th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
 tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
-.rc{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--muted);width:38px;text-align:center;}
+.rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:190px;}.tci{display:flex;align-items:center;gap:9px;}
 .logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
 .tn{font-weight:500;}.tw2{font-size:11px;color:var(--muted);font-style:italic;}
@@ -217,6 +217,7 @@ const COLUMNS = [
   {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
   {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
+  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true, calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
@@ -312,8 +313,8 @@ function renderTable(data){
         const v=parseFloat(d.pct_po)||0;
         return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
-      const raw=d[c.key], val=c.fmt?c.fmt(raw):raw;
-      const isNum=typeof raw==='number'&&!['rank'].includes(c.key);
+      const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
+      const isNum=typeof raw==='number'||c.calc!=null;
       return `<td class="${isNum?'nb':''}">${val??'—'}</td>`;
     }).join('');
     return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
@@ -327,9 +328,10 @@ function selectRow(el,nombre){
 
 function sortBy(key){
   if(sortKey===key) sortAsc=!sortAsc; else{sortKey=key;sortAsc=key==='rank';}
+  const col=COLUMNS.find(c=>c.key===key);
   DB.franquicias.sort((a,b)=>{
-    const av=a[key],bv=b[key];
-    if(typeof av==='number') return sortAsc?av-bv:bv-av;
+    const av=col?.calc?col.calc(a):a[key], bv=col?.calc?col.calc(b):b[key];
+    if(typeof av==='number'||col?.calc) return sortAsc?(av||0)-(bv||0):(bv||0)-(av||0);
     return sortAsc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
   });
   renderTable(getCurrentData());
