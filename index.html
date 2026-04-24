@@ -521,9 +521,10 @@ function initCharts(){
 
 // ── COMPARE ─────────────────────────────────────────────────────────────────
 function populateSelects(){
+  const sorted=[...DB.franquicias].sort((a,b)=>a.nombre.localeCompare(b.nombre));
   ['team1','team2'].forEach(id=>{
     const sel=document.getElementById(id);
-    DB.franquicias.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.nombre; sel.appendChild(o); });
+    sorted.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.nombre; sel.appendChild(o); });
   });
 }
 
