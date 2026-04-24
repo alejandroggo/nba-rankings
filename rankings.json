@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-04-22T20:03:31.723Z",
+  "actualizado": "2026-04-24T13:12:05.339Z",
   "franquicias": [
     {
       "rank": 1,
@@ -159,8 +159,8 @@
     {
       "rank": 6,
       "nombre": "New York Knicks",
-      "puntos": 343.816289077431,
-      "pts_year": 4.352104925030773,
+      "puntos": 343.7845798654443,
+      "pts_year": 4.351703542600561,
       "champ": 2,
       "finals": 6,
       "conf_fin": 10,
@@ -182,16 +182,16 @@
       "anos": 80,
       "anos_po": 47,
       "pct_po": 58.75,
-      "games": 424,
+      "games": 425,
       "wins": 211,
-      "loses": 213,
-      "wl_pct": 0.49764150943396224
+      "loses": 214,
+      "wl_pct": 0.4964705882352941
     },
     {
       "rank": 7,
       "nombre": "Atlanta Hawks",
-      "puntos": 317.519759156244,
-      "pts_year": 4.1778915678453155,
+      "puntos": 317.55423441199514,
+      "pts_year": 4.178345189631515,
       "champ": 1,
       "finals": 3,
       "conf_fin": 10,
@@ -213,16 +213,16 @@
       "anos": 77,
       "anos_po": 50,
       "pct_po": 64.93506493506493,
-      "games": 392,
-      "wins": 169,
+      "games": 393,
+      "wins": 170,
       "loses": 223,
-      "wl_pct": 0.43112244897959184
+      "wl_pct": 0.43256997455470736
     },
     {
       "rank": 8,
       "nombre": "Detroit Pistons",
-      "puntos": 310.15636033979115,
-      "pts_year": 4.028004679737547,
+      "puntos": 310.1894825942927,
+      "pts_year": 4.028434838886918,
       "champ": 3,
       "finals": 4,
       "conf_fin": 10,
@@ -244,10 +244,10 @@
       "anos": 78,
       "anos_po": 44,
       "pct_po": 56.41025641025641,
-      "games": 377,
-      "wins": 190,
+      "games": 378,
+      "wins": 191,
       "loses": 187,
-      "wl_pct": 0.5039787798408488
+      "wl_pct": 0.5052910052910053
     },
     {
       "rank": 9,
@@ -283,8 +283,8 @@
     {
       "rank": 10,
       "nombre": "Oklahoma City Thunder",
-      "puntos": 276.99821429597085,
-      "pts_year": 4.775831280965015,
+      "puntos": 277.03153864659583,
+      "pts_year": 4.776405838734411,
       "champ": 2,
       "finals": 3,
       "conf_fin": 6,
@@ -306,10 +306,10 @@
       "anos": 59,
       "anos_po": 35,
       "pct_po": 59.32203389830508,
-      "games": 365,
-      "wins": 187,
+      "games": 366,
+      "wins": 188,
       "loses": 178,
-      "wl_pct": 0.5123287671232877
+      "wl_pct": 0.5136612021857924
     },
     {
       "rank": 11,
@@ -376,8 +376,8 @@
     {
       "rank": 13,
       "nombre": "Phoenix Suns",
-      "puntos": 245.5860306445527,
-      "pts_year": 4.3085268534132055,
+      "puntos": 245.55092918159846,
+      "pts_year": 4.307911038273657,
       "champ": 0,
       "finals": 3,
       "conf_fin": 7,
@@ -399,10 +399,10 @@
       "anos": 58,
       "anos_po": 34,
       "pct_po": 58.620689655172406,
-      "games": 325,
+      "games": 326,
       "wins": 160,
-      "loses": 165,
-      "wl_pct": 0.49230769230769234
+      "loses": 166,
+      "wl_pct": 0.49079754601226994
     },
     {
       "rank": 14,
@@ -531,8 +531,8 @@
     {
       "rank": 18,
       "nombre": "Cleveland Cavaliers",
-      "puntos": 181.7950184129303,
-      "pts_year": 3.305363971144187,
+      "puntos": 181.75420581678515,
+      "pts_year": 3.304621923941548,
       "champ": 1,
       "finals": 4,
       "conf_fin": 3,
@@ -554,16 +554,16 @@
       "anos": 56,
       "anos_po": 26,
       "pct_po": 46.42857142857143,
-      "games": 257,
+      "games": 258,
       "wins": 138,
-      "loses": 119,
-      "wl_pct": 0.5369649805447471
+      "loses": 120,
+      "wl_pct": 0.5348837209302325
     },
     {
       "rank": 19,
       "nombre": "Denver Nuggets",
-      "puntos": 177.87274602744412,
-      "pts_year": 3.6300560413764105,
+      "puntos": 177.8358354291382,
+      "pts_year": 3.6293027638599633,
       "champ": 1,
       "finals": 0,
       "conf_fin": 4,
@@ -585,10 +585,10 @@
       "anos": 50,
       "anos_po": 32,
       "pct_po": 64,
-      "games": 258,
+      "games": 259,
       "wins": 113,
-      "loses": 145,
-      "wl_pct": 0.437984496124031
+      "loses": 146,
+      "wl_pct": 0.4362934362934363
     },
     {
       "rank": 20,
@@ -686,8 +686,8 @@
     {
       "rank": 23,
       "nombre": "Orlando Magic",
-      "puntos": 104.99550299873958,
-      "pts_year": 2.9165417499649884,
+      "puntos": 104.94568285150261,
+      "pts_year": 2.9151578569861836,
       "champ": 0,
       "finals": 2,
       "conf_fin": 2,
@@ -709,10 +709,10 @@
       "anos": 37,
       "anos_po": 19,
       "pct_po": 51.35135135135135,
-      "games": 146,
+      "games": 147,
       "wins": 64,
-      "loses": 82,
-      "wl_pct": 0.4383561643835616
+      "loses": 83,
+      "wl_pct": 0.43537414965986393
     },
     {
       "rank": 24,
@@ -779,8 +779,8 @@
     {
       "rank": 26,
       "nombre": "Toronto Raptors",
-      "puntos": 91.67726758286176,
-      "pts_year": 3.0559089194287252,
+      "puntos": 91.74044218603636,
+      "pts_year": 3.058014739534545,
       "champ": 1,
       "finals": 0,
       "conf_fin": 1,
@@ -802,16 +802,16 @@
       "anos": 31,
       "anos_po": 15,
       "pct_po": 48.38709677419355,
-      "games": 125,
-      "wins": 57,
+      "games": 126,
+      "wins": 58,
       "loses": 68,
-      "wl_pct": 0.456
+      "wl_pct": 0.4603174603174603
     },
     {
       "rank": 27,
       "nombre": "Minnesota Timberwolves",
-      "puntos": 62.275591615956735,
-      "pts_year": 1.729877544887687,
+      "puntos": 62.35572907300141,
+      "pts_year": 1.7321035853611504,
       "champ": 0,
       "finals": 0,
       "conf_fin": 3,
@@ -833,10 +833,10 @@
       "anos": 37,
       "anos_po": 14,
       "pct_po": 37.83783783783784,
-      "games": 96,
-      "wins": 40,
+      "games": 97,
+      "wins": 41,
       "loses": 56,
-      "wl_pct": 0.4166666666666667
+      "wl_pct": 0.422680412371134
     },
     {
       "rank": 28,
