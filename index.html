@@ -35,10 +35,9 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
 .sc-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-.conf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center;}
 .conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
-.cbtn{padding:4px 11px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
-.cbtn:hover{border-color:var(--accent);}
+.cbtn{padding:4px 11px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
+.cbtn:hover{border-color:var(--accent);color:var(--text);}
 .cbtn.este  {background:rgba(29,66,138,.25);border-color:#1D428A;color:#7aabea;}
 .cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
@@ -59,7 +58,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
-th{padding:16px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
+th{padding:16px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
 th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
@@ -135,12 +134,12 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div id="appContent" style="display:none">
     <div id="tab-ranking" class="section active">
       <div class="stats-bar" id="statsBar"></div>
-      <div class="conf-bar" id="confBar"></div>
       <div class="cf-bar" id="colFilterBar"><span class="cf-lbl">Columnas:</span></div>
       <!-- Edit 13: bloque de texto TBD -->
       <div id="textBlockTop" style="display:none"></div>
       <div class="controls">
         <input class="srch" type="text" id="search" placeholder="Buscar franquicia…" oninput="filterTable()">
+        <div id="confBar"></div>
         <span class="hint">Clic en columna para ordenar</span>
       </div>
       <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
@@ -225,6 +224,7 @@ const COLUMNS = [
   {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true,  group:''},
   {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
   {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
+  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
   {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
@@ -241,7 +241,6 @@ const COLUMNS = [
   {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true,  group:'rs'},
   {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
-  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
@@ -255,7 +254,6 @@ const COLUMNS = [
   {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
   {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
   {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
-  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true,  group:'general', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
 
 // ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
@@ -313,14 +311,13 @@ function buildStats() {
   const leader=f[0];
   const totalG=f.reduce((s,d)=>s+(d.games||0),0);
   const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length*100).toFixed(2);
-  const maxPO=f.reduce((a,b)=>(parseFloat(a.pct_po)||0)>(parseFloat(b.pct_po)||0)?a:b);
-  const mostMVP=f.reduce((a,b)=>(a.mvp||0)>(b.mvp||0)?a:b);
+  const mostChamp=f.reduce((a,b)=>(a.champ||0)>(b.champ||0)?a:b);
+  const max80=Math.max(...f.map(d=>d.pct_80||0));
+  const top80=f.filter(d=>(d.pct_80||0)>=max80);
   const cards=[
-    {label:'Franquicia líder', val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Mayor % playoffs',  val:parseFloat(maxPO.pct_po).toFixed(2)+'%', sub:abr(maxPO.nombre)},
-    {label:'Más MVPs',          val:mostMVP.mvp, sub:abr(mostMVP.nombre)},
-    {label:'Partidos totales',  val:(totalG/1000).toFixed(0)+'K', sub:totalG.toLocaleString('es')},
-    {label:'W-L% medio',        val:avgWL+'%', sub:'promedio 30 franquicias'},
+    {label:'Franquicia líder',        val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
+    {label:'Más Anillos',             val:mostChamp.champ, sub:abr(mostChamp.nombre)},
+    {label:'Temporadas +80% victorias', val:max80, sub:top80.map(d=>abr(d.nombre)).join(' · ')},
   ];
   document.getElementById('statsBar').innerHTML=cards.map(c=>`
     <div class="sc"><div class="sc-lbl">${c.label}</div><div class="sc-val">${c.val}</div><div class="sc-sub">${c.sub}</div></div>`).join('');
@@ -438,19 +435,18 @@ function renderTable(data){
         <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
-        const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        return `<td class="${sc(c.key)}${bc}"><span class="pnv">${d.puntos?.toFixed(2)}</span></td>`;
       }
       if(c.key==='wl_pct'||c.key==='W-L%'){
-        const v=(parseFloat(d[c.key])||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
+        const v=(parseFloat(d[c.key])||0)*100;
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
       }
       const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'||c.calc!=null;
