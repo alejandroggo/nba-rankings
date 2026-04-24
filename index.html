@@ -243,7 +243,7 @@ async function init() {
   document.getElementById('mainTabs').style.display='flex';
   const d=new Date(DB.actualizado);
   const fmt=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Actualizado el ${fmt}</b>`;
+  document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
   buildStats(); buildColFilters(); renderTable(DB.franquicias); populateSelects();
 }
