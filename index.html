@@ -506,8 +506,9 @@ function populateSelects(){
 }
 
 const CMP_BLOCKS=[
-  {title:'Logros de playoffs',     keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po']},
-  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','tot_temporadas','anos','anos_po','pts_ano','games','wins','loses','wl_pct']},
+  {title:null,                     keys:['puntos','pts_ano']},
+  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po']},
+  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','tot_temporadas','anos','anos_po','games','wins','loses','wl_pct']},
   {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy']},
 ];
 
@@ -531,11 +532,11 @@ function updateCompare(){
   }).join('');
   const makeBlock=b=>`
     <div style="margin-bottom:14px">
-      <div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
+      ${b.title!==null?`<div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
         <span class="cv l" style="color:${c1}">${abr(t1.nombre)}</span>
         <span class="clbl" style="font-size:10px;letter-spacing:1.5px">${b.title}</span>
         <span class="cv r" style="color:${c2}">${abr(t2.nombre)}</span>
-      </div>
+      </div>`:''}
       <div class="cmp-card">${makeRows(b.keys)}</div>
     </div>`;
   el.innerHTML=`
