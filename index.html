@@ -139,8 +139,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       <div class="cg">
         <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason</div><div class="ch"><canvas id="cPOPct"></canvas></div></div>
         <div class="cc"><div class="ctitle">% Temporadas en CF+</div><div class="csub">Porcentaje de años llegando a Conference Finals o más</div><div class="ch"><canvas id="cFinPct"></canvas></div></div>
-        <div class="cc"><div class="ctitle">Evolución 2024 → 2026</div><div class="csub">Quién ha subido y quién ha bajado en las últimas actualizaciones</div><div class="ch tall"><canvas id="cEvol"></canvas></div></div>
-        <div class="cc"><div class="ctitle">% Playoffs vs % Finals+</div><div class="csub">Scatter: llegar a playoffs versus llegar lejos — todas las franquicias</div><div class="ch"><canvas id="cBubble"></canvas></div></div>
+<div class="cc"><div class="ctitle">% Playoffs vs % Finals+</div><div class="csub">Scatter: llegar a playoffs versus llegar lejos — todas las franquicias</div><div class="ch"><canvas id="cBubble"></canvas></div></div>
       </div>
     </div>
     <div id="tab-comparar" class="section">
@@ -456,25 +455,7 @@ function initCharts(){
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
     scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'}}}}});
 
-  // 3. Evolución 2024→2026
-  if(DB.evolucion&&DB.evolucion.length){
-    const evo=[...DB.evolucion].filter(d=>d.pts_2024&&d.pts_2026)
-      .sort((a,b)=>Math.abs(b.delta_25_26||0)-Math.abs(a.delta_25_26||0)).slice(0,15);
-    new Chart(document.getElementById('cEvol'),{type:'bar',data:{
-      labels:evo.map(d=>abr(d.nombre)),
-      datasets:[
-        {label:'2024',data:evo.map(d=>d.pts_2024),backgroundColor:'rgba(128,128,128,0.2)',borderWidth:0,borderRadius:2},
-        {label:'2025',data:evo.map(d=>d.pts_2025),backgroundColor:'rgba(128,128,128,0.4)',borderWidth:0,borderRadius:2},
-        {label:'2026',data:evo.map(d=>d.pts_2026),backgroundColor:evo.map(d=>tc(d.nombre)+'cc'),borderWidth:0,borderRadius:2},
-      ]
-    },options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{font:{size:11},color:accent}}},
-      scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:gridColor}}}}});
-  } else {
-    document.getElementById('cEvol').closest('.cc').querySelector('.ch').innerHTML='<div class="ph">Sin datos de evolución</div>';
-  }
-
-  // 4. Scatter %PO vs %CF+
+  // 3. Scatter %PO vs %CF+
   const scat=DB.franquicias.map(d=>({x:parseFloat(d.pct_po)||0,y:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1),nombre:d.nombre}));
   new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
     data:scat,backgroundColor:scat.map(d=>tc(d.nombre)+'bb'),borderColor:scat.map(d=>tc(d.nombre)),borderWidth:1,pointRadius:7,pointHoverRadius:10
