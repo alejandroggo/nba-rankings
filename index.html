@@ -278,6 +278,8 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
 let filterConf=null, filterDiv=null;
+let chartPO=null, chartCF=null, chartBubble=null;
+const COL_DEFAULTS={};
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 const tc = n => (TEAM_COLORS[n]||['#888'])[0];
@@ -302,6 +304,7 @@ async function init() {
   const fmt=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
+  COLUMNS.forEach(c=>COL_DEFAULTS[c.key]=c.on);
   buildStats(); buildConfFilters(); buildColFilters(); renderTable(DB.franquicias); populateSelects(); setupScrollSync();
 }
 
@@ -324,6 +327,7 @@ function buildStats() {
 }
 
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
+const colToggleBtns=[];
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
   const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
@@ -343,9 +347,18 @@ function buildColFilters() {
       btn.textContent=col.label;
       btn.onclick=()=>{ col.on=!col.on; btn.classList.toggle('on',col.on); renderTable(getCurrentData()); };
       wrap.appendChild(btn);
+      colToggleBtns.push({btn,col});
     });
     bar.appendChild(wrap);
   });
+  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp';
+  const resetBtn=document.createElement('button'); resetBtn.className='ctog'; resetBtn.textContent='↺ Reset';
+  resetBtn.onclick=()=>{
+    colToggleBtns.forEach(({btn,col})=>{ col.on=COL_DEFAULTS[col.key]; btn.classList.toggle('on',col.on); });
+    renderTable(getCurrentData());
+  };
+  resetWrap.appendChild(resetBtn);
+  bar.appendChild(resetWrap);
 }
 
 // ── SCROLL SYNC ─────────────────────────────────────────────────────────────
@@ -403,8 +416,9 @@ function refreshConfBtns(){
 function getCurrentData(){
   const q=document.getElementById('search').value.toLowerCase();
   let data=DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
-  if(filterDiv)   data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
-  else if(filterConf) data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
+  if(filterDiv)        data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
+  else if(filterConf)  data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
+  if(selectedTeam&&!data.find(d=>d.nombre===selectedTeam)) selectedTeam=null;
   return data;
 }
 function filterTable(){ renderTable(getCurrentData()); }
@@ -443,16 +457,6 @@ function renderTable(data){
         const bc=isBest(c,d)?' best-cell':'';
         return `<td class="${sc(c.key)}${bc}"><span class="pnv">${d.puntos?.toFixed(2)}</span></td>`;
       }
-      if(c.key==='wl_pct'||c.key==='W-L%'){
-        const v=(parseFloat(d[c.key])||0)*100;
-        const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
-      }
-      if(c.key==='pct_po'){
-        const v=parseFloat(d.pct_po)||0;
-        const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
-      }
       const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'||c.calc!=null;
       const bc=isBest(c,d)?' best-cell':'';
@@ -479,6 +483,12 @@ function sortBy(key){
 }
 
 // ── CHARTS ──────────────────────────────────────────────────────────────────
+function destroyCharts(){
+  [chartPO,chartCF,chartBubble].forEach(c=>c?.destroy());
+  chartPO=chartCF=chartBubble=null;
+  chartsInited=false;
+}
+
 function initCharts(){
   if(chartsInited) return; chartsInited=true;
   const isDay=document.body.classList.contains('day');
@@ -486,11 +496,10 @@ function initCharts(){
   Chart.defaults.borderColor=isDay?'#cccbc3':'#2a2a3a';
   Chart.defaults.font.family='DM Sans';
   const gridColor='rgba(128,128,128,0.12)';
-  const accent=isDay?'#111':'#fff';
 
   // 1. % Playoffs — top 15 ordenado
   const byPO=[...DB.franquicias].sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
-  new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
+  chartPO=new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
     labels:byPO.map(d=>abr(d.nombre)),
     datasets:[{data:byPO.map(d=>parseFloat(d.pct_po)||0),
       backgroundColor:byPO.map(d=>tc(d.nombre)+'99'),borderColor:byPO.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
@@ -500,7 +509,7 @@ function initCharts(){
   // 2. % CF+ — por ratio conf_fin/anos
   const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1)}))
     .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
-  new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
+  chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
     labels:byCF.map(d=>abr(d.nombre)),
     datasets:[{data:byCF.map(d=>d.cfPct),
       backgroundColor:byCF.map(d=>tc(d.nombre)+'99'),borderColor:byCF.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
@@ -509,7 +518,7 @@ function initCharts(){
 
   // 3. Scatter %PO vs %CF+
   const scat=DB.franquicias.map(d=>({x:parseFloat(d.pct_po)||0,y:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1),nombre:d.nombre}));
-  new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
+  chartBubble=new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
     data:scat,backgroundColor:scat.map(d=>tc(d.nombre)+'bb'),borderColor:scat.map(d=>tc(d.nombre)),borderWidth:1,pointRadius:7,pointHoverRadius:10
   }]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
     tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: ${ctx.raw.x}% PO · ${ctx.raw.y}% CF+`}}},
@@ -531,7 +540,7 @@ function populateSelects(){
 const CMP_BLOCKS=[
   {title:null,                     keys:['puntos','pts_ano']},
   {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
-  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','tot_temporadas','anos','anos_po','games','wins','loses','wl_pct']},
+  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','anos','anos_po','games','wins','loses','wl_pct']},
   {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy','A-STAR','A-NBA']},
 ];
 
@@ -585,7 +594,8 @@ function updateCompare(){
     </div>`;
   if(compareChart) compareChart.destroy();
   const isDay=document.body.classList.contains('day');
-  const maxes={puntos:701,conf_fin:16,tot_po:66,wl_pct:0.75,mvp:10,pct_po:85};
+  const mx=k=>Math.max(...DB.franquicias.map(d=>parseFloat(d[k])||0))||1;
+  const maxes={puntos:mx('puntos'),conf_fin:mx('conf_fin'),tot_po:mx('tot_po'),wl_pct:mx('wl_pct'),mvp:mx('mvp'),pct_po:mx('pct_po')};
   const norm=(v,m)=>Math.round((parseFloat(v)||0)/m*100);
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:['Puntos','Conf. Finals','Playoffs','W-L%','MVPs','% PO'],
@@ -614,6 +624,8 @@ function switchTab(id,btn){
 function toggleTheme(){
   const day=document.body.classList.toggle('day');
   document.getElementById('themeBtn').textContent=day?'🌙 Modo noche':'☀ Modo día';
+  destroyCharts();
+  if(document.getElementById('tab-graficos').classList.contains('active')) initCharts();
 }
 
 init();
