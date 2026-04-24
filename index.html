@@ -311,11 +311,11 @@ function buildStats() {
   const leader=f[0];
   const totalG=f.reduce((s,d)=>s+(d.games||0),0);
   const avgWL=(f.reduce((s,d)=>s+(parseFloat(d.wl_pct)||0),0)/f.length*100).toFixed(2);
-  const maxPO=f.reduce((a,b)=>(parseFloat(a.pct_po)||0)>(parseFloat(b.pct_po)||0)?a:b);
+  const mostChamp=f.reduce((a,b)=>(a.champ||0)>(b.champ||0)?a:b);
   const mostMVP=f.reduce((a,b)=>(a.mvp||0)>(b.mvp||0)?a:b);
   const cards=[
     {label:'Franquicia líder', val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Mayor % playoffs',  val:parseFloat(maxPO.pct_po).toFixed(2)+'%', sub:abr(maxPO.nombre)},
+    {label:'Más Anillos',      val:mostChamp.champ, sub:abr(mostChamp.nombre)},
     {label:'Más MVPs',          val:mostMVP.mvp, sub:abr(mostMVP.nombre)},
     {label:'Partidos totales',  val:(totalG/1000).toFixed(0)+'K', sub:totalG.toLocaleString('es')},
     {label:'W-L% medio',        val:avgWL+'%', sub:'promedio 30 franquicias'},
