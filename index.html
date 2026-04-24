@@ -99,6 +99,13 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cv{min-width:64px;font-weight:500;font-size:13px;}.cv.l{text-align:left;}.cv.r{text-align:right;}
 .cv.win{font-weight:700;}.cv.lose{color:var(--muted);font-weight:400;}
 .cmp-radar{background:var(--surface);border:1px solid var(--border);padding:20px;margin-top:14px;}
+.info-block{margin-top:16px;padding:14px 18px;border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--muted);line-height:2;display:flex;flex-wrap:wrap;gap:0 28px;}
+.info-title{width:100%;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;}
+.info-block b{color:var(--text);font-weight:500;}
+td.best-cell{color:var(--pos)!important;font-weight:700;}
+td.best-cell .nb{color:var(--pos)!important;}
+td.best-cell .plbl{color:var(--pos)!important;}
+td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
@@ -136,6 +143,13 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       </div>
       <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
       <div class="tw" id="tableWrapper"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
+      <div class="info-block">
+        <div class="info-title">Equivalencias históricas de rondas</div>
+        <span><b>Division Finals</b> = Conference Finals</span>
+        <span><b>Semifinals</b> = Conference Finals <em style="opacity:.6">(sin filtro por división)</em></span>
+        <span><b>Division Semifinals</b> = Conference Semifinals</span>
+        <span><b>Quarterfinals</b> = Conference Semifinals</span>
+      </div>
     </div>
     <div id="tab-graficos" class="section">
       <div class="cg">
@@ -375,6 +389,16 @@ function filterTable(){ renderTable(getCurrentData()); }
 function renderTable(data){
   const vis=COLUMNS.filter(c=>c.always||c.on);
   const maxPts=Math.max(...DB.franquicias.map(d=>parseFloat(d.puntos)||0));
+  // Máximos para marcar el mejor de cada columna
+  const colMax={};
+  COLUMNS.filter(c=>!['rank','nombre'].includes(c.key)).forEach(c=>{
+    const vals=DB.franquicias.map(d=>parseFloat(c.calc?c.calc(d):d[c.key])||0).filter(v=>v>0);
+    if(vals.length) colMax[c.key]=Math.max(...vals);
+  });
+  const isBest=(c,d)=>{
+    const v=parseFloat(c.calc?c.calc(d):d[c.key])||0;
+    return colMax[c.key]!==undefined&&v>0&&v>=colMax[c.key]-0.0001;
+  };
   // Separadores: última columna visible de cada grupo antes de un cambio de grupo
   const sepKeys=new Set();
   for(let i=0;i<vis.length-1;i++){
@@ -394,19 +418,23 @@ function renderTable(data){
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
-        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
       if(c.key==='wl_pct'){
         const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
-        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
-        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        const bc=isBest(c,d)?' best-cell':'';
+        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'||c.calc!=null;
-      return `<td class="${isNum?'nb':''}${sc(c.key)}">${val??'—'}</td>`;
+      const bc=isBest(c,d)?' best-cell':'';
+      return `<td class="${isNum?'nb':''}${sc(c.key)}${bc}">${val??'—'}</td>`;
     }).join('');
     return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
