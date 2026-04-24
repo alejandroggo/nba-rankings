@@ -43,7 +43,9 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
 .cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
-.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;row-gap:8px;}
+.cf-grp{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.cf-glbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:0 4px 0 2px;opacity:.7;}
 .cf-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-right:4px;flex-shrink:0;}
 .ctog{padding:4px 9px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
 .ctog.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
@@ -327,12 +329,25 @@ function buildStats() {
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
-  COLUMNS.filter(c=>!c.always).forEach(col=>{
-    const btn=document.createElement('button');
-    btn.className='ctog'+(col.on?' on':'');
-    btn.textContent=col.label;
-    btn.onclick=()=>{ col.on=!col.on; btn.classList.toggle('on',col.on); renderTable(getCurrentData()); };
-    bar.appendChild(btn);
+  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
+  const groups={};
+  COLUMNS.filter(c=>!c.always&&c.group).forEach(col=>{
+    if(!groups[col.group]) groups[col.group]=[];
+    groups[col.group].push(col);
+  });
+  Object.entries(GROUP_LABELS).forEach(([grp,lbl])=>{
+    if(!groups[grp]) return;
+    const wrap=document.createElement('div'); wrap.className='cf-grp';
+    const glbl=document.createElement('span'); glbl.className='cf-glbl'; glbl.textContent=lbl;
+    wrap.appendChild(glbl);
+    groups[grp].forEach(col=>{
+      const btn=document.createElement('button');
+      btn.className='ctog'+(col.on?' on':'');
+      btn.textContent=col.label;
+      btn.onclick=()=>{ col.on=!col.on; btn.classList.toggle('on',col.on); renderTable(getCurrentData()); };
+      wrap.appendChild(btn);
+    });
+    bar.appendChild(wrap);
   });
 }
 
