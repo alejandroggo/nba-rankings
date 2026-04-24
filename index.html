@@ -438,19 +438,18 @@ function renderTable(data){
         <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
-        const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        return `<td class="${sc(c.key)}${bc}"><span class="pnv">${d.puntos?.toFixed(2)}</span></td>`;
       }
       if(c.key==='wl_pct'||c.key==='W-L%'){
-        const v=(parseFloat(d[c.key])||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
+        const v=(parseFloat(d[c.key])||0)*100;
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
         const bc=isBest(c,d)?' best-cell':'';
-        return `<td class="${sc(c.key)}${bc}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="nb${sc(c.key)}${bc}">${v.toFixed(2)}%</td>`;
       }
       const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'||c.calc!=null;
