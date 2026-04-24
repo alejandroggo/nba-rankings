@@ -64,7 +64,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .pb{display:flex;align-items:center;gap:6px;min-width:88px;}
 .bt{flex:1;height:3px;background:var(--surface2);}
 .bf{height:100%;}.plbl{font-size:11px;color:var(--muted);min-width:32px;text-align:right;}
-.pnv{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);min-width:52px;text-align:right;line-height:1;}
+.pnv{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);min-width:52px;text-align:right;line-height:1;}
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
 .cc{background:var(--surface);border:1px solid var(--border);padding:20px;}
 .ctitle{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px;}
@@ -312,7 +312,7 @@ function renderTable(data){
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
-        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--gold);opacity:.5"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
       if(c.key==='wl_pct'){
         const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
