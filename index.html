@@ -155,8 +155,11 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       </div>
     </div>
     <div id="tab-graficos" class="section">
-      <div class="cc" style="margin-bottom:20px"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
-      <div style="display:none"><canvas id="cFinPct"></canvas><canvas id="cBubble"></canvas></div>
+      <div class="cg" style="margin-bottom:18px">
+        <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
+        <div class="cc"><div class="ctitle">% Temporadas en Finals de Conf.+</div><div class="csub">Porcentaje de temporadas llegando a CF, Finales o Anillo — Top 15</div><div class="ch tall"><canvas id="cFinPct"></canvas></div></div>
+      </div>
+      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch tall"><canvas id="cBubble"></canvas></div></div>
     </div>
     <div id="tab-comparar" class="section">
       <div class="cmp-top">
@@ -496,25 +499,56 @@ function initCharts(){
   Chart.defaults.font.family='DM Sans';
   const gridColor='rgba(128,128,128,0.12)';
 
-  // 1. % Playoffs — top 15 con etiquetas en cada barra
-  const byPO=[...DB.franquicias].sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
+  const textColor=isDay?'#111111':'#f0f0f5';
   const barLabelPlugin={id:'barLabels',afterDatasetsDraw(chart){
     const {ctx,data}=chart;
     ctx.save(); ctx.font='bold 11px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='bottom';
-    ctx.fillStyle=isDay?'#111111':'#f0f0f0';
+    ctx.fillStyle=textColor;
     chart.getDatasetMeta(0).data.forEach((bar,i)=>{
       const v=data.datasets[0].data[i]; if(v>0) ctx.fillText(v.toFixed(1)+'%',bar.x,bar.y-3);
     }); ctx.restore();
   }};
+  const barOpts=(max)=>({responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},...(max?{max}:{})}}
+  });
+
+  // 1. % Playoffs — top 15
+  const byPO=[...DB.franquicias].sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
   chartPO=new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
     labels:byPO.map(d=>abr(d.nombre)),
     datasets:[{data:byPO.map(d=>parseFloat(d.pct_po)||0),
       backgroundColor:byPO.map(d=>tc(d.nombre)+'99'),borderColor:byPO.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
-  },plugins:[barLabelPlugin],options:{responsive:true,maintainAspectRatio:false,
-    layout:{padding:{top:20}},
-    plugins:{legend:{display:false}},
-    scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},max:100}}
-  }});
+  },plugins:[barLabelPlugin],options:barOpts(100)});
+
+  // 2. % Años CF+ — top 15
+  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1)}))
+    .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
+  chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
+    labels:byCF.map(d=>abr(d.nombre)),
+    datasets:[{data:byCF.map(d=>d.cfPct),
+      backgroundColor:byCF.map(d=>tc(d.nombre)+'99'),borderColor:byCF.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
+  },plugins:[barLabelPlugin],options:barOpts(null)});
+
+  // 3. Scatter RS W/L% vs PO W/L%
+  const scat3=DB.franquicias.filter(d=>d['W-L%']!=null&&parseFloat(d['W-L%'])>0)
+    .map(d=>({x:+(parseFloat(d.wl_pct)*100).toFixed(2),y:+(parseFloat(d['W-L%'])*100).toFixed(2),nombre:d.nombre,color:tc(d.nombre)}));
+  const scatterLabelPlugin={id:'scatterLabels',afterDatasetsDraw(chart){
+    const {ctx,data}=chart;
+    ctx.save(); ctx.font='bold 10px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+    chart.getDatasetMeta(0).data.forEach((pt,i)=>{
+      const d=data.datasets[0].data[i]; ctx.fillStyle=d.color; ctx.fillText(abr(d.nombre),pt.x,pt.y-7);
+    }); ctx.restore();
+  }};
+  chartBubble=new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
+    data:scat3,backgroundColor:scat3.map(d=>d.color+'bb'),borderColor:scat3.map(d=>d.color),borderWidth:1,pointRadius:7,pointHoverRadius:10
+  }]},plugins:[scatterLabelPlugin],options:{responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:18}},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: RS ${ctx.raw.x}% · PO ${ctx.raw.y}%`}}},
+    scales:{
+      x:{title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
+      y:{title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
+    }}});
 }
 
 // ── COMPARE ─────────────────────────────────────────────────────────────────
