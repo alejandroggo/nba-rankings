@@ -248,12 +248,12 @@ const COLUMNS = [
   {key:'A-STAR',         label:'All-Star',             fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'A-NBA',          label:'All-NBA',              fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
-  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false, group:'general'},
-  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
-  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
-  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
-  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
-  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
+  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
+  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
+  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
+  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
+  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'rs'},
 ];
 
 // ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
