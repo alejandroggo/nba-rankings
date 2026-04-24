@@ -35,6 +35,14 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
 .sc-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.conf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center;}
+.conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
+.cbtn{padding:4px 11px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
+.cbtn:hover{border-color:var(--accent);}
+.cbtn.este  {background:rgba(29,66,138,.25);border-color:#1D428A;color:#7aabea;}
+.cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
+.cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
+.cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
 .cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
 .cf-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-right:4px;flex-shrink:0;}
 .ctog{padding:4px 9px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
@@ -44,6 +52,8 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .srch{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
 .srch:focus{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
 .hint{font-size:11px;color:var(--muted);}
+.tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:10px;}
+.tw-top::-webkit-scrollbar{height:6px;}.tw-top::-webkit-scrollbar-thumb{background:var(--border);}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
@@ -116,12 +126,14 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div id="appContent" style="display:none">
     <div id="tab-ranking" class="section active">
       <div class="stats-bar" id="statsBar"></div>
+      <div class="conf-bar" id="confBar"></div>
       <div class="cf-bar" id="colFilterBar"><span class="cf-lbl">Columnas:</span></div>
       <div class="controls">
         <input class="srch" type="text" id="search" placeholder="Buscar franquicia…" oninput="filterTable()">
         <span class="hint">Clic en columna para ordenar</span>
       </div>
-      <div class="tw"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
+      <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
+      <div class="tw" id="tableWrapper"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
     </div>
     <div id="tab-graficos" class="section">
       <div class="cg">
@@ -223,8 +235,28 @@ const COLUMNS = [
   {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true,  group:'general', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
 
+// ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
+const CONFERENCES = {
+  'Este': ['Boston Celtics','Brooklyn Nets','New York Knicks','Philadelphia 76ers','Toronto Raptors',
+           'Chicago Bulls','Cleveland Cavaliers','Detroit Pistons','Indiana Pacers','Milwaukee Bucks',
+           'Atlanta Hawks','Charlotte Hornets','Miami Heat','Orlando Magic','Washington Wizards'],
+  'Oeste':['Denver Nuggets','Minnesota Timberwolves','Oklahoma City Thunder','Portland Trail Blazers','Utah Jazz',
+           'Golden State Warriors','Los Angeles Clippers','Los Angeles Lakers','Phoenix Suns','Sacramento Kings',
+           'Dallas Mavericks','Houston Rockets','Memphis Grizzlies','New Orleans Pelicans','San Antonio Spurs'],
+};
+const DIVISIONS = {
+  'Atlántico': ['Boston Celtics','Brooklyn Nets','New York Knicks','Philadelphia 76ers','Toronto Raptors'],
+  'Central':   ['Chicago Bulls','Cleveland Cavaliers','Detroit Pistons','Indiana Pacers','Milwaukee Bucks'],
+  'Sureste':   ['Atlanta Hawks','Charlotte Hornets','Miami Heat','Orlando Magic','Washington Wizards'],
+  'Noroeste':  ['Denver Nuggets','Minnesota Timberwolves','Oklahoma City Thunder','Portland Trail Blazers','Utah Jazz'],
+  'Pacífico':  ['Golden State Warriors','Los Angeles Clippers','Los Angeles Lakers','Phoenix Suns','Sacramento Kings'],
+  'Suroeste':  ['Dallas Mavericks','Houston Rockets','Memphis Grizzlies','New Orleans Pelicans','San Antonio Spurs'],
+};
+const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroeste':'Oeste','Pacífico':'Oeste','Suroeste':'Oeste'};
+
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
+let filterConf=null, filterDiv=null;
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 const tc = n => (TEAM_COLORS[n]||['#888'])[0];
@@ -249,7 +281,7 @@ async function init() {
   const fmt=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
-  buildStats(); buildColFilters(); renderTable(DB.franquicias); populateSelects();
+  buildStats(); buildConfFilters(); buildColFilters(); renderTable(DB.franquicias); populateSelects(); setupScrollSync();
 }
 
 // ── STAT CARDS ──────────────────────────────────────────────────────────────
@@ -283,10 +315,59 @@ function buildColFilters() {
   });
 }
 
+// ── SCROLL SYNC ─────────────────────────────────────────────────────────────
+function setupScrollSync(){
+  const top=document.getElementById('scrollTop');
+  const wrap=document.getElementById('tableWrapper');
+  const inner=document.getElementById('scrollTopInner');
+  const sync=()=>{ inner.style.width=wrap.scrollWidth+'px'; };
+  sync();
+  let busy=false;
+  top.addEventListener('scroll',()=>{ if(busy)return; busy=true; wrap.scrollLeft=top.scrollLeft; busy=false; });
+  wrap.addEventListener('scroll',()=>{ if(busy)return; busy=true; top.scrollLeft=wrap.scrollLeft; busy=false; });
+  new MutationObserver(sync).observe(document.getElementById('rankingTable'),{childList:true,subtree:true});
+}
+
+// ── CONF FILTERS ─────────────────────────────────────────────────────────────
+function buildConfFilters(){
+  const bar=document.getElementById('confBar');
+  const lbl=document.createElement('span');
+  lbl.className='cf-lbl'; lbl.textContent='Filtrar:'; bar.appendChild(lbl);
+  ['Este','Oeste'].forEach(conf=>{
+    const btn=document.createElement('button');
+    btn.className='cbtn'; btn.textContent=conf; btn.dataset.conf=conf;
+    btn.onclick=()=>{ filterConf=filterConf===conf?null:conf; filterDiv=null; refreshConfBtns(); renderTable(getCurrentData()); };
+    bar.appendChild(btn);
+  });
+  const sep=document.createElement('span'); sep.className='conf-sep'; sep.textContent='|'; bar.appendChild(sep);
+  Object.keys(DIVISIONS).forEach(div=>{
+    const btn=document.createElement('button');
+    btn.className='cbtn'; btn.textContent=div; btn.dataset.div=div;
+    btn.onclick=()=>{ filterDiv=filterDiv===div?null:div; filterConf=filterDiv?DIV_CONF[filterDiv]:null; refreshConfBtns(); renderTable(getCurrentData()); };
+    bar.appendChild(btn);
+  });
+  refreshConfBtns();
+}
+
+function refreshConfBtns(){
+  document.querySelectorAll('#confBar [data-conf]').forEach(btn=>{
+    const c=btn.dataset.conf;
+    btn.className='cbtn'+(filterConf===c&&!filterDiv?' '+(c==='Este'?'este':'oeste'):'');
+  });
+  document.querySelectorAll('#confBar [data-div]').forEach(btn=>{
+    const d=btn.dataset.div, conf=DIV_CONF[d];
+    const active=filterDiv===d, confActive=filterConf===conf&&!filterDiv;
+    btn.className='cbtn'+(active?' '+(conf==='Este'?'este':'oeste'):confActive?' '+(conf==='Este'?'div-e':'div-o'):'');
+  });
+}
+
 // ── TABLE ───────────────────────────────────────────────────────────────────
 function getCurrentData(){
   const q=document.getElementById('search').value.toLowerCase();
-  return DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
+  let data=DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
+  if(filterDiv)   data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
+  else if(filterConf) data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
+  return data;
 }
 function filterTable(){ renderTable(getCurrentData()); }
 
