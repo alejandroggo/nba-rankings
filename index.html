@@ -604,18 +604,26 @@ function updateCompare(){
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
+  const toNum=v=>(!v||v==='—'||v==='–')?0:(parseFloat(v)||0);
   const makeRows=keys=>keys.map(key=>{
     const f=COLUMNS.find(c=>c.key===key); if(!f) return '';
     const v1=f.calc?f.calc(t1):t1[key], v2=f.calc?f.calc(t2):t2[key];
-    const n1=parseFloat(v1),n2=parseFloat(v2);
-    const w1=!isNaN(n1)&&!isNaN(n2)?(n1>n2?'win':n1<n2?'lose':''):'';
-    const w2=!isNaN(n1)&&!isNaN(n2)?(n2>n1?'win':n2<n1?'lose':''):'';
+    const n1=toNum(v1),n2=toNum(v2);
+    const w1=n1!==n2?(n1>n2?'win':'lose'):'';
+    const w2=n1!==n2?(n2>n1?'win':'lose'):'';
     return `<div class="crow">
-      <span class="cv l ${w1}" ${w1==='win'?`style="color:${c1}"`:''}>${f.fmt?f.fmt(v1):v1??'—'}</span>
+      <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}</span>
       <span class="clbl">${f.label}</span>
-      <span class="cv r ${w2}" ${w2==='win'?`style="color:${c2}"`:''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
+      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
+  // Contar duelos ganados sobre todos los bloques
+  let d1=0,d2=0;
+  CMP_BLOCKS.forEach(b=>b.keys.forEach(key=>{
+    const f=COLUMNS.find(c=>c.key===key); if(!f) return;
+    const n1=toNum(f.calc?f.calc(t1):t1[key]), n2=toNum(f.calc?f.calc(t2):t2[key]);
+    if(n1>n2) d1++; else if(n2>n1) d2++;
+  }));
   const makeBlock=b=>`
     <div style="margin-bottom:14px">
       ${b.title!==null?`<div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
@@ -643,7 +651,14 @@ function updateCompare(){
     <div class="cmp-blocks">${CMP_BLOCKS.map((b,i)=>`<div class="${i===0?'cmp-block-full':''}">${makeBlock(b)}</div>`).join('')}</div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Métricas clave normalizadas al máximo histórico</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Métricas clave normalizadas al máximo histórico</div>
+      <div class="cmp-card" style="margin-bottom:14px">
+        <div class="crow">
+          <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
+          <span class="clbl">DUELOS GANADOS</span>
+          <span class="cv r" style="color:${d2>=d1?'var(--pos)':c2};font-family:'Bebas Neue',sans-serif;font-size:22px">${d2}</span>
+        </div>
+      </div>
       <div class="ch"><canvas id="radarCanvas"></canvas></div>
     </div>`;
   if(compareChart) compareChart.destroy();
