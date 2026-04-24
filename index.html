@@ -50,6 +50,9 @@ thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
 th{padding:10px 12px;text-align:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
+th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
+body.day th.sep-r{border-right-color:rgba(0,0,0,0.14);}
+td.sep-r{border-right:2px solid var(--border);}
 tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
@@ -190,34 +193,34 @@ const ABR = {
 };
 
 const COLUMNS = [
-  {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true },
-  {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true },
-  {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true },
-  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true },
-  {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true },
-  {key:'conf_sf',        label:'Conference Semifinals',fmt:v=>v??'—',                    always:false,on:true },
-  {key:'primera_ronda',  label:'1st Round',            fmt:v=>v??'—',                    always:false,on:true },
-  {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true },
-  {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true },
-  {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false},
-  {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false},
-  {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false},
-  {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true },
-  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false},
-  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true },
-  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false},
-  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true },
-  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true, calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
+  {key:'rank',           label:'#',                   fmt:v=>v,                         always:true, on:true,  group:''},
+  {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
+  {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'finals',         label:'Finals',               fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_fin',       label:'Conference Finals',    fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_sf',        label:'Conference Semifinals',fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'primera_ronda',  label:'1st Round',            fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true,  group:'rs'},
+  {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'tot_temporadas', label:'Tot. T.',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
+  {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'anos',           label:'Total Seasons',        fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
+  {key:'anos_po',        label:'Años PO',              fmt:v=>v??'—',                    always:false,on:false, group:'general'},
+  {key:'pct_po',         label:'% Playoffs Seasons',   fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
+  {key:'games',          label:'Games',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'wins',           label:'Wins',                 fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'loses',          label:'Loses',                fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'general'},
+  {key:'wl_pct',         label:'W-L%',                 fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'general'},
+  {key:'pts_ano',        label:'PTS/AÑO',              fmt:v=>v!=null?v.toFixed(2):'—',                      always:false,on:true,  group:'general', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
 ];
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
@@ -290,32 +293,38 @@ function filterTable(){ renderTable(getCurrentData()); }
 function renderTable(data){
   const vis=COLUMNS.filter(c=>c.always||c.on);
   const maxPts=Math.max(...DB.franquicias.map(d=>parseFloat(d.puntos)||0));
+  // Separadores: última columna visible de cada grupo antes de un cambio de grupo
+  const sepKeys=new Set();
+  for(let i=0;i<vis.length-1;i++){
+    if(vis[i].group&&vis[i+1].group&&vis[i].group!==vis[i+1].group) sepKeys.add(vis[i].key);
+  }
+  const sc=k=>sepKeys.has(k)?' sep-r':'';
   document.getElementById('tableHead').innerHTML='<tr>'+vis.map(c=>
-    `<th class="${sortKey===c.key?'sorted':''}" onclick="sortBy('${c.key}')">${c.label}<span class="sico">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
+    `<th class="${sortKey===c.key?'sorted':''}${sc(c.key)}" onclick="sortBy('${c.key}')">${c.label}<span class="sico">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
   ).join('')+'</tr>';
   document.getElementById('tableBody').innerHTML=data.map((d,i)=>{
     const rankColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'';
     const cells=vis.map(c=>{
-      if(c.key==='rank') return `<td><div class="rc" style="color:${rankColor}">${i+1}</div></td>`;
-      if(c.key==='nombre') return `<td class="tc"><div class="tci">
+      if(c.key==='rank') return `<td class="${sc(c.key)}"><div class="rc" style="color:${rankColor||'var(--muted)'}">${i+1}</div></td>`;
+      if(c.key==='nombre') return `<td class="tc${sc(c.key)}"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
         <div><div class="tn">${d.nombre}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
         const pct=Math.round((parseFloat(d.puntos)||0)/maxPts*100);
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
+        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${pct}%;background:var(--accent);opacity:.6"></div></div><span class="pnv">${d.puntos?.toFixed(2)}</span></div></td>`;
       }
       if(c.key==='wl_pct'){
         const v=(parseFloat(d.wl_pct)||0)*100,col=v>=50?'var(--pos)':'var(--neg)';
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:${col}"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       if(c.key==='pct_po'){
         const v=parseFloat(d.pct_po)||0;
-        return `<td><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
+        return `<td class="${sc(c.key)}"><div class="pb"><div class="bt"><div class="bf" style="width:${Math.min(v,100)}%;background:var(--accent);opacity:.45"></div></div><span class="plbl">${v.toFixed(2)}%</span></div></td>`;
       }
       const raw=c.calc?c.calc(d):d[c.key], val=c.fmt?c.fmt(raw):raw;
       const isNum=typeof raw==='number'||c.calc!=null;
-      return `<td class="${isNum?'nb':''}">${val??'—'}</td>`;
+      return `<td class="${isNum?'nb':''}${sc(c.key)}">${val??'—'}</td>`;
     }).join('');
     return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
