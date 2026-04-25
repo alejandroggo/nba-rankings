@@ -33,12 +33,13 @@ h1 em{font-style:normal;opacity:.28;}
 .tab{padding:14px 20px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--muted);background:none;transition:all .2s;}
 .tab:hover{color:var(--text);}.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
-.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:32px;}
-.sc{background:var(--surface);border:1px solid var(--border);padding:16px 18px;position:relative;}
-.sc::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--accent);opacity:.4;}
-.sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
-.sc-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
-.sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:32px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-left-width:3px;padding:16px 18px;}
+.sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.sc-body{display:flex;align-items:center;gap:12px;}
+.sc-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4));}
+.sc-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
+.sc-sub{font-size:11px;color:var(--muted);margin-top:4px;}
 .conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
 .cbtn{padding:4px 11px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
 .cbtn:hover{border-color:var(--accent);color:var(--text);}
@@ -335,12 +336,22 @@ function buildStats() {
   const max80=Math.max(...f.map(d=>d.pct_80||0));
   const top80=f.filter(d=>(d.pct_80||0)>=max80);
   const cards=[
-    {label:'Franquicia líder',        val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Más Anillos',             val:mostChamp.champ, sub:abr(mostChamp.nombre)},
-    {label:'Temporadas +80% victorias', val:max80, sub:top80.map(d=>abr(d.nombre)).join(' · ')},
+    {label:'Franquicia líder',          val:leader.puntos?.toFixed(1),              sub:leader.nombre,                            team:leader.nombre},
+    {label:'Más anillos',               val:mostChamp.champ,                        sub:mostChamp.nombre,                         team:mostChamp.nombre},
+    {label:'Temp. con +80% victorias',  val:max80,                                  sub:top80.map(d=>abr(d.nombre)).join(' · '),  team:top80[0]?.nombre},
   ];
+  const tcol=n=>TEAM_COLORS[n]?.[0]||'var(--accent)';
   document.getElementById('statsBar').innerHTML=cards.map(c=>`
-    <div class="sc"><div class="sc-lbl">${c.label}</div><div class="sc-val">${c.val}</div><div class="sc-sub">${c.sub}</div></div>`).join('');
+    <div class="sc" style="border-left-color:${tcol(c.team)}">
+      <div class="sc-lbl">${c.label}</div>
+      <div class="sc-body">
+        <img class="sc-logo" src="${logo(c.team)}" alt="" onerror="this.style.display='none'">
+        <div>
+          <div class="sc-val" style="color:${tcol(c.team)}">${c.val}</div>
+          <div class="sc-sub">${c.sub}</div>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
