@@ -554,7 +554,7 @@ function initCharts(){
   },plugins:[barLabelPlugin,makeBarLogoPlugin(byPO.map(d=>d.nombre))],options:barOpts(100)});
 
   // 2. % Años CF+ — top 15
-  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1)}))
+  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+(((+d.conf_fin||0)+(+d.finals||0)+(+d.champ||0))/(d.anos||1)*100).toFixed(1)}))
     .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
   chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
     labels:byCF.map(()=>''),
