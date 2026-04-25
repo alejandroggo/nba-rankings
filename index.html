@@ -40,7 +40,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .sc-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4));}
 .sc-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:4px;}
-.conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
+.conf-sep{color:var(--muted);margin:0 10px;font-size:20px;line-height:1;align-self:center;opacity:.6;}
 .cbtn{padding:4px 11px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
 .cbtn:hover{border-color:var(--accent);color:var(--text);}
 .cbtn.este  {background:rgba(29,66,138,.25);border-color:#1D428A;color:#7aabea;}
@@ -396,7 +396,7 @@ function buildColFilters() {
     });
     bar.appendChild(wrap);
   });
-  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp';
+  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp'; resetWrap.style.marginLeft='auto';
   const resetBtn=document.createElement('button'); resetBtn.className='ctog'; resetBtn.textContent='↺ Reset';
   resetBtn.onclick=()=>{
     colToggleBtns.forEach(({btn,col})=>{ col.on=COL_DEFAULTS[col.key]; btn.classList.toggle('on',col.on); });
