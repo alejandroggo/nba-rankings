@@ -84,7 +84,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cc{background:var(--surface);border:1px solid var(--border);padding:20px;}
 .ctitle{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px;}
 .csub{font-size:11px;color:var(--muted);margin-bottom:14px;}
-.ch{position:relative;height:270px;}.ch.tall{height:400px;}
+.ch{position:relative;height:270px;}.ch.tall{height:400px;}.ch.square{position:relative;}
 .cmp-top{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:24px;}
 .cmp-sel{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none;cursor:pointer;appearance:none;transition:border-color .2s;}
 .cmp-sel:focus{border-color:var(--accent);}
@@ -163,7 +163,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
         <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
         <div class="cc"><div class="ctitle">% Temporadas en Finals de Conf.+</div><div class="csub">Porcentaje de temporadas llegando a CF, Finales o Anillo — Top 15</div><div class="ch tall"><canvas id="cFinPct"></canvas></div></div>
       </div>
-      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch tall"><canvas id="cBubble"></canvas></div></div>
+      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch square"><canvas id="cBubble"></canvas></div></div>
     </div>
     <div id="tab-comparar" class="section">
       <div class="cmp-top">
@@ -577,12 +577,12 @@ function initCharts(){
   }};
   chartBubble=new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
     data:scat3,backgroundColor:'transparent',borderColor:'transparent',pointRadius:14,pointHoverRadius:14
-  }]},plugins:[scatterLogoPlugin],options:{responsive:true,maintainAspectRatio:false,
+  }]},plugins:[scatterLogoPlugin],options:{responsive:true,maintainAspectRatio:true,aspectRatio:1,
     layout:{padding:14},
     plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: RS ${ctx.raw.x}% · PO ${ctx.raw.y}%`}}},
     scales:{
-      x:{title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
-      y:{title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
+      x:{min:35,max:65,title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
+      y:{min:35,max:65,title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
     }}});
 }
 
