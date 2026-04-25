@@ -376,7 +376,7 @@ function toggleColFilter(){
 
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
-  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
+  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','general':'General','awards':'Premios'};
   const groups={};
   COLUMNS.filter(c=>!c.always&&c.group).forEach(col=>{
     if(!groups[col.group]) groups[col.group]=[];
