@@ -96,8 +96,8 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cmp-sel:focus{border-color:var(--accent);}
 .vs{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--muted);text-align:center;}
 .cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.chc{padding:12px 16px;border:1px solid var(--border);position:relative;overflow:hidden;}
-.chc-logo{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:44px;height:44px;object-fit:contain;opacity:.2;}
+.chc{padding:12px 16px;border:1px solid var(--border);display:flex;align-items:center;gap:14px;}
+.chc-logo{width:52px;height:52px;object-fit:contain;flex-shrink:0;}
 .chc-name{font-family:'Bebas Neue',sans-serif;font-size:18px;line-height:1;margin-bottom:2px;}
 .chc-pts{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--text);}
 .chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;opacity:.4;}
@@ -376,7 +376,7 @@ function toggleColFilter(){
 
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
-  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
+  const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','general':'General','awards':'Premios'};
   const groups={};
   COLUMNS.filter(c=>!c.always&&c.group).forEach(col=>{
     if(!groups[col.group]) groups[col.group]=[];
@@ -692,13 +692,13 @@ function updateCompare(){
     </div>
     <div class="cmp-blocks">
       <div class="cmp-block-full">${makeBlock(CMP_BLOCKS[0])}</div>
-      <div>${makeBlock(CMP_BLOCKS[1])}</div>
-      <div>${makeBlock(CMP_BLOCKS[2])}${makeBlock(CMP_BLOCKS[3])}</div>
       <div class="cmp-block-full"><div class="cmp-card" style="margin-bottom:14px"><div class="crow">
         <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
         <span class="clbl" style="color:var(--text);font-weight:700">DUELOS GANADOS</span>
         <span class="cv r" style="color:${d2>=d1?'var(--pos)':c2};font-family:'Bebas Neue',sans-serif;font-size:22px">${d2}</span>
       </div></div></div>
+      <div>${makeBlock(CMP_BLOCKS[1])}</div>
+      <div>${makeBlock(CMP_BLOCKS[2])}${makeBlock(CMP_BLOCKS[3])}</div>
     </div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
