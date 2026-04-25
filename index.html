@@ -33,24 +33,30 @@ h1 em{font-style:normal;opacity:.28;}
 .tab{padding:14px 20px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--muted);background:none;transition:all .2s;}
 .tab:hover{color:var(--text);}.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
-.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:32px;}
-.sc{background:var(--surface);border:1px solid var(--border);padding:16px 18px;position:relative;}
-.sc::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--accent);opacity:.4;}
-.sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
-.sc-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
-.sc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-.conf-sep{color:var(--border);margin:0 2px;font-size:14px;line-height:1;align-self:center;}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:32px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-left-width:3px;padding:16px 18px;}
+.sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.sc-body{display:flex;align-items:center;gap:12px;}
+.sc-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4));}
+.sc-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
+.sc-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.conf-sep{color:var(--muted);margin:0 10px;font-size:20px;line-height:1;align-self:center;opacity:.6;}
 .cbtn{padding:4px 11px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:all .15s;}
 .cbtn:hover{border-color:var(--accent);color:var(--text);}
 .cbtn.este  {background:rgba(29,66,138,.25);border-color:#1D428A;color:#7aabea;}
 .cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
 .cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
-.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;row-gap:8px;}
-.cf-grp{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
-.cf-glbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text);padding:0 4px 0 2px;font-weight:700;}
-.cf-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-right:4px;flex-shrink:0;font-weight:700;}
-.ctog{padding:4px 9px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
+.cf-wrap{border:1px solid var(--border);margin-bottom:14px;background:var(--surface);}
+.cf-toggle{width:100%;padding:11px 16px;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s;}
+.cf-toggle:hover{background:var(--surface2);}
+.cf-toggle-arrow{font-size:10px;color:var(--muted);transition:transform .2s;}
+.cf-toggle-arrow.closed{transform:rotate(-90deg);}
+.cf-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;align-items:flex-start;row-gap:10px;}
+.cf-bar.cf-hidden{display:none;}
+.cf-grp{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.cf-glbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:0 4px 0 2px;font-weight:700;flex-shrink:0;}
+.ctog{padding:7px 14px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
 .ctog.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
 .ctog:hover{border-color:var(--accent);color:var(--text);}
 .controls{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
@@ -62,7 +68,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
-th{padding:16px 12px;text-align:center;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none;transition:color .18s;}
+th{padding:16px 12px;text-align:center;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none;transition:color .18s;}
 th:hover,th.sorted{color:var(--accent);}
 .sico{font-size:8px;margin-left:2px;opacity:.3;}th.sorted .sico{opacity:1;}
 th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
@@ -72,8 +78,8 @@ tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:poi
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:155px;}.tci{display:flex;align-items:center;gap:9px;}
-.logo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
-.tn{font-weight:500;}.tw2{font-size:11px;color:var(--muted);font-style:italic;}
+.logo{width:32px;height:32px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
+.tn{font-weight:500;font-size:15px;}.tw2{font-size:11px;color:var(--muted);font-style:italic;}
 .pn{font-family:'Bebas Neue',sans-serif;font-size:18px;}
 .nb{font-family:'Bebas Neue',sans-serif;font-size:15px;}
 .pb{display:flex;align-items:center;gap:6px;min-width:88px;}
@@ -84,7 +90,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cc{background:var(--surface);border:1px solid var(--border);padding:20px;}
 .ctitle{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px;}
 .csub{font-size:11px;color:var(--muted);margin-bottom:14px;}
-.ch{position:relative;height:270px;}.ch.tall{height:400px;}
+.ch{position:relative;height:270px;}.ch.tall{height:400px;}.ch.square{position:relative;}
 .cmp-top{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:24px;}
 .cmp-sel{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none;cursor:pointer;appearance:none;transition:border-color .2s;}
 .cmp-sel:focus{border-color:var(--accent);}
@@ -140,7 +146,12 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div id="appContent" style="display:none">
     <div id="tab-ranking" class="section active">
       <div class="stats-bar" id="statsBar"></div>
-      <div class="cf-bar" id="colFilterBar"><span class="cf-lbl">Columnas:</span></div>
+      <div class="cf-wrap">
+        <button class="cf-toggle" onclick="toggleColFilter()">
+          <span>Columnas</span><span class="cf-toggle-arrow" id="cfArrow">▼</span>
+        </button>
+        <div class="cf-bar" id="colFilterBar"></div>
+      </div>
       <!-- Edit 13: bloque de texto TBD -->
       <div id="textBlockTop" style="display:none"></div>
       <div class="controls">
@@ -163,7 +174,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
         <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
         <div class="cc"><div class="ctitle">% Temporadas en Finals de Conf.+</div><div class="csub">Porcentaje de temporadas llegando a CF, Finales o Anillo — Top 15</div><div class="ch tall"><canvas id="cFinPct"></canvas></div></div>
       </div>
-      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch tall"><canvas id="cBubble"></canvas></div></div>
+      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch square"><canvas id="cBubble"></canvas></div></div>
     </div>
     <div id="tab-comparar" class="section">
       <div class="cmp-top">
@@ -231,35 +242,35 @@ const COLUMNS = [
   {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
   {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
   {key:'pts_ano',        label:'Puntos x temporada',   fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
-  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'finals',         label:'Finales',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
-  {key:'conf_fin',       label:'Finales de Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_fin',       label:'Finales Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'primera_ronda',  label:'1a Ronda',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
-  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'anos_po',        label:'Años Playoffs',        fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'pct_po',         label:'% Años Playoffs',      fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
   {key:'GAMES',          label:'PO Partidos',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'WINS',           label:'PO Victorias',         fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'LOSES',          label:'PO Derrotas',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'W-L%',           label:'PO W/L %',             fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:false,group:'playoffs'},
+  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
+  {key:'games',          label:'Partidos',             fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
+  {key:'wins',           label:'Victorias',            fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
+  {key:'loses',          label:'Derrotas',             fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
+  {key:'wl_pct',         label:'W/L %',                fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'rs'},
+  {key:'anos',           label:'Temporadas totales',   fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
   {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'A-STAR',         label:'All Stars',            fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'A-NBA',          label:'All NBAs',             fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
-  {key:'anos',           label:'Temporadas totales',   fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
-  {key:'anos_po',        label:'Años Playoffs',        fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
-  {key:'pct_po',         label:'% Años Playoffs',      fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
-  {key:'games',          label:'Partidos',             fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
-  {key:'wins',           label:'Victorias',            fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
-  {key:'loses',          label:'Derrotas',             fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
-  {key:'wl_pct',         label:'W/L %',                fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'rs'},
 ];
 
 // ── CONFERENCIAS & DIVISIONES ───────────────────────────────────────────────
@@ -335,16 +346,33 @@ function buildStats() {
   const max80=Math.max(...f.map(d=>d.pct_80||0));
   const top80=f.filter(d=>(d.pct_80||0)>=max80);
   const cards=[
-    {label:'Franquicia líder',        val:leader.nombre.split(' ').pop(), sub:`${leader.puntos?.toFixed(2)} pts totales`},
-    {label:'Más Anillos',             val:mostChamp.champ, sub:abr(mostChamp.nombre)},
-    {label:'Temporadas +80% victorias', val:max80, sub:top80.map(d=>abr(d.nombre)).join(' · ')},
+    {label:'Franquicia líder',          val:leader.puntos?.toFixed(1),              sub:leader.nombre,                            team:leader.nombre},
+    {label:'Más anillos',               val:mostChamp.champ,                        sub:mostChamp.nombre,                         team:mostChamp.nombre},
+    {label:'Temp. con +80% victorias',  val:max80,                                  sub:top80.map(d=>abr(d.nombre)).join(' · '),  team:top80[0]?.nombre},
   ];
+  const tcol=n=>TEAM_COLORS[n]?.[0]||'var(--accent)';
   document.getElementById('statsBar').innerHTML=cards.map(c=>`
-    <div class="sc"><div class="sc-lbl">${c.label}</div><div class="sc-val">${c.val}</div><div class="sc-sub">${c.sub}</div></div>`).join('');
+    <div class="sc" style="border-left-color:${tcol(c.team)}">
+      <div class="sc-lbl">${c.label}</div>
+      <div class="sc-body">
+        <img class="sc-logo" src="${logo(c.team)}" alt="" onerror="this.style.display='none'">
+        <div>
+          <div class="sc-val" style="color:${tcol(c.team)}">${c.val}</div>
+          <div class="sc-sub">${c.sub}</div>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
 const colToggleBtns=[];
+function toggleColFilter(){
+  const bar=document.getElementById('colFilterBar');
+  const arrow=document.getElementById('cfArrow');
+  const hidden=bar.classList.toggle('cf-hidden');
+  arrow.classList.toggle('closed',hidden);
+}
+
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
   const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
@@ -368,7 +396,7 @@ function buildColFilters() {
     });
     bar.appendChild(wrap);
   });
-  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp';
+  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp'; resetWrap.style.marginLeft='auto';
   const resetBtn=document.createElement('button'); resetBtn.className='ctog'; resetBtn.textContent='↺ Reset';
   resetBtn.onclick=()=>{
     colToggleBtns.forEach(({btn,col})=>{ col.on=COL_DEFAULTS[col.key]; btn.classList.toggle('on',col.on); });
@@ -376,6 +404,10 @@ function buildColFilters() {
   };
   resetWrap.appendChild(resetBtn);
   bar.appendChild(resetWrap);
+  if(window.innerWidth<=700){
+    bar.classList.add('cf-hidden');
+    document.getElementById('cfArrow').classList.add('closed');
+  }
 }
 
 // ── SCROLL SYNC ─────────────────────────────────────────────────────────────
@@ -454,7 +486,7 @@ function renderTable(data){
     return colMax[c.key]!==undefined&&v>0&&v>=colMax[c.key]-0.0001;
   };
   // Separadores: última columna visible de cada grupo antes de un cambio de grupo
-  const sepKeys=new Set();
+  const sepKeys=new Set(['pts_ano']);
   for(let i=0;i<vis.length-1;i++){
     if(vis[i].group&&vis[i+1].group&&vis[i].group!==vis[i+1].group) sepKeys.add(vis[i].key);
   }
@@ -550,16 +582,16 @@ function initCharts(){
   chartPO=new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
     labels:byPO.map(()=>''),
     datasets:[{data:byPO.map(d=>parseFloat(d.pct_po)||0),
-      backgroundColor:byPO.map(d=>tc(d.nombre)+'99'),borderColor:byPO.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
+      backgroundColor:byPO.map(d=>TEAM_COLORS[d.nombre]?.[0]||'#888'),borderColor:byPO.map(d=>TEAM_COLORS[d.nombre]?.[0]||'#888'),borderWidth:0,borderRadius:2}]
   },plugins:[barLabelPlugin,makeBarLogoPlugin(byPO.map(d=>d.nombre))],options:barOpts(100)});
 
   // 2. % Años CF+ — top 15
-  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1)}))
+  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+(((+d.conf_fin||0)+(+d.finals||0)+(+d.champ||0))/(d.anos||1)*100).toFixed(1)}))
     .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
   chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
     labels:byCF.map(()=>''),
     datasets:[{data:byCF.map(d=>d.cfPct),
-      backgroundColor:byCF.map(d=>tc(d.nombre)+'99'),borderColor:byCF.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
+      backgroundColor:byCF.map(d=>TEAM_COLORS[d.nombre]?.[0]||'#888'),borderColor:byCF.map(d=>TEAM_COLORS[d.nombre]?.[0]||'#888'),borderWidth:0,borderRadius:2}]
   },plugins:[barLabelPlugin,makeBarLogoPlugin(byCF.map(d=>d.nombre))],options:barOpts(null)});
 
   // 3. Scatter RS W/L% vs PO W/L% — logos en cada punto
@@ -577,12 +609,12 @@ function initCharts(){
   }};
   chartBubble=new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
     data:scat3,backgroundColor:'transparent',borderColor:'transparent',pointRadius:14,pointHoverRadius:14
-  }]},plugins:[scatterLogoPlugin],options:{responsive:true,maintainAspectRatio:false,
+  }]},plugins:[scatterLogoPlugin],options:{responsive:true,maintainAspectRatio:true,aspectRatio:1,
     layout:{padding:14},
     plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: RS ${ctx.raw.x}% · PO ${ctx.raw.y}%`}}},
     scales:{
-      x:{title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
-      y:{title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
+      x:{min:35,max:65,title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
+      y:{min:35,max:65,title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
     }}});
 }
 
@@ -597,9 +629,10 @@ function populateSelects(){
 
 const CMP_BLOCKS=[
   {title:null,                     keys:['puntos','pts_ano']},
-  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
-  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','anos','anos_po','games','wins','loses','wl_pct']},
+  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','tot_po','anos_po','pct_po','GAMES','WINS','LOSES','W-L%']},
+  {title:'Temporada regular',      keys:['copa','pct_80','pct_70','pct_50','pct_menos20','games','wins','loses','wl_pct','anos']},
   {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy','A-STAR','A-NBA']},
+
 ];
 
 function updateCompare(){
@@ -626,7 +659,7 @@ function updateCompare(){
     return `<div class="crow">
       <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}${r1!=='—'?rnk(r1):''}</span>
       <span class="clbl">${f.label}</span>
-      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?rnk(r2):''}${f.fmt?f.fmt(v2):v2??'—'}</span>
+      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?`<span style="font-size:10px;color:var(--muted);margin-right:3px">(#${r2})</span>`:''}${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
   // Contar duelos ganados sobre todos los bloques
@@ -660,17 +693,17 @@ function updateCompare(){
         <div class="chc-rank">Puesto #${t2.rank}</div>
       </div>
     </div>
-    <div class="cmp-blocks">${CMP_BLOCKS.map((b,i)=>`<div class="${i===0?'cmp-block-full':''}">${makeBlock(b)}</div>`).join('')}</div>
+    <div class="cmp-blocks">${CMP_BLOCKS.map((b,i)=>`
+      <div class="${i===0?'cmp-block-full':''}">${makeBlock(b)}</div>
+      ${i===1?`<div class="cmp-block-full"><div class="cmp-card" style="margin-bottom:14px"><div class="crow">
+        <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
+        <span class="clbl">DUELOS GANADOS</span>
+        <span class="cv r" style="color:${d2>=d1?'var(--pos)':c2};font-family:'Bebas Neue',sans-serif;font-size:22px">${d2}</span>
+      </div></div></div>`:''}
+    `).join('')}</div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Métricas clave normalizadas al máximo histórico</div>
-      <div class="cmp-card" style="margin-bottom:14px">
-        <div class="crow">
-          <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
-          <span class="clbl">DUELOS GANADOS</span>
-          <span class="cv r" style="color:${d2>=d1?'var(--pos)':c2};font-family:'Bebas Neue',sans-serif;font-size:22px">${d2}</span>
-        </div>
-      </div>
       <div class="ch"><canvas id="radarCanvas"></canvas></div>
     </div>`;
   if(compareChart) compareChart.destroy();
@@ -682,7 +715,7 @@ function updateCompare(){
     {label:'Anillos',         fn:d=>parseFloat(d.champ)||0},
     {label:'PO W/L %',        fn:d=>parseFloat(d['W-L%'])||0},
     {label:'% Playoffs',      fn:d=>parseFloat(d.pct_po)||0},
-    {label:'Finales de Conf.',fn:d=>parseFloat(d.conf_fin)||0},
+    {label:'Finales Conf.',fn:d=>parseFloat(d.conf_fin)||0},
     {label:'MVPs',            fn:d=>parseFloat(d.mvp)||0},
   ];
   const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
