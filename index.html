@@ -248,12 +248,12 @@ const COLUMNS = [
   {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'primera_ronda',  label:'1a Ronda',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
-  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'GAMES',          label:'PO Partidos',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'WINS',           label:'PO Victorias',         fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'LOSES',          label:'PO Derrotas',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'W-L%',           label:'PO W/L %',             fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:false,group:'playoffs'},
+  {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
@@ -629,8 +629,8 @@ function populateSelects(){
 
 const CMP_BLOCKS=[
   {title:null,                     keys:['puntos','pts_ano']},
-  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','copa','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
-  {title:'Temporada regular',      keys:['pct_80','pct_70','pct_50','pct_menos20','anos','anos_po','games','wins','loses','wl_pct']},
+  {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
+  {title:'Temporada regular',      keys:['copa','pct_80','pct_70','pct_50','pct_menos20','anos','anos_po','games','wins','loses','wl_pct']},
   {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy','A-STAR','A-NBA']},
 
 ];
