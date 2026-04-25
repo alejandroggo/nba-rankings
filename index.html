@@ -242,7 +242,7 @@ const COLUMNS = [
   {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
   {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
   {key:'pts_ano',        label:'Puntos x temporada',   fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
-  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'finals',         label:'Finales',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_fin',       label:'Finales de Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
