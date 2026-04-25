@@ -158,6 +158,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
         <input class="srch" type="text" id="search" placeholder="Buscar franquicia…" oninput="filterTable()">
         <div id="confBar"></div>
         <span class="hint">Clic en columna para ordenar</span>
+        <button class="ctog" id="resetColBtn" style="margin-left:auto">↺ Reset</button>
       </div>
       <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
       <div class="tw" id="tableWrapper"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
@@ -396,14 +397,10 @@ function buildColFilters() {
     });
     bar.appendChild(wrap);
   });
-  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp'; resetWrap.style.marginLeft='auto';
-  const resetBtn=document.createElement('button'); resetBtn.className='ctog'; resetBtn.textContent='↺ Reset';
-  resetBtn.onclick=()=>{
+  document.getElementById('resetColBtn').onclick=()=>{
     colToggleBtns.forEach(({btn,col})=>{ col.on=COL_DEFAULTS[col.key]; btn.classList.toggle('on',col.on); });
     renderTable(getCurrentData());
   };
-  resetWrap.appendChild(resetBtn);
-  bar.appendChild(resetWrap);
   if(window.innerWidth<=700){
     bar.classList.add('cf-hidden');
     document.getElementById('cfArrow').classList.add('closed');
