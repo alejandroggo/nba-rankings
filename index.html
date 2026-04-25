@@ -47,11 +47,16 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
 .cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
-.cf-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;row-gap:8px;}
-.cf-grp{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
-.cf-glbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text);padding:0 4px 0 2px;font-weight:700;}
-.cf-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-right:4px;flex-shrink:0;font-weight:700;}
-.ctog{padding:4px 9px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
+.cf-wrap{border:1px solid var(--border);margin-bottom:14px;background:var(--surface);}
+.cf-toggle{width:100%;padding:11px 16px;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s;}
+.cf-toggle:hover{background:var(--surface2);}
+.cf-toggle-arrow{font-size:10px;color:var(--muted);transition:transform .2s;}
+.cf-toggle-arrow.closed{transform:rotate(-90deg);}
+.cf-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;align-items:flex-start;row-gap:10px;}
+.cf-bar.cf-hidden{display:none;}
+.cf-grp{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.cf-glbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:0 4px 0 2px;font-weight:700;flex-shrink:0;}
+.ctog{padding:7px 14px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s;}
 .ctog.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
 .ctog:hover{border-color:var(--accent);color:var(--text);}
 .controls{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
@@ -141,7 +146,12 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div id="appContent" style="display:none">
     <div id="tab-ranking" class="section active">
       <div class="stats-bar" id="statsBar"></div>
-      <div class="cf-bar" id="colFilterBar"><span class="cf-lbl">Columnas:</span></div>
+      <div class="cf-wrap">
+        <button class="cf-toggle" onclick="toggleColFilter()">
+          <span>Columnas</span><span class="cf-toggle-arrow" id="cfArrow">▼</span>
+        </button>
+        <div class="cf-bar" id="colFilterBar"></div>
+      </div>
       <!-- Edit 13: bloque de texto TBD -->
       <div id="textBlockTop" style="display:none"></div>
       <div class="controls">
@@ -356,6 +366,13 @@ function buildStats() {
 
 // ── COL FILTERS ─────────────────────────────────────────────────────────────
 const colToggleBtns=[];
+function toggleColFilter(){
+  const bar=document.getElementById('colFilterBar');
+  const arrow=document.getElementById('cfArrow');
+  const hidden=bar.classList.toggle('cf-hidden');
+  arrow.classList.toggle('closed',hidden);
+}
+
 function buildColFilters() {
   const bar=document.getElementById('colFilterBar');
   const GROUP_LABELS={'playoffs':'Playoffs','rs':'Temp. regular','awards':'Premios','general':'General'};
@@ -387,6 +404,10 @@ function buildColFilters() {
   };
   resetWrap.appendChild(resetBtn);
   bar.appendChild(resetWrap);
+  if(window.innerWidth<=700){
+    bar.classList.add('cf-hidden');
+    document.getElementById('cfArrow').classList.add('closed');
+  }
 }
 
 // ── SCROLL SYNC ─────────────────────────────────────────────────────────────
