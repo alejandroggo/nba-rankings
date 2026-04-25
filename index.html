@@ -258,13 +258,13 @@ const COLUMNS = [
   {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
-  {key:'anos',           label:'Temporadas totales',   fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
-  {key:'anos_po',        label:'Años Playoffs',        fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
-  {key:'pct_po',         label:'% Años Playoffs',      fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
   {key:'games',          label:'Partidos',             fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
   {key:'wins',           label:'Victorias',            fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
   {key:'loses',          label:'Derrotas',             fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
   {key:'wl_pct',         label:'W/L %',                fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'rs'},
+  {key:'anos',           label:'Temporadas totales',   fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
+  {key:'anos_po',        label:'Años Playoffs',        fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'pct_po',         label:'% Años Playoffs',      fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
   {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
@@ -630,7 +630,7 @@ function populateSelects(){
 const CMP_BLOCKS=[
   {title:null,                     keys:['puntos','pts_ano']},
   {title:'Playoffs',               keys:['champ','finals','conf_fin','conf_sf','primera_ronda','play_in','tot_po','pct_po','GAMES','WINS','LOSES','W-L%']},
-  {title:'Temporada regular',      keys:['copa','pct_80','pct_70','pct_50','pct_menos20','anos','anos_po','games','wins','loses','wl_pct']},
+  {title:'Temporada regular',      keys:['copa','pct_80','pct_70','pct_50','pct_menos20','games','wins','loses','wl_pct','anos','anos_po']},
   {title:'Premios individuales',   keys:['mvp','dpoy','roy','coy','A-STAR','A-NBA']},
 
 ];
