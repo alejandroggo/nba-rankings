@@ -37,7 +37,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .sc{background:var(--surface);border:1px solid var(--border);border-left-width:3px;padding:16px 18px;}
 .sc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
 .sc-body{display:flex;align-items:center;gap:12px;}
-.sc-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0;background:rgba(255,255,255,0.08);border-radius:6px;padding:3px;}
+.sc-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0;}
 .sc-val{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:4px;}
 .conf-sep{color:var(--muted);margin:0 10px;font-size:20px;line-height:1;align-self:center;opacity:.6;}
@@ -78,7 +78,7 @@ tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:poi
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:155px;}.tci{display:flex;align-items:center;gap:9px;}
-.logo{width:32px;height:32px;object-fit:contain;flex-shrink:0;background:rgba(255,255,255,0.08);border-radius:4px;padding:2px;}
+.logo{width:32px;height:32px;object-fit:contain;flex-shrink:0;}
 .tn{font-weight:500;font-size:15px;}.tw2{font-size:11px;color:var(--muted);font-style:italic;}
 .pn{font-family:'Bebas Neue',sans-serif;font-size:18px;}
 .nb{font-family:'Bebas Neue',sans-serif;font-size:15px;}
@@ -101,7 +101,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .chc-name{font-family:'Bebas Neue',sans-serif;font-size:18px;line-height:1;margin-bottom:2px;}
 .chc-pts{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--text);}
 .chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;opacity:.4;}
-.cmp-blocks{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}.cmp-col2{grid-column:2;}
+.cmp-blocks{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
 .cmp-block-full{grid-column:1/-1;}
 .cmp-card{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
 .cmp-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface2);border-bottom:2px solid var(--border);gap:6px;}
@@ -122,7 +122,7 @@ td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
-@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}.cmp-col2{grid-column:unset;}}
+@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
 </head>
 <body>
@@ -130,7 +130,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <div class="h-top">
     <div>
       <div class="h-eye">#aleggoritmo · Sistema propio de puntuación</div>
-      <h1>¿Mejor<br>franquicia<br><em>de la historia?</em></h1>
+      <h1>¿Cuál es la<br>mejor franquicia<br><em>de la historia de la NBA?</em></h1>
       <p class="h-meta" id="headerMeta">Cargando datos…</p>
     </div>
     <button class="h-btn" id="themeBtn" onclick="toggleTheme()">☀ Modo día</button>
@@ -158,6 +158,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
         <input class="srch" type="text" id="search" placeholder="Buscar franquicia…" oninput="filterTable()">
         <div id="confBar"></div>
         <span class="hint">Clic en columna para ordenar</span>
+        <button class="ctog" id="resetColBtn" style="margin-left:auto">↺ Reset</button>
       </div>
       <div class="tw-top" id="scrollTop"><div id="scrollTopInner" style="height:1px"></div></div>
       <div class="tw" id="tableWrapper"><table id="rankingTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
@@ -396,14 +397,10 @@ function buildColFilters() {
     });
     bar.appendChild(wrap);
   });
-  const resetWrap=document.createElement('div'); resetWrap.className='cf-grp'; resetWrap.style.marginLeft='auto';
-  const resetBtn=document.createElement('button'); resetBtn.className='ctog'; resetBtn.textContent='↺ Reset';
-  resetBtn.onclick=()=>{
+  document.getElementById('resetColBtn').onclick=()=>{
     colToggleBtns.forEach(({btn,col})=>{ col.on=COL_DEFAULTS[col.key]; btn.classList.toggle('on',col.on); });
     renderTable(getCurrentData());
   };
-  resetWrap.appendChild(resetBtn);
-  bar.appendChild(resetWrap);
   if(window.innerWidth<=700){
     bar.classList.add('cf-hidden');
     document.getElementById('cfArrow').classList.add('closed');
@@ -694,7 +691,9 @@ function updateCompare(){
       </div>
     </div>
     <div class="cmp-blocks">
-      ${CMP_BLOCKS.map((b,i)=>`<div class="${i===0?'cmp-block-full':i===3?'cmp-col2':''}">${makeBlock(b)}</div>`).join('')}
+      <div class="cmp-block-full">${makeBlock(CMP_BLOCKS[0])}</div>
+      <div>${makeBlock(CMP_BLOCKS[1])}</div>
+      <div>${makeBlock(CMP_BLOCKS[2])}${makeBlock(CMP_BLOCKS[3])}</div>
       <div class="cmp-block-full"><div class="cmp-card" style="margin-bottom:14px"><div class="crow">
         <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
         <span class="clbl" style="color:var(--text);font-weight:700">DUELOS GANADOS</span>
