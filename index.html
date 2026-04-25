@@ -626,7 +626,7 @@ function updateCompare(){
     return `<div class="crow">
       <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}${r1!=='—'?rnk(r1):''}</span>
       <span class="clbl">${f.label}</span>
-      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?rnk(r2):''}${f.fmt?f.fmt(v2):v2??'—'}</span>
+      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?`<span style="font-size:10px;color:var(--muted);margin-right:3px">(#${r2})</span>`:''}${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
   // Contar duelos ganados sobre todos los bloques
