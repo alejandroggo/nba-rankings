@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Mejor franquicia NBA? · #aleggoritmo</title>
+<title>¿Cuál es la mejor franquicia de la historia de la NBA? · #aleggoritmo</title>
+<meta name="description" content="Ranking histórico de las 30 franquicias NBA basado en un sistema propio de puntuación: anillos, finales, playoffs, premios y temporada regular. Por #aleggoritmo.">
+<meta property="og:title" content="¿Cuál es la mejor franquicia de la historia de la NBA?">
+<meta property="og:description" content="Ranking histórico de las 30 franquicias NBA con sistema propio de puntuación. Compara franquicias y analiza su trayectoria.">
+<meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a3a;--accent:#ffffff;--accent-dim:rgba(255,255,255,0.1);--accent-glow:rgba(255,255,255,0.04);--text:#f0f0f0;--muted:#565670;--gold:#e8c840;--silver:#b0b0c0;--bronze:#cd7f32;--pos:#4ade80;--neg:#f87171;}
+:root{--bg:#0d0d14;--surface:#16161f;--surface2:#1e1e2a;--border:#33334a;--accent:#ffffff;--accent-dim:rgba(255,255,255,0.1);--accent-glow:rgba(255,255,255,0.04);--text:#f0f0f5;--muted:#9090b0;--gold:#e8c840;--silver:#b0b0c0;--bronze:#cd7f32;--pos:#4ade80;--neg:#f87171;}
 body.day{--bg:#f0efe9;--surface:#ffffff;--surface2:#e6e5df;--border:#cccbc3;--accent:#111111;--accent-dim:rgba(0,0,0,0.07);--accent-glow:rgba(0,0,0,0.02);--text:#111111;--muted:#88887c;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
@@ -53,8 +57,8 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .srch{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
 .srch:focus{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
 .hint{font-size:11px;color:var(--muted);}
-.tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:10px;}
-.tw-top::-webkit-scrollbar{height:6px;}.tw-top::-webkit-scrollbar-thumb{background:var(--border);}
+.tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:18px;}
+.tw-top::-webkit-scrollbar{height:10px;}.tw-top::-webkit-scrollbar-thumb{background:var(--muted);border-radius:3px;}.tw-top::-webkit-scrollbar-track{background:var(--surface2);}
 .tw{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
@@ -85,12 +89,14 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .cmp-sel{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none;cursor:pointer;appearance:none;transition:border-color .2s;}
 .cmp-sel:focus{border-color:var(--accent);}
 .vs{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--muted);text-align:center;}
-.cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-.chc{padding:20px 22px;border:1px solid var(--border);position:relative;overflow:hidden;}
-.chc-logo{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:64px;height:64px;object-fit:contain;opacity:.2;}
-.chc-name{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;margin-bottom:4px;}
-.chc-pts{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:var(--text);}
-.chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;opacity:.4;}
+.cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.chc{padding:12px 16px;border:1px solid var(--border);position:relative;overflow:hidden;}
+.chc-logo{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:44px;height:44px;object-fit:contain;opacity:.2;}
+.chc-name{font-family:'Bebas Neue',sans-serif;font-size:18px;line-height:1;margin-bottom:2px;}
+.chc-pts{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--text);}
+.chc-rank{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;opacity:.4;}
+.cmp-blocks{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
+.cmp-block-full{grid-column:1/-1;}
 .cmp-card{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
 .cmp-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface2);border-bottom:2px solid var(--border);gap:6px;}
 .crow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;gap:6px;}
@@ -110,7 +116,7 @@ td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
-@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg,.cmp-heads{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}}
+@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
 </head>
 <body>
@@ -153,11 +159,11 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       </div>
     </div>
     <div id="tab-graficos" class="section">
-      <div class="cg">
-        <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason</div><div class="ch"><canvas id="cPOPct"></canvas></div></div>
-        <div class="cc"><div class="ctitle">% Temporadas en CF+</div><div class="csub">Porcentaje de años llegando a Conference Finals o más</div><div class="ch"><canvas id="cFinPct"></canvas></div></div>
-<div class="cc"><div class="ctitle">% Playoffs vs % Finals+</div><div class="csub">Scatter: llegar a playoffs versus llegar lejos — todas las franquicias</div><div class="ch"><canvas id="cBubble"></canvas></div></div>
+      <div class="cg" style="margin-bottom:18px">
+        <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
+        <div class="cc"><div class="ctitle">% Temporadas en Finals de Conf.+</div><div class="csub">Porcentaje de temporadas llegando a CF, Finales o Anillo — Top 15</div><div class="ch tall"><canvas id="cFinPct"></canvas></div></div>
       </div>
+      <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch tall"><canvas id="cBubble"></canvas></div></div>
     </div>
     <div id="tab-comparar" class="section">
       <div class="cmp-top">
@@ -225,34 +231,34 @@ const COLUMNS = [
   {key:'nombre',         label:'Franquicia',           fmt:null,                         always:true, on:true,  group:''},
   {key:'puntos',         label:'Puntos',               fmt:v=>v?.toFixed(2),             always:true, on:true,  group:'playoffs'},
   {key:'pts_ano',        label:'Puntos x temporada',   fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
-  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'finals',         label:'Finales',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_fin',       label:'Finales de Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
-  {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
-  {key:'primera_ronda',  label:'1a Ronda',             fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
+  {key:'primera_ronda',  label:'1a Ronda',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'copa',           label:'NBA Cup',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
-  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'tot_po',         label:'Playoffs',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'GAMES',          label:'PO Partidos',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'WINS',           label:'PO Victorias',         fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
   {key:'LOSES',          label:'PO Derrotas',          fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'playoffs'},
-  {key:'W-L%',           label:'PO W/L %',             fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true, group:'playoffs'},
+  {key:'W-L%',           label:'PO W/L %',             fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:false,group:'playoffs'},
   {key:'pct_80',         label:'RS +80%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
-  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:true,  group:'rs'},
+  {key:'pct_70',         label:'RS +70%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_50',         label:'RS +50%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'pct_menos20',    label:'RS -20%',              fmt:v=>v??'—',                    always:false,on:false, group:'rs'},
   {key:'mvp',            label:'MVP',                  fmt:v=>v??'—',                    always:false,on:true,  group:'awards'},
   {key:'dpoy',           label:'DPOY',                 fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'roy',            label:'ROY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'coy',            label:'COY',                  fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
-  {key:'A-STAR',         label:'All Stars',             fmt:v=>v??'—',                   always:false,on:true,  group:'awards'},
-  {key:'A-NBA',          label:'All NBAs',              fmt:v=>v??'—',                   always:false,on:true,  group:'awards'},
+  {key:'A-STAR',         label:'All Stars',            fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
+  {key:'A-NBA',          label:'All NBAs',             fmt:v=>v??'—',                    always:false,on:false, group:'awards'},
   {key:'anos',           label:'Temporadas totales',   fmt:v=>v??'—',                    always:false,on:true,  group:'general'},
   {key:'anos_po',        label:'Años Playoffs',        fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'pct_po',         label:'% Años Playoffs',      fmt:v=>v!=null?parseFloat(v).toFixed(2)+'%':'—', always:false,on:true,  group:'playoffs'},
   {key:'games',          label:'Partidos',             fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
-  {key:'wins',           label:'Victorias',            fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
-  {key:'loses',          label:'Derrotas',             fmt:v=>v?.toLocaleString('es'),   always:false,on:false, group:'rs'},
+  {key:'wins',           label:'Victorias',            fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
+  {key:'loses',          label:'Derrotas',             fmt:v=>v?.toLocaleString('es'),   always:false,on:true,  group:'rs'},
   {key:'wl_pct',         label:'W/L %',                fmt:v=>v!=null?(parseFloat(v)*100).toFixed(2)+'%':'—', always:false,on:true,  group:'rs'},
 ];
 
@@ -280,9 +286,19 @@ let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null
 let filterConf=null, filterDiv=null;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
+const logoImgs={};
+
+function preloadLogos(){
+  Object.entries(LOGO_IDS).forEach(([nombre,id])=>{
+    const img=new Image(); img.crossOrigin='anonymous';
+    img.onload=()=>{ logoImgs[nombre]=img; if(chartsInited)[chartPO,chartCF,chartBubble].forEach(c=>c?.update('none')); };
+    img.src=`https://a.espncdn.com/i/teamlogos/nba/500/${id}.png`;
+  });
+}
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
-const tc = n => (TEAM_COLORS[n]||['#888'])[0];
+const lumOf=hex=>{const r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;return .299*r+.587*g+.114*b;};
+const tc=n=>{const cols=TEAM_COLORS[n]||['#888'];if(cols.length<2)return cols[0];const[c1,c2]=cols,day=document.body.classList.contains('day');return day?(lumOf(c1)<=lumOf(c2)?c1:c2):(lumOf(c1)>=lumOf(c2)?c1:c2);};
 const logo = n => { const id=LOGO_IDS[n]; return id?`https://a.espncdn.com/i/teamlogos/nba/500/${id}.png`:''; };
 const abr = n => ABR[n]||n.slice(0,3).toUpperCase();
 
@@ -305,6 +321,7 @@ async function init() {
   document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
   COLUMNS.forEach(c=>COL_DEFAULTS[c.key]=c.on);
+  preloadLogos();
   buildStats(); buildConfFilters(); buildColFilters(); renderTable(DB.franquicias); populateSelects(); setupScrollSync();
 }
 
@@ -497,34 +514,75 @@ function initCharts(){
   Chart.defaults.font.family='DM Sans';
   const gridColor='rgba(128,128,128,0.12)';
 
-  // 1. % Playoffs — top 15 ordenado
+  const textColor=isDay?'#111111':'#f0f0f5';
+
+  // Plugin: % label encima de cada barra
+  const barLabelPlugin={id:'barLabels',afterDatasetsDraw(chart){
+    const {ctx,data}=chart;
+    ctx.save(); ctx.font='bold 11px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillStyle=textColor;
+    chart.getDatasetMeta(0).data.forEach((bar,i)=>{
+      const v=data.datasets[0].data[i]; if(v>0) ctx.fillText(v.toFixed(1)+'%',bar.x,bar.y-3);
+    }); ctx.restore();
+  }};
+
+  // Plugin: logos debajo de cada barra (reemplaza siglas en eje X)
+  const makeBarLogoPlugin=(teams)=>({id:'barLogos',afterDraw(chart){
+    const {ctx,scales:{x}}=chart; const sz=22;
+    ctx.save();
+    teams.forEach((nombre,i)=>{
+      const px=x.getPixelForTick(i), py=x.bottom+3;
+      const img=logoImgs[nombre];
+      if(img){ ctx.drawImage(img,px-sz/2,py,sz,sz); }
+      else{ ctx.fillStyle=textColor; ctx.font='10px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='top'; ctx.fillText(abr(nombre),px,py+2); }
+    });
+    ctx.restore();
+  }});
+
+  const barOpts=(max)=>({responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:20,bottom:28}},
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},ticks:{display:false}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},...(max?{max}:{})}}
+  });
+
+  // 1. % Playoffs — top 15
   const byPO=[...DB.franquicias].sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
   chartPO=new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
-    labels:byPO.map(d=>abr(d.nombre)),
+    labels:byPO.map(()=>''),
     datasets:[{data:byPO.map(d=>parseFloat(d.pct_po)||0),
       backgroundColor:byPO.map(d=>tc(d.nombre)+'99'),borderColor:byPO.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},max:100}}}});
+  },plugins:[barLabelPlugin,makeBarLogoPlugin(byPO.map(d=>d.nombre))],options:barOpts(100)});
 
-  // 2. % CF+ — por ratio conf_fin/anos
+  // 2. % Años CF+ — top 15
   const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1)}))
     .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
   chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
-    labels:byCF.map(d=>abr(d.nombre)),
+    labels:byCF.map(()=>''),
     datasets:[{data:byCF.map(d=>d.cfPct),
       backgroundColor:byCF.map(d=>tc(d.nombre)+'99'),borderColor:byCF.map(d=>tc(d.nombre)),borderWidth:1,borderRadius:2}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'}}}}});
+  },plugins:[barLabelPlugin,makeBarLogoPlugin(byCF.map(d=>d.nombre))],options:barOpts(null)});
 
-  // 3. Scatter %PO vs %CF+
-  const scat=DB.franquicias.map(d=>({x:parseFloat(d.pct_po)||0,y:+((d.conf_fin||0)/(d.anos||1)*100).toFixed(1),nombre:d.nombre}));
+  // 3. Scatter RS W/L% vs PO W/L% — logos en cada punto
+  const scat3=DB.franquicias.filter(d=>d['W-L%']!=null&&parseFloat(d['W-L%'])>0)
+    .map(d=>({x:+(parseFloat(d.wl_pct)*100).toFixed(2),y:+(parseFloat(d['W-L%'])*100).toFixed(2),nombre:d.nombre,color:tc(d.nombre)}));
+  const scatterLogoPlugin={id:'scatterLogos',afterDatasetsDraw(chart){
+    const {ctx,data}=chart; const sz=24;
+    ctx.save();
+    chart.getDatasetMeta(0).data.forEach((pt,i)=>{
+      const {nombre,color}=data.datasets[0].data[i];
+      const img=logoImgs[nombre];
+      if(img){ ctx.drawImage(img,pt.x-sz/2,pt.y-sz/2,sz,sz); }
+      else{ ctx.fillStyle=color; ctx.font='bold 10px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(abr(nombre),pt.x,pt.y); }
+    }); ctx.restore();
+  }};
   chartBubble=new Chart(document.getElementById('cBubble'),{type:'scatter',data:{datasets:[{
-    data:scat,backgroundColor:scat.map(d=>tc(d.nombre)+'bb'),borderColor:scat.map(d=>tc(d.nombre)),borderWidth:1,pointRadius:7,pointHoverRadius:10
-  }]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: ${ctx.raw.x}% PO · ${ctx.raw.y}% CF+`}}},
+    data:scat3,backgroundColor:'transparent',borderColor:'transparent',pointRadius:14,pointHoverRadius:14
+  }]},plugins:[scatterLogoPlugin],options:{responsive:true,maintainAspectRatio:false,
+    layout:{padding:14},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw.nombre}: RS ${ctx.raw.x}% · PO ${ctx.raw.y}%`}}},
     scales:{
-      x:{title:{display:true,text:'% Temporadas en playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
-      y:{title:{display:true,text:'% Temporadas en CF+',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
+      x:{title:{display:true,text:'W/L% Temporada Regular',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}},
+      y:{title:{display:true,text:'W/L% Playoffs',font:{size:11}},grid:{color:gridColor},ticks:{callback:v=>v+'%'}}
     }}});
 }
 
@@ -550,18 +608,34 @@ function updateCompare(){
   const el=document.getElementById('compareResult');
   if(!t1||!t2){el.innerHTML='<div class="ph">Selecciona dos franquicias para comparar</div>';return;}
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
+  const toNum=v=>(!v||v==='—'||v==='–')?0:(parseFloat(v)||0);
+  const rankOf=(col,team)=>{
+    const vals=[...DB.franquicias].map(d=>({n:d.nombre,v:toNum(col.calc?col.calc(d):d[col.key])}));
+    vals.sort((a,b)=>b.v-a.v);
+    const pos=vals.findIndex(x=>x.n===team.nombre)+1;
+    return pos||'—';
+  };
+  const rnk=n=>`<span style="font-size:10px;color:var(--muted);margin-left:3px">(#${n})</span>`;
   const makeRows=keys=>keys.map(key=>{
     const f=COLUMNS.find(c=>c.key===key); if(!f) return '';
     const v1=f.calc?f.calc(t1):t1[key], v2=f.calc?f.calc(t2):t2[key];
-    const n1=parseFloat(v1),n2=parseFloat(v2);
-    const w1=!isNaN(n1)&&!isNaN(n2)?(n1>n2?'win':n1<n2?'lose':''):'';
-    const w2=!isNaN(n1)&&!isNaN(n2)?(n2>n1?'win':n2<n1?'lose':''):'';
+    const n1=toNum(v1),n2=toNum(v2);
+    const w1=n1!==n2?(n1>n2?'win':'lose'):'';
+    const w2=n1!==n2?(n2>n1?'win':'lose'):'';
+    const r1=rankOf(f,t1), r2=rankOf(f,t2);
     return `<div class="crow">
-      <span class="cv l ${w1}" ${w1==='win'?`style="color:${c1}"`:''}>${f.fmt?f.fmt(v1):v1??'—'}</span>
+      <span class="cv l ${w1}" ${w1==='win'?'style="color:var(--pos)"':''}>${f.fmt?f.fmt(v1):v1??'—'}${r1!=='—'?rnk(r1):''}</span>
       <span class="clbl">${f.label}</span>
-      <span class="cv r ${w2}" ${w2==='win'?`style="color:${c2}"`:''}>${f.fmt?f.fmt(v2):v2??'—'}</span>
+      <span class="cv r ${w2}" ${w2==='win'?'style="color:var(--pos)"':''}>${r2!=='—'?rnk(r2):''}${f.fmt?f.fmt(v2):v2??'—'}</span>
     </div>`;
   }).join('');
+  // Contar duelos ganados sobre todos los bloques
+  let d1=0,d2=0;
+  CMP_BLOCKS.forEach(b=>b.keys.forEach(key=>{
+    const f=COLUMNS.find(c=>c.key===key); if(!f) return;
+    const n1=toNum(f.calc?f.calc(t1):t1[key]), n2=toNum(f.calc?f.calc(t2):t2[key]);
+    if(n1>n2) d1++; else if(n2>n1) d2++;
+  }));
   const makeBlock=b=>`
     <div style="margin-bottom:14px">
       ${b.title!==null?`<div class="cmp-hdr" style="border-bottom:1px solid var(--border);margin-bottom:0">
@@ -586,29 +660,45 @@ function updateCompare(){
         <div class="chc-rank">Puesto #${t2.rank}</div>
       </div>
     </div>
-    ${CMP_BLOCKS.map(makeBlock).join('')}
+    <div class="cmp-blocks">${CMP_BLOCKS.map((b,i)=>`<div class="${i===0?'cmp-block-full':''}">${makeBlock(b)}</div>`).join('')}</div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Métricas clave normalizadas al máximo histórico</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Métricas clave normalizadas al máximo histórico</div>
+      <div class="cmp-card" style="margin-bottom:14px">
+        <div class="crow">
+          <span class="cv l" style="color:${d1>=d2?'var(--pos)':c1};font-family:'Bebas Neue',sans-serif;font-size:22px">${d1}</span>
+          <span class="clbl">DUELOS GANADOS</span>
+          <span class="cv r" style="color:${d2>=d1?'var(--pos)':c2};font-family:'Bebas Neue',sans-serif;font-size:22px">${d2}</span>
+        </div>
+      </div>
       <div class="ch"><canvas id="radarCanvas"></canvas></div>
     </div>`;
   if(compareChart) compareChart.destroy();
   const isDay=document.body.classList.contains('day');
-  const mx=k=>Math.max(...DB.franquicias.map(d=>parseFloat(d[k])||0))||1;
-  const maxes={puntos:mx('puntos'),conf_fin:mx('conf_fin'),tot_po:mx('tot_po'),wl_pct:mx('wl_pct'),mvp:mx('mvp'),pct_po:mx('pct_po')};
-  const norm=(v,m)=>Math.round((parseFloat(v)||0)/m*100);
+  const textClr=isDay?'#111111':'#f0f0f5';
+  const mutedClr=isDay?'#88887c':'#9090b0';
+  const radarAxes=[
+    {label:'Puntos',          fn:d=>parseFloat(d.puntos)||0},
+    {label:'Anillos',         fn:d=>parseFloat(d.champ)||0},
+    {label:'PO W/L %',        fn:d=>parseFloat(d['W-L%'])||0},
+    {label:'% Playoffs',      fn:d=>parseFloat(d.pct_po)||0},
+    {label:'Finales de Conf.',fn:d=>parseFloat(d.conf_fin)||0},
+    {label:'MVPs',            fn:d=>parseFloat(d.mvp)||0},
+  ];
+  const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
+  const norm=(v,i)=>Math.round(v/radarMax[i]*100);
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
-    labels:['Puntos','Finales de Conf.','Playoffs','W/L %','MVPs','% PO'],
+    labels:radarAxes.map(a=>a.label),
     datasets:[
-      {label:abr(t1.nombre),data:[norm(t1.puntos,maxes.puntos),norm(t1.conf_fin,maxes.conf_fin),norm(t1.tot_po,maxes.tot_po),norm(t1.wl_pct,maxes.wl_pct),norm(t1.mvp,maxes.mvp),norm(t1.pct_po,maxes.pct_po)],
-        borderColor:c1,backgroundColor:c1+'20',borderWidth:2,pointBackgroundColor:c1},
-      {label:abr(t2.nombre),data:[norm(t2.puntos,maxes.puntos),norm(t2.conf_fin,maxes.conf_fin),norm(t2.tot_po,maxes.tot_po),norm(t2.wl_pct,maxes.wl_pct),norm(t2.mvp,maxes.mvp),norm(t2.pct_po,maxes.pct_po)],
-        borderColor:c2,backgroundColor:c2+'20',borderWidth:2,pointBackgroundColor:c2},
+      {label:abr(t1.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t1),i)),
+        borderColor:c1,backgroundColor:c1+'25',borderWidth:2,pointBackgroundColor:c1,pointRadius:3},
+      {label:abr(t2.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t2),i)),
+        borderColor:c2,backgroundColor:c2+'25',borderWidth:2,pointBackgroundColor:c2,pointRadius:3},
     ]
   },options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:isDay?'#111':'#f0f0f0',font:{size:12}}}},
+    plugins:{legend:{labels:{color:textClr,font:{size:12},boxWidth:14}}},
     scales:{r:{backgroundColor:'transparent',grid:{color:'rgba(128,128,128,0.15)'},
-      pointLabels:{color:isDay?'#88887c':'#565670',font:{size:11}},ticks:{display:false},min:0,max:100}}}});
+      pointLabels:{color:mutedClr,font:{size:11}},ticks:{display:false},min:0,max:100}}}});
 }
 
 // ── TABS ────────────────────────────────────────────────────────────────────
@@ -626,6 +716,10 @@ function toggleTheme(){
   document.getElementById('themeBtn').textContent=day?'🌙 Modo noche':'☀ Modo día';
   destroyCharts();
   if(document.getElementById('tab-graficos').classList.contains('active')) initCharts();
+  if(compareChart){
+    const t1=document.getElementById('team1').value, t2=document.getElementById('team2').value;
+    if(t1&&t2) updateCompare();
+  }
 }
 
 init();
