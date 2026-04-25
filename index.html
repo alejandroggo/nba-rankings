@@ -244,7 +244,7 @@ const COLUMNS = [
   {key:'pts_ano',        label:'Puntos x temporada',   fmt:v=>v!=null?v.toFixed(2):'—',  always:false,on:true,  group:'playoffs', calc:d=>d.puntos&&d.anos?d.puntos/d.anos:null},
   {key:'champ',          label:'Anillos',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'finals',         label:'Finales',              fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
-  {key:'conf_fin',       label:'Finales de Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
+  {key:'conf_fin',       label:'Finales Conf.',     fmt:v=>v??'—',                    always:false,on:true,  group:'playoffs'},
   {key:'conf_sf',        label:'SF de Conf.',          fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'primera_ronda',  label:'1a Ronda',             fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
   {key:'play_in',        label:'Play-in',              fmt:v=>v??'—',                    always:false,on:false, group:'playoffs'},
@@ -715,7 +715,7 @@ function updateCompare(){
     {label:'Anillos',         fn:d=>parseFloat(d.champ)||0},
     {label:'PO W/L %',        fn:d=>parseFloat(d['W-L%'])||0},
     {label:'% Playoffs',      fn:d=>parseFloat(d.pct_po)||0},
-    {label:'Finales de Conf.',fn:d=>parseFloat(d.conf_fin)||0},
+    {label:'Finales Conf.',fn:d=>parseFloat(d.conf_fin)||0},
     {label:'MVPs',            fn:d=>parseFloat(d.mvp)||0},
   ];
   const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
