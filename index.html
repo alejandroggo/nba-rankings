@@ -719,13 +719,15 @@ function updateCompare(){
   ];
   const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
   const norm=(v,i)=>Math.round(v/radarMax[i]*100);
+  const rc1=TEAM_COLORS[t1.nombre]?.[0]||c1;
+  const rc2=TEAM_COLORS[t2.nombre]?.[0]||c2;
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:radarAxes.map(a=>a.label),
     datasets:[
       {label:abr(t1.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t1),i)),
-        borderColor:c1,backgroundColor:c1+'25',borderWidth:2,pointBackgroundColor:c1,pointRadius:3},
+        borderColor:rc1,backgroundColor:rc1+'33',borderWidth:2,pointBackgroundColor:rc1,pointRadius:3},
       {label:abr(t2.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t2),i)),
-        borderColor:c2,backgroundColor:c2+'25',borderWidth:2,pointBackgroundColor:c2,pointRadius:3},
+        borderColor:rc2,backgroundColor:rc2+'33',borderWidth:2,pointBackgroundColor:rc2,pointRadius:3},
     ]
   },options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{color:textClr,font:{size:12},boxWidth:14}}},
