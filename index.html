@@ -74,7 +74,8 @@ th:hover,th.sorted{color:var(--accent);}
 th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
 body.day th.sep-r{border-right-color:rgba(0,0,0,0.14);}
 td.sep-r{border-right:2px solid var(--border);}
-tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
+tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}tr.dr.extinta{opacity:.65;}
+.ext-badge{display:inline-block;font-size:8px;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;font-weight:700;background:var(--border);border-radius:2px;padding:1px 4px;margin-top:2px;}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:155px;}.tci{display:flex;align-items:center;gap:9px;}
@@ -108,7 +109,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .crow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center;gap:6px;}
 .crow:last-child{border-bottom:none;}
 .crow:nth-child(even){background:var(--surface2);}
-.clbl{color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;text-align:center;flex:1;}
+.clbl{color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;text-align:center;flex:1;font-weight:700;}
 .cv{min-width:64px;font-weight:500;font-size:13px;}.cv.l{text-align:left;}.cv.r{text-align:right;}
 .cv.win{font-weight:700;}.cv.lose{color:var(--muted);font-weight:400;}
 .cmp-radar{background:var(--surface);border:1px solid var(--border);padding:20px;margin-top:14px;}
@@ -497,7 +498,7 @@ function renderTable(data){
       if(c.key==='rank') return `<td class="${sc(c.key)}"><div class="rc" style="color:${rankColor||'var(--muted)'}">${i+1}</div></td>`;
       if(c.key==='nombre') return `<td class="tc${sc(c.key)}"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
-        <div><div class="tn">${d.nombre}</div></div>
+        <div><div class="tn">${d.nombre}</div>${d.extinta?'<span class="ext-badge">Extinta</span>':''}</div>
       </div></td>`;
       if(c.key==='puntos'){
         const bc=isBest(c,d)?' best-cell':'';
@@ -508,7 +509,7 @@ function renderTable(data){
       const bc=isBest(c,d)?' best-cell':'';
       return `<td class="${isNum?'nb':''}${sc(c.key)}${bc}">${val??'—'}</td>`;
     }).join('');
-    return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
+    return `<tr class="dr${d.extinta?' extinta':''}${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
 }
 
@@ -719,13 +720,15 @@ function updateCompare(){
   ];
   const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
   const norm=(v,i)=>Math.round(v/radarMax[i]*100);
+  const rc1=TEAM_COLORS[t1.nombre]?.[0]||c1;
+  const rc2=TEAM_COLORS[t2.nombre]?.[0]||c2;
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:radarAxes.map(a=>a.label),
     datasets:[
       {label:abr(t1.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t1),i)),
-        borderColor:c1,backgroundColor:c1+'25',borderWidth:2,pointBackgroundColor:c1,pointRadius:3},
+        borderColor:rc1,backgroundColor:rc1+'33',borderWidth:2,pointBackgroundColor:rc1,pointRadius:3},
       {label:abr(t2.nombre),data:radarAxes.map((a,i)=>norm(a.fn(t2),i)),
-        borderColor:c2,backgroundColor:c2+'25',borderWidth:2,pointBackgroundColor:c2,pointRadius:3},
+        borderColor:rc2,backgroundColor:rc2+'33',borderWidth:2,pointBackgroundColor:rc2,pointRadius:3},
     ]
   },options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{color:textClr,font:{size:12},boxWidth:14}}},
