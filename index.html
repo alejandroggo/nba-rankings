@@ -593,7 +593,7 @@ function initCharts(){
   });
 
   // 1. % Playoffs — top 15
-  const byPO=[...DB.franquicias].sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
+  const byPO=[...DB.franquicias].filter(d=>!d.extinta).sort((a,b)=>(parseFloat(b.pct_po)||0)-(parseFloat(a.pct_po)||0)).slice(0,15);
   chartPO=new Chart(document.getElementById('cPOPct'),{type:'bar',data:{
     labels:byPO.map(()=>''),
     datasets:[{data:byPO.map(d=>parseFloat(d.pct_po)||0),
@@ -601,7 +601,7 @@ function initCharts(){
   },plugins:[barLabelPlugin,makeBarLogoPlugin(byPO.map(d=>d.nombre))],options:barOpts(100)});
 
   // 2. % Años CF+ — top 15
-  const byCF=[...DB.franquicias].map(d=>({...d,cfPct:+(((+d.conf_fin||0)+(+d.finals||0)+(+d.champ||0))/(d.anos||1)*100).toFixed(1)}))
+  const byCF=[...DB.franquicias].filter(d=>!d.extinta).map(d=>({...d,cfPct:+(((+d.conf_fin||0)+(+d.finals||0)+(+d.champ||0))/(d.anos||1)*100).toFixed(1)}))
     .sort((a,b)=>b.cfPct-a.cfPct).slice(0,15);
   chartCF=new Chart(document.getElementById('cFinPct'),{type:'bar',data:{
     labels:byCF.map(()=>''),
@@ -610,7 +610,7 @@ function initCharts(){
   },plugins:[barLabelPlugin,makeBarLogoPlugin(byCF.map(d=>d.nombre))],options:barOpts(null)});
 
   // 3. Scatter RS W/L% vs PO W/L% — logos en cada punto
-  const scat3=DB.franquicias.filter(d=>d['W-L%']!=null&&parseFloat(d['W-L%'])>0)
+  const scat3=DB.franquicias.filter(d=>!d.extinta&&d['W-L%']!=null&&parseFloat(d['W-L%'])>0)
     .map(d=>({x:+(parseFloat(d.wl_pct)*100).toFixed(2),y:+(parseFloat(d['W-L%'])*100).toFixed(2),nombre:d.nombre,color:tc(d.nombre)}));
   const scatterLogoPlugin={id:'scatterLogos',afterDatasetsDraw(chart){
     const {ctx,data}=chart; const sz=24;
