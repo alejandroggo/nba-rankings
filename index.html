@@ -497,6 +497,7 @@ function renderTable(data){
     if(vals.length) colMax[c.key]=Math.max(...vals);
   });
   const isBest=(c,d)=>{
+    if(d.extinta) return false;
     const v=parseFloat(c.calc?c.calc(d):d[c.key])||0;
     return colMax[c.key]!==undefined&&v>0&&v>=colMax[c.key]-0.0001;
   };
