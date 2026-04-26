@@ -2,8 +2,8 @@
   "extintas": [
     {
       "nombre": "Chicago Stags",
-      "puntos": 43.42814,
-      "pts_year": 10.857035,
+      "puntos": 39.92814,
+      "pts_year": 9.98,
       "champ": 0,
       "finals": 1,
       "conf_fin": 1,
@@ -36,12 +36,12 @@
       "LOSES": 13,
       "W-L%": 0.35,
       "extinta": true,
-      "rank": 30
+      "rank": 31
     },
     {
       "nombre": "Washington Capitals",
-      "puntos": 41.17388,
-      "pts_year": 8.234776,
+      "puntos": 36.96336,
+      "pts_year": 7.39,
       "champ": 0,
       "finals": 1,
       "conf_fin": 1,
@@ -74,12 +74,12 @@
       "LOSES": 11,
       "W-L%": 0.4211,
       "extinta": true,
-      "rank": 31
+      "rank": 32
     },
     {
       "nombre": "Indianapolis Olympians",
-      "puntos": 33.93399,
-      "pts_year": 8.4834975,
+      "puntos": 30.85706,
+      "pts_year": 7.71,
       "champ": 0,
       "finals": 0,
       "conf_fin": 1,
@@ -116,8 +116,8 @@
     },
     {
       "nombre": "Baltimore Bullets",
-      "puntos": 33.23611,
-      "pts_year": 4.15451375,
+      "puntos": 27.61111,
+      "pts_year": 3.45,
       "champ": 1,
       "finals": 0,
       "conf_fin": 0,
@@ -154,8 +154,8 @@
     },
     {
       "nombre": "St. Louis Bombers",
-      "puntos": 28.17101,
-      "pts_year": 7.0427525,
+      "puntos": 24.83768,
+      "pts_year": 6.21,
       "champ": 0,
       "finals": 0,
       "conf_fin": 1,
@@ -192,8 +192,8 @@
     },
     {
       "nombre": "Anderson Packers",
-      "puntos": 19.28125,
-      "pts_year": 19.28125,
+      "puntos": 14.28125,
+      "pts_year": 14.28,
       "champ": 0,
       "finals": 0,
       "conf_fin": 1,
@@ -230,8 +230,8 @@
     },
     {
       "nombre": "Cleveland Rebels",
-      "puntos": 14.71333,
-      "pts_year": 14.71333,
+      "puntos": 11.38,
+      "pts_year": 11.38,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -268,8 +268,8 @@
     },
     {
       "nombre": "Sheboygan Red Skins",
-      "puntos": 11.68172,
-      "pts_year": 11.68172,
+      "puntos": 8.34839,
+      "pts_year": 8.35,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -307,7 +307,7 @@
     {
       "nombre": "Detroit Falcons",
       "puntos": 3.03333,
-      "pts_year": 3.03333,
+      "pts_year": 3.03,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -345,7 +345,7 @@
     {
       "nombre": "Toronto Huskies",
       "puntos": 3.00667,
-      "pts_year": 3.00667,
+      "pts_year": 3.01,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -383,7 +383,7 @@
     {
       "nombre": "Waterloo Hawks",
       "puntos": 2.32452,
-      "pts_year": 2.32452,
+      "pts_year": 2.32,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -497,7 +497,7 @@
     {
       "nombre": "Providence Steamrollers",
       "puntos": 0.7781,
-      "pts_year": 0.2593666667,
+      "pts_year": 0.26,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
@@ -535,7 +535,7 @@
     {
       "nombre": "Denver Nuggets (BAA)",
       "puntos": 0.37419,
-      "pts_year": 0.37419,
+      "pts_year": 0.37,
       "champ": 0,
       "finals": 0,
       "conf_fin": 0,
