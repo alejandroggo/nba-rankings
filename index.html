@@ -76,7 +76,7 @@ th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
 body.day th.sep-r{border-right-color:rgba(0,0,0,0.14);}
 td.sep-r{border-right:2px solid var(--border);}
 tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}tr.dr.extinta{opacity:.65;}
-.ext-badge{display:inline-block;font-size:8px;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;font-weight:700;background:var(--border);border-radius:2px;padding:1px 4px;margin-top:2px;}
+.ext-badge{display:inline-block;font-size:8px;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;font-weight:700;background:var(--border);border-radius:2px;padding:1px 4px;margin-left:6px;vertical-align:middle;}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:155px;}.tci{display:flex;align-items:center;gap:9px;}
@@ -510,7 +510,7 @@ function renderTable(data){
       if(c.key==='rank') return `<td class="${sc(c.key)}"><div class="rc" style="color:${rankColor||'var(--muted)'}">${i+1}</div></td>`;
       if(c.key==='nombre') return `<td class="tc${sc(c.key)}"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
-        <div><div class="tn">${d.nombre}</div>${d.extinta?'<span class="ext-badge">Extinta</span>':''}</div>
+        <div><div class="tn">${d.nombre}${d.extinta?'<span class="ext-badge">Extinta</span>':''}</div></div>
       </div></td>`;
       if(c.key==='puntos'){
         const bc=isBest(c,d)?' best-cell':'';
@@ -653,7 +653,7 @@ function updateCompare(){
   const c1=tc(t1.nombre), c2=tc(t2.nombre);
   const toNum=v=>(!v||v==='—'||v==='–')?0:(parseFloat(v)||0);
   const rankOf=(col,team)=>{
-    const vals=[...DB.franquicias].map(d=>({n:d.nombre,v:toNum(col.calc?col.calc(d):d[col.key])}));
+    const vals=[...DB.franquicias].filter(d=>!d.extinta).map(d=>({n:d.nombre,v:toNum(col.calc?col.calc(d):d[col.key])}));
     vals.sort((a,b)=>b.v-a.v);
     const pos=vals.findIndex(x=>x.n===team.nombre)+1;
     return pos||'—';
