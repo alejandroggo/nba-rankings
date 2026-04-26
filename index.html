@@ -493,7 +493,7 @@ function renderTable(data){
   // Máximos para marcar el mejor de cada columna
   const colMax={};
   COLUMNS.filter(c=>!['rank','nombre'].includes(c.key)).forEach(c=>{
-    const vals=DB.franquicias.map(d=>parseFloat(c.calc?c.calc(d):d[c.key])||0).filter(v=>v>0);
+    const vals=DB.franquicias.filter(d=>!d.extinta).map(d=>parseFloat(c.calc?c.calc(d):d[c.key])||0).filter(v=>v>0);
     if(vals.length) colMax[c.key]=Math.max(...vals);
   });
   const isBest=(c,d)=>{
