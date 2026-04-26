@@ -541,12 +541,7 @@ function sortBy(key){
   DB.franquicias.sort((a,b)=>{
     const av=col?.calc?col.calc(a):a[key], bv=col?.calc?col.calc(b):b[key];
     const numCol=col?.calc||typeof av==='number'||typeof bv==='number';
-    if(numCol){
-      if(av==null&&bv==null) return 0;
-      if(av==null) return 1;
-      if(bv==null) return -1;
-      return sortAsc?(+av)-(+bv):(+bv)-(+av);
-    }
+    if(numCol) return sortAsc?(+av||0)-(+bv||0):(+bv||0)-(+av||0);
     return sortAsc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
   });
   renderTable(getCurrentData());
