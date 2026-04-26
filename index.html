@@ -47,6 +47,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .cbtn.oeste {background:rgba(200,16,46,.22);border-color:#C8102E;color:#e87070;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
 .cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
+.cbtn.extinct-on{background:rgba(144,144,176,.15);border-color:var(--muted);color:var(--text);}
 .cf-wrap{border:1px solid var(--border);margin-bottom:14px;background:var(--surface);}
 .cf-toggle{width:100%;padding:11px 16px;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s;}
 .cf-toggle:hover{background:var(--surface2);}
@@ -296,7 +297,7 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
-let filterConf=null, filterDiv=null;
+let filterConf=null, filterDiv=null, showExtinct=false;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
 const logoImgs={};
@@ -335,7 +336,7 @@ async function init() {
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
   COLUMNS.forEach(c=>COL_DEFAULTS[c.key]=c.on);
   preloadLogos();
-  buildStats(); buildConfFilters(); buildColFilters(); renderTable(DB.franquicias); populateSelects(); setupScrollSync();
+  buildStats(); buildConfFilters(); buildColFilters(); refreshExtinctBtn(); renderTable(getCurrentData()); populateSelects(); setupScrollSync();
 }
 
 // ── STAT CARDS ──────────────────────────────────────────────────────────────
@@ -444,7 +445,17 @@ function buildConfFilters(){
     btn.onclick=()=>{ filterDiv=filterDiv===div?null:div; filterConf=filterDiv?DIV_CONF[filterDiv]:null; refreshConfBtns(); renderTable(getCurrentData()); };
     bar.appendChild(btn);
   });
+  addSep();
+  const extBtn=document.createElement('button');
+  extBtn.id='extinctBtn'; extBtn.className='cbtn'; extBtn.textContent='Extintas';
+  extBtn.onclick=()=>{ showExtinct=!showExtinct; refreshExtinctBtn(); if(showExtinct){filterConf=null;filterDiv=null;refreshConfBtns();} renderTable(getCurrentData()); };
+  bar.appendChild(extBtn);
   refreshConfBtns();
+}
+
+function refreshExtinctBtn(){
+  const btn=document.getElementById('extinctBtn');
+  if(btn) btn.className='cbtn'+(showExtinct?' extinct-on':'');
 }
 
 function refreshConfBtns(){
@@ -463,6 +474,7 @@ function refreshConfBtns(){
 function getCurrentData(){
   const q=document.getElementById('search').value.toLowerCase();
   let data=DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
+  if(!showExtinct) data=data.filter(d=>!d.extinta);
   if(filterDiv)        data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
   else if(filterConf)  data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
   if(selectedTeam&&!data.find(d=>d.nombre===selectedTeam)) selectedTeam=null;
