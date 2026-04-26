@@ -74,7 +74,8 @@ th:hover,th.sorted{color:var(--accent);}
 th.sep-r{border-right:2px solid rgba(255,255,255,0.18);}
 body.day th.sep-r{border-right-color:rgba(0,0,0,0.14);}
 td.sep-r{border-right:2px solid var(--border);}
-tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}
+tr.dr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}tr.dr:nth-child(even){background:var(--surface);}tr.dr:hover{background:var(--accent-dim);}tr.dr.selected{background:var(--accent-dim)!important;box-shadow:inset 2px 0 0 var(--accent);}tr.dr.extinta{opacity:.65;}
+.ext-badge{display:inline-block;font-size:8px;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;font-weight:700;background:var(--border);border-radius:2px;padding:1px 4px;margin-top:2px;}
 td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .rc{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--muted);width:38px;text-align:center;}
 .tc{min-width:155px;}.tci{display:flex;align-items:center;gap:9px;}
@@ -497,7 +498,7 @@ function renderTable(data){
       if(c.key==='rank') return `<td class="${sc(c.key)}"><div class="rc" style="color:${rankColor||'var(--muted)'}">${i+1}</div></td>`;
       if(c.key==='nombre') return `<td class="tc${sc(c.key)}"><div class="tci">
         <img class="logo" src="${logo(d.nombre)}" alt="" onerror="this.style.display='none'">
-        <div><div class="tn">${d.nombre}</div></div>
+        <div><div class="tn">${d.nombre}</div>${d.extinta?'<span class="ext-badge">Extinta</span>':''}</div>
       </div></td>`;
       if(c.key==='puntos'){
         const bc=isBest(c,d)?' best-cell':'';
@@ -508,7 +509,7 @@ function renderTable(data){
       const bc=isBest(c,d)?' best-cell':'';
       return `<td class="${isNum?'nb':''}${sc(c.key)}${bc}">${val??'—'}</td>`;
     }).join('');
-    return `<tr class="dr${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
+    return `<tr class="dr${d.extinta?' extinta':''}${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
   }).join('');
 }
 
