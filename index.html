@@ -197,6 +197,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
 // ── CONFIG ─────────────────────────────────────────────────────────────────
 // Cambia esta URL cuando crees el repo en GitHub
 const JSON_URL = 'https://raw.githubusercontent.com/alejandroggo/nba-rankings/main/rankings.json';
+const EXTINTAS_URL = 'https://raw.githubusercontent.com/alejandroggo/nba-rankings/main/extintas.json';
 
 const TEAM_COLORS = {
   'Los Angeles Lakers':['#552583','#FDB927'],'Boston Celtics':['#007A33','#BA9653'],
@@ -319,9 +320,13 @@ const abr = n => ABR[n]||n.slice(0,3).toUpperCase();
 // ── INIT ────────────────────────────────────────────────────────────────────
 async function init() {
   try {
-    const res = await fetch(JSON_URL);
+    const [res, extRes] = await Promise.all([fetch(JSON_URL), fetch(EXTINTAS_URL)]);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     DB = await res.json();
+    if (extRes.ok) {
+      const extData = await extRes.json();
+      DB.franquicias = [...DB.franquicias, ...extData.extintas];
+    }
   } catch(e) {
     document.getElementById('loading').innerHTML =
       `<p style="color:var(--neg);font-size:13px;text-align:center">Error al cargar los datos.<br><small style="opacity:.6">${e.message}</small><br><br><small style="opacity:.4">Comprueba que el JSON_URL es correcto y el repo es público.</small></p>`;
