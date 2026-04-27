@@ -652,12 +652,10 @@ function initCharts(){
 
 // ── COMPARE ─────────────────────────────────────────────────────────────────
 function populateSelects(){
-  const active=[...DB.franquicias].filter(d=>!d.extinta).sort((a,b)=>a.nombre.localeCompare(b.nombre));
-  const extinct=[...DB.franquicias].filter(d=>d.extinta).sort((a,b)=>a.nombre.localeCompare(b.nombre));
-  const sorted=[...active,...extinct];
+  const sorted=[...DB.franquicias].filter(d=>!d.extinta).sort((a,b)=>a.nombre.localeCompare(b.nombre));
   ['team1','team2'].forEach(id=>{
     const sel=document.getElementById(id);
-    sorted.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.extinta?`${d.nombre} (Extinta)`:d.nombre; sel.appendChild(o); });
+    sorted.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.nombre; sel.appendChild(o); });
   });
 }
 
