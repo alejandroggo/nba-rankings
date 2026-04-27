@@ -171,27 +171,35 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
         <span><b>Division Semifinals</b> = Conference Semifinals</span>
         <span><b>Quarterfinals</b> = Conference Semifinals</span>
       </div>
-      <div class="info-block" style="margin-top:10px;flex-direction:column;gap:10px;line-height:1.8">
-        <div class="info-title">Sistema de puntuación</div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px 32px;">
+      <div class="info-block" style="margin-top:10px;flex-direction:column;gap:12px;line-height:1.7">
+        <div class="info-title">Sistema de puntuación · puntos por logro</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px 40px;">
           <div>
-            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:4px">Playoffs</div>
-            <div><b>Anillo</b> · mayor peso del sistema</div>
-            <div><b>Final NBA · Final de Conf. · SF de Conf.</b> · peso decreciente</div>
-            <div><b>1ª Ronda · Play-in</b> · peso menor</div>
-            <div><b>% temporadas en playoffs</b> · constancia histórica</div>
-            <div><b>W/L% en playoffs</b> · rendimiento en postseason</div>
+            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:6px">Playoffs · por ronda alcanzada</div>
+            <div><b style="color:var(--text)">+15</b> &nbsp;Anillo</div>
+            <div><b style="color:var(--text)">+10</b> &nbsp;Final NBA</div>
+            <div><b style="color:var(--text)">+7</b> &nbsp;&nbsp;Final de Conferencia</div>
+            <div><b style="color:var(--text)">+5</b> &nbsp;&nbsp;Semifinal de Conferencia</div>
+            <div><b style="color:var(--text)">+2</b> &nbsp;&nbsp;1ª Ronda</div>
+            <div><b style="color:var(--text)">+0.5</b> Play-in</div>
+            <div><b style="color:var(--text)">+1</b> &nbsp;&nbsp;Copa NBA</div>
           </div>
           <div>
-            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:4px">Temporada regular</div>
-            <div><b>Temporadas +80% / +70% / +50% victorias</b> · bonus positivo</div>
-            <div><b>Temporadas −20% victorias</b> · penalización</div>
+            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:6px">Temporada regular · por temporada</div>
+            <div><b style="color:var(--text)">+5</b> &nbsp;&nbsp;Temporada con +80% victorias</div>
+            <div><b style="color:var(--text)">+3</b> &nbsp;&nbsp;Temporada con +70% victorias</div>
+            <div><b style="color:var(--text)">+1</b> &nbsp;&nbsp;Temporada con +50% victorias</div>
+            <div><b style="color:var(--neg)">−0.5</b> Temporada con −20% victorias</div>
+            <div><b style="color:var(--neg)">−0.5</b> Temporada sin playoffs</div>
+            <div style="margin-top:6px"><b style="color:var(--text)">+0.01</b> por victoria · <b style="color:var(--text)">−0.01</b> por derrota · W/L% ×10</div>
           </div>
           <div>
-            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:4px">Premios individuales</div>
-            <div><b>MVP · DPOY · ROY · COY</b></div>
-            <div><b>All-Stars · All-NBAs</b></div>
-            <div><b>NBA Cup</b></div>
+            <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text);font-weight:700;margin-bottom:6px">Premios individuales</div>
+            <div><b style="color:var(--text)">+3</b> &nbsp;&nbsp;MVP</div>
+            <div><b style="color:var(--text)">+1</b> &nbsp;&nbsp;DPOY · ROY · COY</div>
+            <div><b style="color:var(--text)">+0.4</b> All-NBA</div>
+            <div><b style="color:var(--text)">+0.1</b> All-Star</div>
+            <div style="margin-top:6px"><b style="color:var(--text)">+0.02</b> por victoria PO · <b style="color:var(--neg)">−0.02</b> por derrota PO</div>
           </div>
         </div>
       </div>
