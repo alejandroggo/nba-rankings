@@ -640,7 +640,7 @@ function populateSelects(){
   const sorted=[...DB.franquicias].sort((a,b)=>a.nombre.localeCompare(b.nombre));
   ['team1','team2'].forEach(id=>{
     const sel=document.getElementById(id);
-    sorted.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.nombre; sel.appendChild(o); });
+    sorted.forEach(d=>{ const o=document.createElement('option'); o.value=d.nombre; o.textContent=d.extinta?`${d.nombre} (Extinta)`:d.nombre; sel.appendChild(o); });
   });
 }
 
@@ -737,10 +737,11 @@ function updateCompare(){
     {label:'Finales Conf.',fn:d=>parseFloat(d.conf_fin)||0},
     {label:'MVPs',            fn:d=>parseFloat(d.mvp)||0},
   ];
-  const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.map(a.fn))||1);
+  const radarMax=radarAxes.map(a=>Math.max(...DB.franquicias.filter(d=>!d.extinta).map(a.fn))||1);
   const norm=(v,i)=>Math.round(v/radarMax[i]*100);
-  const rc1=TEAM_COLORS[t1.nombre]?.[0]||c1;
-  const rc2=TEAM_COLORS[t2.nombre]?.[0]||c2;
+  const fullHex=h=>(h.length===4?'#'+h[1]+h[1]+h[2]+h[2]+h[3]+h[3]:h);
+  const rc1=fullHex(TEAM_COLORS[t1.nombre]?.[0]||c1);
+  const rc2=fullHex(TEAM_COLORS[t2.nombre]?.[0]||c2);
   compareChart=new Chart(document.getElementById('radarCanvas'),{type:'radar',data:{
     labels:radarAxes.map(a=>a.label),
     datasets:[
