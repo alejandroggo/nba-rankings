@@ -298,7 +298,7 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
-let filterConf=null, filterDiv=null, showExtinct=false;
+let filterConf=null, filterDiv=null, showExtinct=false, onlyExtinct=false;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
 const logoImgs={};
@@ -453,14 +453,28 @@ function buildConfFilters(){
   addSep();
   const extBtn=document.createElement('button');
   extBtn.id='extinctBtn'; extBtn.className='cbtn'; extBtn.textContent='Extintas';
-  extBtn.onclick=()=>{ showExtinct=!showExtinct; refreshExtinctBtn(); if(showExtinct){filterConf=null;filterDiv=null;refreshConfBtns();} renderTable(getCurrentData()); };
+  extBtn.onclick=()=>{
+    showExtinct=!showExtinct; onlyExtinct=false;
+    refreshExtinctBtn(); if(showExtinct){filterConf=null;filterDiv=null;refreshConfBtns();}
+    renderTable(getCurrentData());
+  };
   bar.appendChild(extBtn);
+  const onlyBtn=document.createElement('button');
+  onlyBtn.id='onlyExtinctBtn'; onlyBtn.className='cbtn'; onlyBtn.textContent='Solo Extintas';
+  onlyBtn.onclick=()=>{
+    onlyExtinct=!onlyExtinct; showExtinct=false;
+    refreshExtinctBtn(); if(onlyExtinct){filterConf=null;filterDiv=null;refreshConfBtns();}
+    renderTable(getCurrentData());
+  };
+  bar.appendChild(onlyBtn);
   refreshConfBtns();
 }
 
 function refreshExtinctBtn(){
   const btn=document.getElementById('extinctBtn');
   if(btn) btn.className='cbtn'+(showExtinct?' extinct-on':'');
+  const btn2=document.getElementById('onlyExtinctBtn');
+  if(btn2) btn2.className='cbtn'+(onlyExtinct?' extinct-on':'');
 }
 
 function refreshConfBtns(){
@@ -479,7 +493,8 @@ function refreshConfBtns(){
 function getCurrentData(){
   const q=document.getElementById('search').value.toLowerCase();
   let data=DB.franquicias.filter(d=>d.nombre?.toLowerCase().includes(q));
-  if(!showExtinct) data=data.filter(d=>!d.extinta);
+  if(onlyExtinct) data=data.filter(d=>d.extinta);
+  else if(!showExtinct) data=data.filter(d=>!d.extinta);
   if(filterDiv)        data=data.filter(d=>DIVISIONS[filterDiv].includes(d.nombre));
   else if(filterConf)  data=data.filter(d=>CONFERENCES[filterConf].includes(d.nombre));
   if(selectedTeam&&!data.find(d=>d.nombre===selectedTeam)) selectedTeam=null;
