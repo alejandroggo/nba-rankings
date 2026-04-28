@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-04-27T18:28:54.694Z",
+  "actualizado": "2026-04-28T00:02:04.377Z",
   "franquicias": [
     {
       "rank": 1,
@@ -744,8 +744,8 @@
     {
       "rank": 21,
       "nombre": "Dallas Mavericks",
-      "puntos": 164.07188541595573,
-      "pts_year": 3.6460418981323497,
+      "puntos": 165.07188541595573,
+      "pts_year": 3.668264120354572,
       "champ": 1,
       "finals": 2,
       "conf_fin": 3,
@@ -762,7 +762,7 @@
       "tot_temporadas": 26,
       "mvp": 1,
       "dpoy": 0,
-      "roy": 2,
+      "roy": 3,
       "coy": 1,
       "A-STAR": 38,
       "A-NBA": 19,
