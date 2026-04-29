@@ -132,6 +132,18 @@ td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
 footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
+.evo-table{width:100%;border-collapse:collapse;font-size:13px;}
+.evo-table thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
+.evo-table th{padding:12px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:center;}
+.evo-table th.left{text-align:left;}
+.evo-table td{padding:10px 14px;border-bottom:1px solid var(--border);text-align:center;vertical-align:middle;}
+.evo-table tr:nth-child(even) td{background:var(--surface);}
+.evo-table tr:hover td{background:var(--accent-dim);}
+.evo-td-pts{font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1;}
+.evo-td-rank{font-size:10px;color:var(--muted);margin-top:2px;}
+.evo-arrow-up{color:var(--pos);font-size:11px;font-weight:700;margin-left:4px;}
+.evo-arrow-dn{color:var(--neg);font-size:11px;font-weight:700;margin-left:4px;}
+.evo-blank{color:var(--border);font-size:18px;}
 @media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
 </head>
@@ -150,6 +162,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
   <button class="tab active" onclick="switchTab('ranking',this)">Ranking</button>
   <button class="tab" onclick="switchTab('graficos',this)">Gráficos</button>
   <button class="tab" onclick="switchTab('comparar',this)">Comparar</button>
+  <button class="tab" onclick="switchTab('evolucion',this)">Evolución</button>
 </nav>
 <main>
   <div id="loading"><div class="spin"></div><p>Cargando rankings</p></div>
@@ -227,6 +240,9 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       </div>
       <div id="compareResult"><div class="ph">Selecciona dos franquicias para comparar</div></div>
     </div>
+    <div id="tab-evolucion" class="section">
+      <div id="evolucionContent"></div>
+    </div>
   </div>
 </main>
 <footer>
@@ -238,6 +254,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
 // Cambia esta URL cuando crees el repo en GitHub
 const JSON_URL = 'https://raw.githubusercontent.com/alejandroggo/nba-rankings/main/rankings.json';
 const EXTINTAS_URL = 'https://raw.githubusercontent.com/alejandroggo/nba-rankings/main/extintas.json';
+const HISTORICO_URL = 'https://raw.githubusercontent.com/alejandroggo/nba-rankings/main/historico.json';
 
 const TEAM_COLORS = {
   'Los Angeles Lakers':['#552583','#FDB927'],'Boston Celtics':['#007A33','#BA9653'],
@@ -360,13 +377,14 @@ const abr = n => ABR[n]||n.slice(0,3).toUpperCase();
 // ── INIT ────────────────────────────────────────────────────────────────────
 async function init() {
   try {
-    const [res, extRes] = await Promise.all([fetch(JSON_URL), fetch(EXTINTAS_URL)]);
+    const [res, extRes, histRes] = await Promise.all([fetch(JSON_URL), fetch(EXTINTAS_URL), fetch(HISTORICO_URL)]);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     DB = await res.json();
     if (extRes.ok) {
       const extData = await extRes.json();
       DB.franquicias = [...DB.franquicias, ...extData.extintas];
     }
+    if (histRes.ok) DB.historico = await histRes.json();
   } catch(e) {
     document.getElementById('loading').innerHTML =
       `<p style="color:var(--neg);font-size:13px;text-align:center">Error al cargar los datos.<br><small style="opacity:.6">${e.message}</small><br><br><small style="opacity:.4">Comprueba que el JSON_URL es correcto y el repo es público.</small></p>`;
@@ -819,6 +837,69 @@ function switchTab(id,btn){
   btn.classList.add('active');
   document.getElementById('tab-'+id).classList.add('active');
   if(id==='graficos') initCharts();
+  if(id==='evolucion') renderEvolucion();
+}
+
+// ── EVOLUCIÓN ────────────────────────────────────────────────────────────────
+function renderEvolucion(){
+  const el=document.getElementById('evolucionContent');
+  if(!DB.historico){el.innerHTML='<div class="ph">No hay datos históricos disponibles</div>';return;}
+  const snaps=DB.historico.snapshots;
+  const years=snaps.map(s=>s.year);
+  // Equipos ordenados por rank del año más reciente con datos
+  const lastSnap=[...snaps].reverse().find(s=>s.data);
+  if(!lastSnap){el.innerHTML='<div class="ph">Sin datos todavía</div>';return;}
+  const teams=lastSnap.data.map(d=>d.nombre);
+
+  // Índice: year → map nombre→{puntos,rank}
+  const idx={};
+  snaps.forEach(s=>{
+    idx[s.year]={};
+    if(s.data) s.data.forEach(d=>idx[s.year][d.nombre]={puntos:d.puntos,rank:d.rank});
+  });
+
+  const arrow=(cur,prev)=>{
+    if(!cur||!prev) return '';
+    const diff=prev.rank-cur.rank;
+    if(diff>0) return `<span class="evo-arrow-up">▲${diff}</span>`;
+    if(diff<0) return `<span class="evo-arrow-dn">▼${Math.abs(diff)}</span>`;
+    return `<span style="color:var(--muted);font-size:10px;margin-left:4px">—</span>`;
+  };
+
+  let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
+    <th class="left" style="min-width:200px">Franquicia</th>
+    ${years.map(y=>`<th colspan="2">${y}</th>`).join('')}
+  </tr>
+  <tr>
+    <th class="left"></th>
+    ${years.map(()=>'<th>Puntos</th><th>Posición</th>').join('')}
+  </tr></thead><tbody>`;
+
+  teams.forEach(nombre=>{
+    html+=`<tr><td class="left" style="text-align:left">
+      <div style="display:flex;align-items:center;gap:8px">
+        <img style="width:24px;height:24px;object-fit:contain" src="${logo(nombre)}" alt="" onerror="this.style.display='none'">
+        <span style="font-weight:500">${nombre}</span>
+      </div></td>`;
+    years.forEach((y,i)=>{
+      const cur=idx[y]?.[nombre];
+      const prev=i>0?idx[years[i-1]]?.[nombre]:null;
+      if(!cur){
+        html+=`<td class="evo-blank" colspan="2">—</td>`;
+      } else {
+        html+=`<td><div class="evo-td-pts">${cur.puntos.toFixed(2)}</div></td>
+               <td><div class="evo-td-rank">#${cur.rank}</div>${arrow(cur,prev)}</td>`;
+      }
+    });
+    html+='</tr>';
+  });
+
+  html+='</tbody></table></div>';
+  html+=`<div class="info-block" style="margin-top:10px">
+    <div class="info-title">Nota</div>
+    <span>Dato capturado el <b>1 de julio</b> de cada año, al cierre de la temporada.</span>
+  </div>`;
+  el.innerHTML=html;
 }
 
 // ── THEME ────────────────────────────────────────────────────────────────────
