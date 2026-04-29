@@ -847,12 +847,16 @@ function switchTab(id,btn){
 function renderEvolucion(){
   const el=document.getElementById('evolucionContent');
   if(!DB.historico){el.innerHTML='<div class="ph">No hay datos históricos disponibles</div>';return;}
-  const snaps=DB.historico.snapshots;
+
+  // Current year always comes live from rankings.json
+  const currentYear=new Date().getFullYear();
+  const liveData=[...DB.franquicias].filter(d=>!d.extinta).sort((a,b)=>b.puntos-a.puntos)
+    .map((d,i)=>({nombre:d.nombre,puntos:d.puntos,rank:i+1}));
+  const snaps=[...DB.historico.snapshots.filter(s=>s.year!==currentYear),{year:currentYear,data:liveData}]
+    .sort((a,b)=>a.year-b.year);
+
   const years=snaps.map(s=>s.year);
-  // Equipos ordenados por rank del año más reciente con datos
-  const lastSnap=[...snaps].reverse().find(s=>s.data);
-  if(!lastSnap){el.innerHTML='<div class="ph">Sin datos todavía</div>';return;}
-  const teams=lastSnap.data.map(d=>d.nombre);
+  const teams=liveData.map(d=>d.nombre);
 
   // Índice: year → map nombre→{puntos,rank}
   const idx={};
@@ -908,7 +912,7 @@ function renderEvolucion(){
   html+='</tbody></table></div>';
   html+=`<div class="info-block" style="margin-top:10px">
     <div class="info-title">Nota</div>
-    <span>Dato capturado el <b>1 de julio</b> de cada año, al cierre de la temporada.</span>
+    <span>El año en curso se actualiza en tiempo real. Los años anteriores corresponden al dato del <b>1 de julio</b> de cada temporada.</span>
   </div>`;
   el.innerHTML=html;
 }
