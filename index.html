@@ -909,32 +909,40 @@ function renderEvolucion(){
     teams=[...teams];
     if(evoSort.key==='nombre'){
       teams.sort((a,b)=>evoSort.asc?a.localeCompare(b):b.localeCompare(a));
+    } else if(evoSort.key==='delta_rank'){
+      const prevY=years[years.indexOf(evoSort.year)-1]??null;
+      teams.sort((a,b)=>{
+        const getDelta=n=>{const c=idx[evoSort.year]?.[n],p=prevY?idx[prevY]?.[n]:null;return(c&&p)?p.rank-c.rank:null;};
+        const va=getDelta(a),vb=getDelta(b);
+        if(va===null&&vb===null) return 0;
+        if(va===null) return 1; if(vb===null) return -1;
+        return evoSort.asc?va-vb:vb-va;
+      });
     } else {
       teams.sort((a,b)=>{
         const va=idx[evoSort.year]?.[a]?.[evoSort.key]??null;
         const vb=idx[evoSort.year]?.[b]?.[evoSort.key]??null;
         if(va===null&&vb===null) return 0;
-        if(va===null) return 1;
-        if(vb===null) return -1;
+        if(va===null) return 1; if(vb===null) return -1;
         return evoSort.asc?va-vb:vb-va;
       });
     }
   }
 
-  const arrow=(cur,prev)=>{
-    if(!cur||!prev) return '';
-    const diff=prev.rank-cur.rank;
-    if(diff>0) return `<span class="evo-arrow-up">▲${diff}</span>`;
-    if(diff<0) return `<span class="evo-arrow-dn">▼${Math.abs(diff)}</span>`;
-    return `<span style="color:var(--muted);font-size:10px;margin-left:4px">—</span>`;
-  };
-
-  const delta=(cur,prev)=>{
+  const ptsDelta=(cur,prev)=>{
     if(!cur||!prev) return '';
     const d=cur.puntos-prev.puntos;
     if(d>0) return `<span class="evo-td-delta-pos">+${d.toFixed(2)}</span>`;
     if(d<0) return `<span class="evo-td-delta-neg">${d.toFixed(2)}</span>`;
     return '';
+  };
+
+  const rankDelta=(cur,prev)=>{
+    if(!cur||!prev) return `<span style="color:var(--muted);font-size:10px">—</span>`;
+    const diff=prev.rank-cur.rank;
+    if(diff>0) return `<span class="evo-arrow-up">▲${diff}</span>`;
+    if(diff<0) return `<span class="evo-arrow-dn">▼${Math.abs(diff)}</span>`;
+    return `<span style="color:var(--muted);font-size:10px">—</span>`;
   };
 
   const evoTh=(y,k,label,cls)=>{
@@ -945,11 +953,14 @@ function renderEvolucion(){
 
   let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
     ${evoTh(null,'nombre','Franquicia','left')}
-    ${years.map((y,i)=>`<th colspan="2"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
+    ${years.map((y,i)=>`<th colspan="${i>0?3:2}"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
   </tr>
   <tr>
     <th class="left"></th>
-    ${years.map((y,i)=>`${evoTh(y,'puntos','Puntos',i>0?'evo-year-sep':'')}${evoTh(y,'rank','Posición','')}`).join('')}
+    ${years.map((y,i)=>i===0
+      ? `${evoTh(y,'puntos','Puntos','')}${evoTh(y,'rank','Posición','')}`
+      : `${evoTh(y,'puntos','Puntos','evo-year-sep')}${evoTh(y,'rank','Posición','')}${evoTh(y,'delta_rank','Δ pos','')}`
+    ).join('')}
   </tr></thead><tbody>`;
 
   teams.forEach(nombre=>{
@@ -962,10 +973,14 @@ function renderEvolucion(){
       const cur=idx[y]?.[nombre];
       const prev=i>0?idx[years[i-1]]?.[nombre]:null;
       if(!cur){
-        html+=`<td class="evo-blank${i>0?' evo-year-sep':''}" colspan="2">—</td>`;
+        html+=`<td class="evo-blank${i>0?' evo-year-sep':''}" colspan="${i>0?3:2}">—</td>`;
+      } else if(i===0){
+        html+=`<td><div class="evo-td-pts">${cur.puntos.toFixed(2)}</div></td>
+               <td><div class="evo-td-rank">#${cur.rank}</div></td>`;
       } else {
-        html+=`<td${i>0?' class="evo-year-sep"':''}><div class="evo-td-pts">${cur.puntos.toFixed(2)}${delta(cur,prev)}</div></td>
-               <td><div class="evo-td-rank">#${cur.rank}</div>${arrow(cur,prev)}</td>`;
+        html+=`<td class="evo-year-sep"><div class="evo-td-pts">${cur.puntos.toFixed(2)}${ptsDelta(cur,prev)}</div></td>
+               <td><div class="evo-td-rank">#${cur.rank}</div></td>
+               <td>${rankDelta(cur,prev)}</td>`;
       }
     });
     html+='</tr>';
