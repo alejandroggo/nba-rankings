@@ -1,6 +1,41 @@
 {
   "snapshots": [
     {
+      "year": 2024,
+      "data": [
+        {"nombre": "Los Angeles Lakers",      "puntos": 753.78, "rank": 1},
+        {"nombre": "Boston Celtics",           "puntos": 719.18, "rank": 2},
+        {"nombre": "Philadelphia 76ers",       "puntos": 452.39, "rank": 3},
+        {"nombre": "Golden State Warriors",    "puntos": 381.12, "rank": 4},
+        {"nombre": "San Antonio Spurs",        "puntos": 354.02, "rank": 5},
+        {"nombre": "New York Knicks",          "puntos": 331.57, "rank": 6},
+        {"nombre": "Atlanta Hawks",            "puntos": 315.24, "rank": 7},
+        {"nombre": "Chicago Bulls",            "puntos": 309.91, "rank": 8},
+        {"nombre": "Detroit Pistons",          "puntos": 302.57, "rank": 9},
+        {"nombre": "Milwaukee Bucks",          "puntos": 265.92, "rank": 10},
+        {"nombre": "Oklahoma City Thunder",    "puntos": 247.87, "rank": 11},
+        {"nombre": "Phoenix Suns",             "puntos": 244.46, "rank": 12},
+        {"nombre": "Houston Rockets",          "puntos": 240.45, "rank": 13},
+        {"nombre": "Utah Jazz",                "puntos": 211.10, "rank": 14},
+        {"nombre": "Miami Heat",               "puntos": 207.79, "rank": 15},
+        {"nombre": "Portland Trail Blazers",   "puntos": 207.50, "rank": 16},
+        {"nombre": "Sacramento Kings",         "puntos": 200.60, "rank": 17},
+        {"nombre": "Washington Wizards",       "puntos": 177.83, "rank": 18},
+        {"nombre": "Denver Nuggets",           "puntos": 169.14, "rank": 19},
+        {"nombre": "Cleveland Cavaliers",      "puntos": 168.22, "rank": 20},
+        {"nombre": "Dallas Mavericks",         "puntos": 164.76, "rank": 21},
+        {"nombre": "Indiana Pacers",           "puntos": 151.84, "rank": 22},
+        {"nombre": "Orlando Magic",            "puntos": 100.47, "rank": 23},
+        {"nombre": "Brooklyn Nets",            "puntos":  98.85, "rank": 24},
+        {"nombre": "Toronto Raptors",          "puntos":  90.72, "rank": 25},
+        {"nombre": "Los Angeles Clippers",     "puntos":  87.48, "rank": 26},
+        {"nombre": "Memphis Grizzlies",        "puntos":  56.11, "rank": 27},
+        {"nombre": "Minnesota Timberwolves",   "puntos":  51.32, "rank": 28},
+        {"nombre": "Charlotte Hornets",        "puntos":  46.19, "rank": 29},
+        {"nombre": "New Orleans Pelicans",     "puntos":  41.17, "rank": 30}
+      ]
+    },
+    {
       "year": 2025,
       "data": [
         {"nombre": "Los Angeles Lakers",      "puntos": 757.88, "rank": 1},
