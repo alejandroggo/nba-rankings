@@ -844,14 +844,26 @@ function downloadCompare(){
   const el=document.getElementById('compareResult');
   const t1=document.getElementById('team1').value;
   const t2=document.getElementById('team2').value;
+  const radar=el.querySelector('.cmp-radar');
+  const footer=document.createElement('div');
+  footer.style.cssText='padding:10px 14px;font-size:11px;color:#888;text-align:right;font-family:DM Sans,sans-serif;border-top:1px solid #333;margin-top:4px;';
+  footer.textContent='Creado por @alejandroggo | Claude';
   wrap.style.display='none';
+  if(radar) radar.style.display='none';
+  el.appendChild(footer);
   html2canvas(el,{scale:2,useCORS:true,backgroundColor:getComputedStyle(document.body).getPropertyValue('--bg').trim()||'#0d0f14'}).then(canvas=>{
+    if(radar) radar.style.display='';
+    el.removeChild(footer);
     wrap.style.display='block';
     const a=document.createElement('a');
     a.download=`${t1} vs ${t2}.png`.replace(/\s+/g,'_');
     a.href=canvas.toDataURL('image/png');
     a.click();
-  }).catch(()=>{ wrap.style.display='block'; });
+  }).catch(()=>{
+    if(radar) radar.style.display='';
+    if(footer.parentNode) el.removeChild(footer);
+    wrap.style.display='block';
+  });
 }
 
 // ── TABS ────────────────────────────────────────────────────────────────────
