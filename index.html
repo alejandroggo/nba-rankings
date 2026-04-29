@@ -57,6 +57,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .cbtn.div-e {background:rgba(29,66,138,.12);border-color:#1D428A88;color:#7aabea;}
 .cbtn.div-o {background:rgba(200,16,46,.12);border-color:#C8102E88;color:#e87070;}
 .cbtn.extinct-on{background:rgba(144,144,176,.15);border-color:var(--muted);color:var(--text);}
+.cbtn.on{background:var(--accent-dim);border-color:var(--accent);color:var(--text);}
 .cf-wrap{border:1px solid var(--border);margin-bottom:14px;background:var(--surface);}
 .cf-toggle{width:100%;padding:11px 16px;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s;}
 .cf-toggle:hover{background:var(--surface2);}
@@ -245,6 +246,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
       <div id="compareResult"><div class="ph">Selecciona dos franquicias para comparar</div></div>
     </div>
     <div id="tab-evolucion" class="section">
+      <div id="evoFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center"></div>
       <div id="evolucionContent"></div>
     </div>
   </div>
@@ -360,6 +362,7 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
 let evoSort={year:null,key:null,asc:true};
+let evoFilterConf=null, evoFilterDiv=null;
 let filterConf=null, filterDiv=null, showExtinct=false, onlyExtinct=false;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
@@ -404,7 +407,7 @@ async function init() {
   document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
   COLUMNS.forEach(c=>COL_DEFAULTS[c.key]=c.on);
   preloadLogos();
-  buildStats(); buildConfFilters(); buildColFilters(); refreshExtinctBtn(); renderTable(getCurrentData()); populateSelects(); setupScrollSync();
+  buildStats(); buildConfFilters(); buildColFilters(); refreshExtinctBtn(); renderTable(getCurrentData()); populateSelects(); setupScrollSync(); buildEvoFilters();
   // Deeplink: ?t1=Los+Angeles+Lakers&t2=Boston+Celtics
   const params=new URLSearchParams(location.search);
   const p1=params.get('t1'), p2=params.get('t2');
@@ -891,6 +894,35 @@ function switchTab(id,btn){
 }
 
 // ── EVOLUCIÓN ────────────────────────────────────────────────────────────────
+function buildEvoFilters(){
+  const wrap=document.getElementById('evoFilters');
+  const mk=(label,onclick,cls)=>{const b=document.createElement('button');b.className='cbtn'+cls;b.textContent=label;b.onclick=onclick;wrap.appendChild(b);return b;};
+  mk('Todos',()=>{evoFilterConf=null;evoFilterDiv=null;refreshEvoFilters();renderEvolucion();},'');
+  ['Este','Oeste'].forEach(c=>{
+    mk(c,()=>{evoFilterConf=evoFilterConf===c?null:c;evoFilterDiv=null;refreshEvoFilters();renderEvolucion();},'');
+  });
+  Object.keys(DIVISIONS).forEach(div=>{
+    mk(div,()=>{evoFilterDiv=evoFilterDiv===div?null:div;evoFilterConf=evoFilterDiv?DIV_CONF[evoFilterDiv]:null;refreshEvoFilters();renderEvolucion();},'');
+  });
+  refreshEvoFilters();
+}
+function refreshEvoFilters(){
+  const wrap=document.getElementById('evoFilters');
+  const btns=[...wrap.querySelectorAll('.cbtn')];
+  const labels=['Todos','Este','Oeste',...Object.keys(DIVISIONS)];
+  btns.forEach((b,i)=>{
+    const label=labels[i];
+    if(label==='Todos'){b.className='cbtn'+((!evoFilterConf&&!evoFilterDiv)?' on':'');}
+    else if(label==='Este'||label==='Oeste'){
+      const c=label;
+      b.className='cbtn'+(evoFilterConf===c&&!evoFilterDiv?' '+(c==='Este'?'este':'oeste'):'');
+    } else {
+      const conf=DIV_CONF[label], active=evoFilterDiv===label, confActive=evoFilterConf===conf&&!evoFilterDiv;
+      b.className='cbtn'+(active?' '+(conf==='Este'?'este':'oeste'):confActive?' '+(conf==='Este'?'div-e':'div-o'):'');
+    }
+  });
+}
+
 function sortEvo(year,key){
   if(evoSort.year===year&&evoSort.key===key){evoSort.asc=!evoSort.asc;}
   else{evoSort={year,key,asc:(key==='rank'||key==='nombre')};}
@@ -919,6 +951,8 @@ function renderEvolucion(){
 
   // Sort teams
   let teams=liveData.map(d=>d.nombre);
+  if(evoFilterDiv)        teams=teams.filter(n=>DIVISIONS[evoFilterDiv].includes(n));
+  else if(evoFilterConf)  teams=teams.filter(n=>CONFERENCES[evoFilterConf].includes(n));
   if(evoSort.key){
     teams=[...teams];
     if(evoSort.key==='nombre'){
