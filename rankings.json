@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-04-29T00:40:01.500Z",
+  "actualizado": "2026-04-29T03:11:38.349Z",
   "franquicias": [
     {
       "rank": 1,
@@ -41,8 +41,8 @@
     {
       "rank": 2,
       "nombre": "Boston Celtics",
-      "puntos": 730.1718845421119,
-      "pts_year": 9.242682082811543,
+      "puntos": 730.1442757201055,
+      "pts_year": 9.242332604051969,
       "champ": 18,
       "finals": 5,
       "conf_fin": 16,
@@ -70,16 +70,16 @@
       "wins": 3751,
       "loses": 2527,
       "wl_pct": 0.5974832749283211,
-      "GAMES": 753,
+      "GAMES": 754,
       "WINS": 432,
-      "LOSES": 321,
-      "W-L%": 0.5737051792828686
+      "LOSES": 322,
+      "W-L%": 0.5729442970822282
     },
     {
       "rank": 3,
       "nombre": "Philadelphia 76ers",
-      "puntos": 453.14409120872534,
-      "pts_year": 5.962422252746386,
+      "puntos": 453.174027058591,
+      "pts_year": 5.962816145507776,
       "champ": 3,
       "finals": 6,
       "conf_fin": 12,
@@ -107,10 +107,10 @@
       "wins": 3170,
       "loses": 2935,
       "wl_pct": 0.5192465192465192,
-      "GAMES": 492,
-      "WINS": 251,
+      "GAMES": 493,
+      "WINS": 252,
       "LOSES": 241,
-      "W-L%": 0.5101626016260162
+      "W-L%": 0.5111561866125761
     },
     {
       "rank": 4,
@@ -152,8 +152,8 @@
     {
       "rank": 5,
       "nombre": "San Antonio Spurs",
-      "puntos": 358.6545939058293,
-      "pts_year": 7.31948150828223,
+      "puntos": 358.6855540638483,
+      "pts_year": 7.320113348241803,
       "champ": 5,
       "finals": 1,
       "conf_fin": 8,
@@ -181,16 +181,16 @@
       "wins": 2401,
       "loses": 1630,
       "wl_pct": 0.5956338377573803,
-      "GAMES": 407,
-      "WINS": 225,
+      "GAMES": 408,
+      "WINS": 226,
       "LOSES": 182,
-      "W-L%": 0.5528255528255528
+      "W-L%": 0.553921568627451
     },
     {
       "rank": 6,
       "nombre": "New York Knicks",
-      "puntos": 343.8163998046876,
-      "pts_year": 4.352106326641615,
+      "puntos": 343.8481643812178,
+      "pts_year": 4.352508409888833,
       "champ": 2,
       "finals": 6,
       "conf_fin": 10,
@@ -218,16 +218,16 @@
       "wins": 3078,
       "loses": 3191,
       "wl_pct": 0.49098739830914023,
-      "GAMES": 426,
-      "WINS": 212,
+      "GAMES": 427,
+      "WINS": 213,
       "LOSES": 214,
-      "W-L%": 0.49765258215962443
+      "W-L%": 0.49882903981264637
     },
     {
       "rank": 7,
       "nombre": "Atlanta Hawks",
-      "puntos": 317.52325547863074,
-      "pts_year": 4.177937572087247,
+      "puntos": 317.4923321348025,
+      "pts_year": 4.177530685984244,
       "champ": 1,
       "finals": 3,
       "conf_fin": 10,
@@ -255,10 +255,10 @@
       "wins": 3013,
       "loses": 3088,
       "wl_pct": 0.49385346664481233,
-      "GAMES": 394,
+      "GAMES": 395,
       "WINS": 170,
-      "LOSES": 224,
-      "W-L%": 0.43147208121827413
+      "LOSES": 225,
+      "W-L%": 0.43037974683544306
     },
     {
       "rank": 8,
@@ -559,15 +559,15 @@
     {
       "rank": 16,
       "nombre": "Portland Trail Blazers",
-      "puntos": 208.4329586052766,
-      "pts_year": 3.789690156459575,
+      "puntos": 210.3974871115039,
+      "pts_year": 3.825408856572798,
       "champ": 1,
       "finals": 2,
       "conf_fin": 4,
       "conf_sf": 5,
-      "primera_ronda": 25,
+      "primera_ronda": 26,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 38,
       "pct_80": 0,
@@ -588,10 +588,10 @@
       "wins": 2370,
       "loses": 2156,
       "wl_pct": 0.5236411842686699,
-      "GAMES": 278,
+      "GAMES": 279,
       "WINS": 120,
-      "LOSES": 158,
-      "W-L%": 0.4316546762589928
+      "LOSES": 159,
+      "W-L%": 0.43010752688172044
     },
     {
       "rank": 17,
