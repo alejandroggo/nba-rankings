@@ -970,6 +970,14 @@ function renderEvolucion(){
         if(va===null) return 1; if(vb===null) return -1;
         return evoSort.asc?va-vb:vb-va;
       });
+    } else if(evoSort.key==='total_delta'){
+      teams.sort((a,b)=>{
+        const getDelta=n=>{const f=idx[years[0]]?.[n],l=idx[years[years.length-1]]?.[n];return(f&&l)?l.puntos-f.puntos:null;};
+        const va=getDelta(a),vb=getDelta(b);
+        if(va===null&&vb===null) return 0;
+        if(va===null) return 1; if(vb===null) return -1;
+        return evoSort.asc?va-vb:vb-va;
+      });
     } else {
       teams.sort((a,b)=>{
         const va=idx[evoSort.year]?.[a]?.[evoSort.key]??null;
@@ -1003,9 +1011,12 @@ function renderEvolucion(){
     return `<th${cls?' class="'+cls+'"':''} onclick="sortEvo(${y===null?'null':y},'${k}')" style="cursor:pointer${on?';color:var(--accent)':''}">${label}<span style="font-size:7px;margin-left:3px;opacity:${on?1:0.25}">${ico}</span></th>`;
   };
 
+  const totalThOn=evoSort.key==='total_delta';
+  const totalThIco=totalThOn?(evoSort.asc?'▲':'▼'):'⇅';
   let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
     ${evoTh(null,'nombre','Franquicia','left')}
     ${years.map((y,i)=>`<th colspan="${i>0?3:2}"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
+    <th rowspan="2" class="evo-year-sep" onclick="sortEvo(null,'total_delta')" style="cursor:pointer;vertical-align:middle${totalThOn?';color:var(--accent)':''}">Δ Total<br><span style="font-size:8px;opacity:.6">desde ${years[0]}</span><br><span style="font-size:7px;opacity:${totalThOn?1:0.25}">${totalThIco}</span></th>
   </tr>
   <tr>
     <th class="left"></th>
@@ -1035,6 +1046,15 @@ function renderEvolucion(){
                <td>${rankDelta(cur,prev)}</td>`;
       }
     });
+    const first=idx[years[0]]?.[nombre];
+    const last=idx[years[years.length-1]]?.[nombre];
+    if(first&&last){
+      const d=last.puntos-first.puntos;
+      const cls=d>0?'evo-td-delta-pos':'evo-td-delta-neg';
+      html+=`<td class="evo-year-sep"><span class="${cls}" style="font-size:17px">${d>0?'+':''}${d.toFixed(2)}</span></td>`;
+    } else {
+      html+=`<td class="evo-year-sep evo-blank">—</td>`;
+    }
     html+='</tr>';
   });
 
