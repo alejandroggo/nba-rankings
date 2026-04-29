@@ -10,8 +10,8 @@
         {"nombre": "San Antonio Spurs",        "puntos": 353.94, "rank": 5},
         {"nombre": "New York Knicks",          "puntos": 341.36, "rank": 6},
         {"nombre": "Atlanta Hawks",            "puntos": 316.32, "rank": 7},
-        {"nombre": "Detroit Pistons",          "puntos": 306.58, "rank": 8},
-        {"nombre": "Chicago Bulls",            "puntos": 305.14, "rank": 9},
+        {"nombre": "Chicago Bulls",            "puntos": 310.86, "rank": 8},
+        {"nombre": "Detroit Pistons",          "puntos": 306.58, "rank": 9},
         {"nombre": "Oklahoma City Thunder",    "puntos": 273.26, "rank": 10},
         {"nombre": "Milwaukee Bucks",          "puntos": 271.07, "rank": 11},
         {"nombre": "Phoenix Suns",             "puntos": 244.44, "rank": 12},
@@ -31,7 +31,7 @@
         {"nombre": "Toronto Raptors",          "puntos":  90.46, "rank": 26},
         {"nombre": "Minnesota Timberwolves",   "puntos":  60.95, "rank": 27},
         {"nombre": "Memphis Grizzlies",        "puntos":  59.67, "rank": 28},
-        {"nombre": "Charlotte Hornets",        "puntos":  51.42, "rank": 29},
+        {"nombre": "Charlotte Hornets",        "puntos":  45.69, "rank": 29},
         {"nombre": "New Orleans Pelicans",     "puntos":  40.67, "rank": 30}
       ]
     },
