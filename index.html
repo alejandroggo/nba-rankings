@@ -144,8 +144,8 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
 .evo-arrow-up{color:var(--pos);font-size:11px;font-weight:700;margin-left:4px;}
 .evo-arrow-dn{color:var(--neg);font-size:11px;font-weight:700;margin-left:4px;}
 .evo-blank{color:var(--border);font-size:18px;}
-.evo-td-delta-pos{font-size:10px;color:var(--pos);margin-top:2px;}
-.evo-td-delta-neg{font-size:10px;color:var(--neg);margin-top:2px;}
+.evo-td-delta-pos{font-size:10px;color:var(--pos);margin-left:5px;}
+.evo-td-delta-neg{font-size:10px;color:var(--neg);margin-left:5px;}
 .evo-year-sep{border-left:2px solid var(--accent)!important;}
 @media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
@@ -872,8 +872,8 @@ function renderEvolucion(){
   const delta=(cur,prev)=>{
     if(!cur||!prev) return '';
     const d=cur.puntos-prev.puntos;
-    if(d>0) return `<div class="evo-td-delta-pos">+${d.toFixed(2)}</div>`;
-    if(d<0) return `<div class="evo-td-delta-neg">${d.toFixed(2)}</div>`;
+    if(d>0) return `<span class="evo-td-delta-pos">+${d.toFixed(2)}</span>`;
+    if(d<0) return `<span class="evo-td-delta-neg">${d.toFixed(2)}</span>`;
     return '';
   };
 
@@ -898,7 +898,7 @@ function renderEvolucion(){
       if(!cur){
         html+=`<td class="evo-blank${i>0?' evo-year-sep':''}" colspan="2">—</td>`;
       } else {
-        html+=`<td${i>0?' class="evo-year-sep"':''}><div class="evo-td-pts">${cur.puntos.toFixed(2)}</div>${delta(cur,prev)}</td>
+        html+=`<td${i>0?' class="evo-year-sep"':''}><div class="evo-td-pts">${cur.puntos.toFixed(2)}${delta(cur,prev)}</div></td>
                <td><div class="evo-td-rank">#${cur.rank}</div>${arrow(cur,prev)}</td>`;
       }
     });
