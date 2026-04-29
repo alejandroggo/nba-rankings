@@ -144,6 +144,9 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
 .evo-arrow-up{color:var(--pos);font-size:11px;font-weight:700;margin-left:4px;}
 .evo-arrow-dn{color:var(--neg);font-size:11px;font-weight:700;margin-left:4px;}
 .evo-blank{color:var(--border);font-size:18px;}
+.evo-td-delta-pos{font-size:10px;color:var(--pos);margin-top:2px;}
+.evo-td-delta-neg{font-size:10px;color:var(--neg);margin-top:2px;}
+.evo-year-sep{border-left:2px solid var(--accent)!important;}
 @media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
 </head>
@@ -866,13 +869,21 @@ function renderEvolucion(){
     return `<span style="color:var(--muted);font-size:10px;margin-left:4px">—</span>`;
   };
 
+  const delta=(cur,prev)=>{
+    if(!cur||!prev) return '';
+    const d=cur.puntos-prev.puntos;
+    if(d>0) return `<div class="evo-td-delta-pos">+${d.toFixed(2)}</div>`;
+    if(d<0) return `<div class="evo-td-delta-neg">${d.toFixed(2)}</div>`;
+    return '';
+  };
+
   let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
     <th class="left" style="min-width:200px">Franquicia</th>
-    ${years.map(y=>`<th colspan="2">${y}</th>`).join('')}
+    ${years.map((y,i)=>`<th colspan="2"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
   </tr>
   <tr>
     <th class="left"></th>
-    ${years.map(()=>'<th>Puntos</th><th>Posición</th>').join('')}
+    ${years.map((y,i)=>`<th${i>0?' class="evo-year-sep"':''}>Puntos</th><th>Posición</th>`).join('')}
   </tr></thead><tbody>`;
 
   teams.forEach(nombre=>{
@@ -885,9 +896,9 @@ function renderEvolucion(){
       const cur=idx[y]?.[nombre];
       const prev=i>0?idx[years[i-1]]?.[nombre]:null;
       if(!cur){
-        html+=`<td class="evo-blank" colspan="2">—</td>`;
+        html+=`<td class="evo-blank${i>0?' evo-year-sep':''}" colspan="2">—</td>`;
       } else {
-        html+=`<td><div class="evo-td-pts">${cur.puntos.toFixed(2)}</div></td>
+        html+=`<td${i>0?' class="evo-year-sep"':''}><div class="evo-td-pts">${cur.puntos.toFixed(2)}</div>${delta(cur,prev)}</td>
                <td><div class="evo-td-rank">#${cur.rank}</div>${arrow(cur,prev)}</td>`;
       }
     });
