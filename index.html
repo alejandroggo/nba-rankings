@@ -359,6 +359,7 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let DB=null, sortKey='rank', sortAsc=true, chartsInited=false, compareChart=null, selectedTeam=null;
+let evoSort={year:null,key:null,asc:true};
 let filterConf=null, filterDiv=null, showExtinct=false, onlyExtinct=false;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
@@ -876,6 +877,12 @@ function switchTab(id,btn){
 }
 
 // ── EVOLUCIÓN ────────────────────────────────────────────────────────────────
+function sortEvo(year,key){
+  if(evoSort.year===year&&evoSort.key===key){evoSort.asc=!evoSort.asc;}
+  else{evoSort={year,key,asc:(key==='rank'||key==='nombre')};}
+  renderEvolucion();
+}
+
 function renderEvolucion(){
   const el=document.getElementById('evolucionContent');
   if(!DB.historico){el.innerHTML='<div class="ph">No hay datos históricos disponibles</div>';return;}
@@ -888,7 +895,6 @@ function renderEvolucion(){
     .sort((a,b)=>a.year-b.year);
 
   const years=snaps.map(s=>s.year);
-  const teams=liveData.map(d=>d.nombre);
 
   // Índice: year → map nombre→{puntos,rank}
   const idx={};
@@ -896,6 +902,24 @@ function renderEvolucion(){
     idx[s.year]={};
     if(s.data) s.data.forEach(d=>idx[s.year][d.nombre]={puntos:d.puntos,rank:d.rank});
   });
+
+  // Sort teams
+  let teams=liveData.map(d=>d.nombre);
+  if(evoSort.key){
+    teams=[...teams];
+    if(evoSort.key==='nombre'){
+      teams.sort((a,b)=>evoSort.asc?a.localeCompare(b):b.localeCompare(a));
+    } else {
+      teams.sort((a,b)=>{
+        const va=idx[evoSort.year]?.[a]?.[evoSort.key]??null;
+        const vb=idx[evoSort.year]?.[b]?.[evoSort.key]??null;
+        if(va===null&&vb===null) return 0;
+        if(va===null) return 1;
+        if(vb===null) return -1;
+        return evoSort.asc?va-vb:vb-va;
+      });
+    }
+  }
 
   const arrow=(cur,prev)=>{
     if(!cur||!prev) return '';
@@ -913,13 +937,19 @@ function renderEvolucion(){
     return '';
   };
 
+  const evoTh=(y,k,label,cls)=>{
+    const on=evoSort.year===y&&evoSort.key===k;
+    const ico=on?(evoSort.asc?'▲':'▼'):'⇅';
+    return `<th${cls?' class="'+cls+'"':''} onclick="sortEvo(${y===null?'null':y},'${k}')" style="cursor:pointer${on?';color:var(--accent)':''}">${label}<span style="font-size:7px;margin-left:3px;opacity:${on?1:0.25}">${ico}</span></th>`;
+  };
+
   let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
-    <th class="left" style="min-width:200px">Franquicia</th>
+    ${evoTh(null,'nombre','Franquicia','left')}
     ${years.map((y,i)=>`<th colspan="2"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
   </tr>
   <tr>
     <th class="left"></th>
-    ${years.map((y,i)=>`<th${i>0?' class="evo-year-sep"':''}>Puntos</th><th>Posición</th>`).join('')}
+    ${years.map((y,i)=>`${evoTh(y,'puntos','Puntos',i>0?'evo-year-sep':'')}${evoTh(y,'rank','Posición','')}`).join('')}
   </tr></thead><tbody>`;
 
   teams.forEach(nombre=>{
