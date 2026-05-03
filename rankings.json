@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-02T05:00:27.153Z",
+  "actualizado": "2026-05-03T03:49:46.082Z",
   "franquicias": [
     {
       "rank": 1,
@@ -41,15 +41,15 @@
     {
       "rank": 2,
       "nombre": "Boston Celtics",
-      "puntos": 730.1166870539189,
-      "pts_year": 9.241983380429353,
+      "puntos": 732.0891184635689,
+      "pts_year": 9.266950866627454,
       "champ": 18,
       "finals": 5,
       "conf_fin": 16,
       "conf_sf": 13,
-      "primera_ronda": 10,
+      "primera_ronda": 11,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 63,
       "pct_80": 3,
@@ -70,16 +70,16 @@
       "wins": 3751,
       "loses": 2527,
       "wl_pct": 0.5974832749283211,
-      "GAMES": 755,
+      "GAMES": 756,
       "WINS": 432,
-      "LOSES": 323,
-      "W-L%": 0.5721854304635762
+      "LOSES": 324,
+      "W-L%": 0.5714285714285714
     },
     {
       "rank": 3,
       "nombre": "Philadelphia 76ers",
-      "puntos": 453.2039226823437,
-      "pts_year": 5.963209508978207,
+      "puntos": 453.23377832377827,
+      "pts_year": 5.963602346365503,
       "champ": 3,
       "finals": 6,
       "conf_fin": 12,
@@ -107,10 +107,10 @@
       "wins": 3170,
       "loses": 2935,
       "wl_pct": 0.5192465192465192,
-      "GAMES": 494,
-      "WINS": 253,
+      "GAMES": 495,
+      "WINS": 254,
       "LOSES": 241,
-      "W-L%": 0.5121457489878543
+      "W-L%": 0.5131313131313131
     },
     {
       "rank": 4,
