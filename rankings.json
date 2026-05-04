@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-03T21:49:29.206Z",
+  "actualizado": "2026-05-04T02:34:25.450Z",
   "franquicias": [
     {
       "rank": 1,
@@ -633,8 +633,8 @@
     {
       "rank": 18,
       "nombre": "Cleveland Cavaliers",
-      "puntos": 181.71103910556712,
-      "pts_year": 3.303837074646675,
+      "puntos": 181.7488800578645,
+      "pts_year": 3.304525091961173,
       "champ": 1,
       "finals": 4,
       "conf_fin": 3,
@@ -662,10 +662,10 @@
       "wins": 2148,
       "loses": 2369,
       "wl_pct": 0.4755368607482843,
-      "GAMES": 261,
-      "WINS": 139,
+      "GAMES": 262,
+      "WINS": 140,
       "LOSES": 122,
-      "W-L%": 0.5325670498084292
+      "W-L%": 0.5343511450381679
     },
     {
       "rank": 19,
@@ -929,15 +929,15 @@
     {
       "rank": 26,
       "nombre": "Toronto Raptors",
-      "puntos": 91.80843037355943,
-      "pts_year": 3.060281012451981,
+      "puntos": 93.75265219824637,
+      "pts_year": 3.1250884066082123,
       "champ": 1,
       "finals": 0,
       "conf_fin": 1,
       "conf_sf": 4,
-      "primera_ronda": 8,
+      "primera_ronda": 9,
       "play_in": 1,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 15,
       "pct_80": 0,
@@ -958,10 +958,10 @@
       "wins": 1172,
       "loses": 1302,
       "wl_pct": 0.4737267582861762,
-      "GAMES": 129,
+      "GAMES": 130,
       "WINS": 60,
-      "LOSES": 69,
-      "W-L%": 0.46511627906976744
+      "LOSES": 70,
+      "W-L%": 0.46153846153846156
     },
     {
       "rank": 27,
