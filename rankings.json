@@ -1,18 +1,18 @@
 {
-  "actualizado": "2026-05-11T20:01:16.935Z",
+  "actualizado": "2026-05-12T12:07:15.319Z",
   "franquicias": [
     {
       "rank": 1,
       "nombre": "Los Angeles Lakers",
-      "puntos": 759.2870258556073,
-      "pts_year": 9.860870465657237,
+      "puntos": 766.8103108804487,
+      "pts_year": 9.958575465979854,
       "champ": 17,
       "finals": 15,
       "conf_fin": 10,
-      "conf_sf": 12,
+      "conf_sf": 13,
       "primera_ronda": 11,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": 1,
       "tot_po": 66,
       "pct_80": 2,
@@ -33,10 +33,10 @@
       "wins": 3653,
       "loses": 2515,
       "wl_pct": 0.5922503242542153,
-      "GAMES": 796,
+      "GAMES": 707,
       "WINS": 470,
-      "LOSES": 326,
-      "W-L%": 0.5904522613065326
+      "LOSES": 237,
+      "W-L%": 0.6647807637906648
     },
     {
       "rank": 2,
@@ -263,8 +263,8 @@
     {
       "rank": 8,
       "nombre": "Detroit Pistons",
-      "puntos": 310.25429274863654,
-      "pts_year": 4.029276529203072,
+      "puntos": 310.2211720245868,
+      "pts_year": 4.028846389929699,
       "champ": 3,
       "finals": 4,
       "conf_fin": 10,
@@ -292,10 +292,10 @@
       "wins": 2931,
       "loses": 3231,
       "wl_pct": 0.4756572541382668,
-      "GAMES": 386,
+      "GAMES": 387,
       "WINS": 196,
-      "LOSES": 190,
-      "W-L%": 0.5077720207253886
+      "LOSES": 191,
+      "W-L%": 0.5064599483204134
     },
     {
       "rank": 9,
@@ -337,8 +337,8 @@
     {
       "rank": 10,
       "nombre": "Oklahoma City Thunder",
-      "puntos": 277.19708295896976,
-      "pts_year": 4.77926005101672,
+      "puntos": 277.2299803881788,
+      "pts_year": 4.779827248072047,
       "champ": 2,
       "finals": 3,
       "conf_fin": 6,
@@ -366,10 +366,10 @@
       "wins": 2602,
       "loses": 2168,
       "wl_pct": 0.5454926624737946,
-      "GAMES": 371,
-      "WINS": 193,
+      "GAMES": 372,
+      "WINS": 194,
       "LOSES": 178,
-      "W-L%": 0.5202156334231806
+      "W-L%": 0.521505376344086
     },
     {
       "rank": 11,
@@ -633,8 +633,8 @@
     {
       "rank": 18,
       "nombre": "Cleveland Cavaliers",
-      "puntos": 181.70612332446396,
-      "pts_year": 3.303747696808436,
+      "puntos": 181.7437144721445,
+      "pts_year": 3.304431172220809,
       "champ": 1,
       "finals": 4,
       "conf_fin": 3,
@@ -662,10 +662,10 @@
       "wins": 2148,
       "loses": 2369,
       "wl_pct": 0.4755368607482843,
-      "GAMES": 265,
-      "WINS": 141,
+      "GAMES": 266,
+      "WINS": 142,
       "LOSES": 124,
-      "W-L%": 0.5320754716981132
+      "W-L%": 0.5338345864661654
     },
     {
       "rank": 19,
