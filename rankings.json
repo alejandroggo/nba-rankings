@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-16T01:42:32.142Z",
+  "actualizado": "2026-05-16T11:58:58.956Z",
   "franquicias": [
     {
       "rank": 1,
@@ -152,8 +152,8 @@
     {
       "rank": 5,
       "nombre": "San Antonio Spurs",
-      "puntos": 358.71113256643577,
-      "pts_year": 7.320635358498689,
+      "puntos": 358.74189393312935,
+      "pts_year": 7.321263141492436,
       "champ": 5,
       "finals": 1,
       "conf_fin": 8,
@@ -181,10 +181,10 @@
       "wins": 2401,
       "loses": 1630,
       "wl_pct": 0.5956338377573803,
-      "GAMES": 413,
-      "WINS": 229,
+      "GAMES": 414,
+      "WINS": 230,
       "LOSES": 184,
-      "W-L%": 0.5544794188861986
+      "W-L%": 0.5555555555555556
     },
     {
       "rank": 6,
@@ -966,15 +966,15 @@
     {
       "rank": 27,
       "nombre": "Minnesota Timberwolves",
-      "puntos": 62.41463923500435,
-      "pts_year": 1.7337399787501209,
+      "puntos": 67.354207968158,
+      "pts_year": 1.870950221337722,
       "champ": 0,
       "finals": 0,
       "conf_fin": 3,
-      "conf_sf": 0,
+      "conf_sf": 1,
       "primera_ronda": 10,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 14,
       "pct_80": 0,
@@ -995,10 +995,10 @@
       "wins": 1245,
       "loses": 1713,
       "wl_pct": 0.4208924949290061,
-      "GAMES": 105,
+      "GAMES": 106,
       "WINS": 45,
-      "LOSES": 60,
-      "W-L%": 0.42857142857142855
+      "LOSES": 61,
+      "W-L%": 0.42452830188679247
     },
     {
       "rank": 28,
