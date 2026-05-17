@@ -80,7 +80,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .ctog:hover{border-color:var(--accent);color:var(--text);}
 .controls{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
 .srch{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
-.srch:focus-visible{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
+.srch::placeholder{color:var(--muted);}
 .hint{font-size:11px;color:var(--muted);}
 .tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:18px;}
 .tw-top::-webkit-scrollbar{height:10px;}.tw-top::-webkit-scrollbar-thumb{background:var(--muted);border-radius:3px;}.tw-top::-webkit-scrollbar-track{background:var(--surface2);}
@@ -113,7 +113,6 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .ch{position:relative;height:270px;}.ch.tall{height:400px;}.ch.square{position:relative;}
 .cmp-top{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:24px;}
 .cmp-sel{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none;cursor:pointer;appearance:none;transition:border-color .2s;}
-.cmp-sel:focus-visible{border-color:var(--accent);}
 .vs{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--muted);text-align:center;}
 .cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .chc{padding:12px 16px;border:1px solid var(--border);display:flex;align-items:center;gap:14px;}
@@ -1055,7 +1054,7 @@ function renderEvolucion(){
   let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
     ${evoTh(null,'nombre','Franquicia','left')}
     ${years.map((y,i)=>`<th colspan="${i>0?3:2}"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
-    <th rowspan="2" class="evo-year-sep" onclick="sortEvo(null,'total_delta')" style="cursor:pointer;vertical-align:middle${totalThOn?';color:var(--accent)':''}">Δ Total<br><span style="font-size:8px;opacity:.6">desde ${years[0]}</span><br><span style="font-size:7px;opacity:${totalThOn?1:0.25}">${totalThIco}</span></th>
+    <th rowspan="2" class="evo-year-sep" onclick="sortEvo(null,'total_delta')" aria-sort="${totalThOn?(evoSort.asc?'ascending':'descending'):'none'}" style="cursor:pointer;vertical-align:middle${totalThOn?';color:var(--accent)':''}">Δ Total<br><span style="font-size:8px;opacity:.6">desde ${years[0]}</span><br><span aria-hidden="true" style="font-size:7px;opacity:${totalThOn?1:0.25}">${totalThIco}</span></th>
   </tr>
   <tr>
     <th class="left"></th>
