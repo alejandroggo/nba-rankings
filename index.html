@@ -135,8 +135,12 @@ td.best-cell .nb{color:var(--pos)!important;}
 td.best-cell .plbl{color:var(--pos)!important;}
 td.best-cell .pnv{color:var(--pos)!important;}
 .ph{display:flex;align-items:center;justify-content:center;height:160px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:1px dashed var(--border);}
-footer{padding:24px 44px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
-footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
+.ag-footer{padding:32px 44px;border-top:1px solid var(--border);display:grid;grid-template-columns:auto 1fr 1fr auto;gap:24px 40px;align-items:start;color:var(--muted);font-size:11px;transition:background .3s,color .3s;}
+.ag-footer a{color:var(--muted);text-decoration:none;}.ag-footer a:hover{color:var(--text);}
+.ag-footer-brand{display:flex;flex-direction:column;gap:4px;}
+.ag-footer-brand strong{color:var(--text);font-size:12px;font-weight:500;}
+.ag-footer-projects,.ag-footer-pubs{display:flex;flex-direction:column;gap:6px;}
+.ag-footer-meta{display:flex;flex-direction:column;gap:4px;text-align:right;}
 .evo-table{width:100%;border-collapse:collapse;font-size:13px;}
 .evo-table thead{background:var(--surface2);border-bottom:2px solid var(--accent);}
 .evo-table th{padding:12px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:center;}
@@ -152,7 +156,7 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
 .evo-td-delta-pos{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--pos);margin-left:6px;}
 .evo-td-delta-neg{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--neg);margin-left:6px;}
 .evo-year-sep{border-left:2px solid var(--accent)!important;}
-@media(max-width:700px){header,main,footer{padding:20px 16px;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
+@media(max-width:700px){header,main,.ag-footer{padding:20px 16px;}.ag-footer{grid-template-columns:1fr;gap:16px;}.ag-footer-meta{text-align:left;}.tabs{padding:0 12px;}.cg{grid-template-columns:1fr;}.cmp-top{grid-template-columns:1fr;}.vs{display:none;}.cmp-blocks{grid-template-columns:1fr;}.cmp-block-full{grid-column:unset;}}
 </style>
 </head>
 <body>
@@ -258,9 +262,27 @@ footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--tex
     </div>
   </div>
 </main>
-<footer>
-  <span>¿Mejor franquicia NBA? · <a href="https://alejandroggo.com" target="_blank">#aleggoritmo</a> por Alejandro Gaitán</span>
-  <span id="footerDate"></span>
+<footer class="ag-footer">
+  <div class="ag-footer-brand">
+    <strong>Alejandro Gaitán</strong>
+    <span>Periodismo NBA en español</span>
+  </div>
+  <nav class="ag-footer-projects" aria-label="Otros proyectos">
+    <a href="https://alejandroggo.github.io/portfolio/" rel="noopener noreferrer">Portfolio</a>
+    <a href="https://alejandroggo.github.io/nba-offseason-2026/" rel="noopener noreferrer">Off-Season 2026</a>
+    <a href="https://alejandroggo.github.io/espanoles-nba/" rel="noopener noreferrer">Españoles en la NBA</a>
+    <a href="https://alejandroggo.github.io/NBA-espanol/" rel="noopener noreferrer">NBA en Español</a>
+  </nav>
+  <nav class="ag-footer-pubs" aria-label="Publicaciones">
+    <a href="https://alejandroggo.substack.com" rel="noopener noreferrer">Substack</a>
+    <a href="https://www.relevo.com/autor/alejandro-gaitan-5475.html" rel="noopener noreferrer">Relevo</a>
+    <a href="https://www.gigantes.com" rel="noopener noreferrer">Gigantes</a>
+    <a href="https://alejandrogaitan.com" rel="noopener noreferrer">alejandrogaitan.com</a>
+  </nav>
+  <div class="ag-footer-meta">
+    <span>© Alejandro Gaitán</span>
+    <span>Última actualización: <time id="ag-last-update" datetime=""></time></span>
+  </div>
 </footer>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
@@ -411,7 +433,6 @@ async function init() {
   const d=new Date(DB.actualizado);
   const fmt=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('headerMeta').innerHTML=`30 franquicias · <b>Última actualización el ${fmt}</b>`;
-  document.getElementById('footerDate').textContent=`Última actualización: ${fmt}`;
   COLUMNS.forEach(c=>COL_DEFAULTS[c.key]=c.on);
   preloadLogos();
   buildStats(); buildConfFilters(); buildColFilters(); refreshExtinctBtn(); renderTable(getCurrentData()); populateSelects(); setupScrollSync(); buildEvoFilters();
