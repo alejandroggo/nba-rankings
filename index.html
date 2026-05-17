@@ -27,6 +27,9 @@
 :root{--bg:#f0efe9;--surface:#ffffff;--surface2:#e6e5df;--surface-2:#e6e5df;--border:#cccbc3;--text:#111111;--text-muted:#88887c;--muted:#88887c;--accent:#111111;--accent-contrast:#ffffff;--accent-dim:rgba(0,0,0,0.07);--accent-glow:rgba(0,0,0,0.02);--success:#16a34a;--danger:#dc2626;--pos:#16a34a;--neg:#dc2626;--gold:#b8960a;--silver:#787878;--bronze:#8b4513;}
 [data-theme="dark"]{--bg:#0d0d14;--surface:#16161f;--surface2:#1e1e2a;--surface-2:#1e1e2a;--border:#33334a;--text:#f0f0f5;--text-muted:#9090b0;--muted:#9090b0;--accent:#ffffff;--accent-contrast:#0d0d14;--accent-dim:rgba(255,255,255,0.1);--accent-glow:rgba(255,255,255,0.04);--success:#4ade80;--danger:#f87171;--pos:#4ade80;--neg:#f87171;--gold:#e8c840;--silver:#b0b0c0;--bronze:#cd7f32;}
 *{margin:0;padding:0;box-sizing:border-box;}
+*:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.srch:focus-visible,.cmp-sel:focus-visible{outline:none;border-color:var(--accent);}
+tr.dr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
 header{padding:52px 44px 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
 header::after{content:'NBA';position:absolute;right:-8px;top:-28px;font-family:'Bebas Neue',sans-serif;font-size:280px;color:var(--accent-glow);pointer-events:none;line-height:1;}
@@ -77,7 +80,7 @@ main{padding:36px 44px;}.section{display:none;}.section.active{display:block;}
 .ctog:hover{border-color:var(--accent);color:var(--text);}
 .controls{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
 .srch{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
-.srch:focus{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
+.srch:focus-visible{border-color:var(--accent);}.srch::placeholder{color:var(--muted);}
 .hint{font-size:11px;color:var(--muted);}
 .tw-top{overflow-x:auto;border:1px solid var(--border);border-bottom:none;height:18px;}
 .tw-top::-webkit-scrollbar{height:10px;}.tw-top::-webkit-scrollbar-thumb{background:var(--muted);border-radius:3px;}.tw-top::-webkit-scrollbar-track{background:var(--surface2);}
@@ -110,7 +113,7 @@ td{padding:9px 12px;white-space:nowrap;text-align:center;}
 .ch{position:relative;height:270px;}.ch.tall{height:400px;}.ch.square{position:relative;}
 .cmp-top{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:24px;}
 .cmp-sel{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none;cursor:pointer;appearance:none;transition:border-color .2s;}
-.cmp-sel:focus{border-color:var(--accent);}
+.cmp-sel:focus-visible{border-color:var(--accent);}
 .vs{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--muted);text-align:center;}
 .cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .chc{padding:12px 16px;border:1px solid var(--border);display:flex;align-items:center;gap:14px;}
@@ -169,23 +172,23 @@ td.best-cell .pnv{color:var(--pos)!important;}
       <h1><em>¿Cuál es la</em><br>mejor franquicia<br><em>de la historia de la </em>NBA<em>?</em></h1>
       <p class="h-meta" id="headerMeta">Cargando datos…</p>
     </div>
-    <button class="h-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar a modo claro">🌙 Oscuro</button>
+    <button class="h-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar a modo oscuro">Tema</button>
   </div>
 </header>
-<nav class="tabs" id="mainTabs" style="display:none">
-  <button class="tab active" onclick="switchTab('ranking',this)">Ranking</button>
-  <button class="tab" onclick="switchTab('graficos',this)">Gráficos</button>
-  <button class="tab" onclick="switchTab('comparar',this)">Comparar</button>
-  <button class="tab" onclick="switchTab('evolucion',this)">Evolución</button>
+<nav class="tabs" id="mainTabs" role="tablist" aria-label="Secciones" style="display:none">
+  <button class="tab active" id="tbtn-ranking" role="tab" aria-selected="true" aria-controls="tab-ranking" onclick="switchTab('ranking',this)">Ranking</button>
+  <button class="tab" id="tbtn-graficos" role="tab" aria-selected="false" aria-controls="tab-graficos" onclick="switchTab('graficos',this)">Gráficos</button>
+  <button class="tab" id="tbtn-comparar" role="tab" aria-selected="false" aria-controls="tab-comparar" onclick="switchTab('comparar',this)">Comparar</button>
+  <button class="tab" id="tbtn-evolucion" role="tab" aria-selected="false" aria-controls="tab-evolucion" onclick="switchTab('evolucion',this)">Evolución</button>
 </nav>
 <main>
   <div id="loading"><div class="spin"></div><p>Cargando rankings</p></div>
   <div id="appContent" style="display:none">
-    <div id="tab-ranking" class="section active">
+    <div id="tab-ranking" class="section active" role="tabpanel" tabindex="0" aria-labelledby="tbtn-ranking">
       <div class="stats-bar" id="statsBar"></div>
       <div class="cf-wrap">
-        <button class="cf-toggle" onclick="toggleColFilter()">
-          <span>Columnas</span><span class="cf-toggle-arrow" id="cfArrow">▼</span>
+        <button class="cf-toggle" onclick="toggleColFilter()" aria-expanded="false" aria-controls="colFilterBar">
+          <span>Columnas</span><span class="cf-toggle-arrow" id="cfArrow" aria-hidden="true">▼</span>
         </button>
         <div class="cf-bar" id="colFilterBar"></div>
       </div>
@@ -239,14 +242,14 @@ td.best-cell .pnv{color:var(--pos)!important;}
         </div>
       </div>
     </div>
-    <div id="tab-graficos" class="section">
+    <div id="tab-graficos" class="section" role="tabpanel" tabindex="0" aria-labelledby="tbtn-graficos">
       <div class="cg" style="margin-bottom:18px">
         <div class="cc"><div class="ctitle">% Temporadas en playoffs</div><div class="csub">De todas las temporadas, cuántas terminaron en postseason — Top 15</div><div class="ch tall"><canvas id="cPOPct"></canvas></div></div>
         <div class="cc"><div class="ctitle">% Temporadas en Finals de Conf.+</div><div class="csub">Porcentaje de temporadas llegando a CF, Finales o Anillo — Top 15</div><div class="ch tall"><canvas id="cFinPct"></canvas></div></div>
       </div>
       <div class="cc"><div class="ctitle">W/L% Temporada Regular vs Playoffs</div><div class="csub">Relación entre rendimiento en regular season y en playoffs — todas las franquicias</div><div class="ch square"><canvas id="cBubble"></canvas></div></div>
     </div>
-    <div id="tab-comparar" class="section">
+    <div id="tab-comparar" class="section" role="tabpanel" tabindex="0" aria-labelledby="tbtn-comparar">
       <div class="cmp-top">
         <select class="cmp-sel" id="team1" onchange="updateCompare()"><option value="">— Equipo A —</option></select>
         <div class="vs">VS</div>
@@ -254,7 +257,7 @@ td.best-cell .pnv{color:var(--pos)!important;}
       </div>
       <div id="compareResult"><div class="ph">Selecciona dos franquicias para comparar</div></div>
     </div>
-    <div id="tab-evolucion" class="section">
+    <div id="tab-evolucion" class="section" role="tabpanel" tabindex="0" aria-labelledby="tbtn-evolucion">
       <div class="info-block" style="margin-bottom:14px">
         <div class="info-title">Evolución histórica</div>
         <span>Datos a <b>1 de julio</b> de cada año, al cierre de la temporada.</span>
@@ -493,8 +496,10 @@ const colToggleBtns=[];
 function toggleColFilter(){
   const bar=document.getElementById('colFilterBar');
   const arrow=document.getElementById('cfArrow');
+  const btn=document.querySelector('.cf-toggle');
   const hidden=bar.classList.toggle('cf-hidden');
   arrow.classList.toggle('closed',hidden);
+  btn.setAttribute('aria-expanded',String(!hidden));
 }
 
 function buildColFilters() {
@@ -639,7 +644,7 @@ function renderTable(data){
   }
   const sc=k=>sepKeys.has(k)?' sep-r':'';
   document.getElementById('tableHead').innerHTML='<tr>'+vis.map(c=>
-    `<th class="${sortKey===c.key?'sorted':''}${sc(c.key)}" onclick="sortBy('${c.key}')">${c.label}<span class="sico">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
+    `<th class="${sortKey===c.key?'sorted':''}${sc(c.key)}" onclick="sortBy('${c.key}')" aria-sort="${sortKey===c.key?(sortAsc?'ascending':'descending'):'none'}">${c.label}<span class="sico" aria-hidden="true">${sortKey===c.key?(sortAsc?'↑':'↓'):'↕'}</span></th>`
   ).join('')+'</tr>';
   document.getElementById('tableBody').innerHTML=data.map((d,i)=>{
     const rankColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'';
@@ -658,7 +663,7 @@ function renderTable(data){
       const bc=isBest(c,d)?' best-cell':'';
       return `<td class="${isNum?'nb':''}${sc(c.key)}${bc}">${val??'—'}</td>`;
     }).join('');
-    return `<tr class="dr${d.extinta?' extinta':''}${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')">${cells}</tr>`;
+    return `<tr class="dr${d.extinta?' extinta':''}${d.nombre===selectedTeam?' selected':''}" onclick="selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectRow(this,'${d.nombre.replace(/'/g,"\\'")}')}" tabindex="0">${cells}</tr>`;
   }).join('');
 }
 
@@ -855,7 +860,7 @@ function updateCompare(){
       <div>${makeBlock(CMP_BLOCKS[2])}${makeBlock(CMP_BLOCKS[3])}</div>
     </div>
     <div style="text-align:right;margin-top:14px">
-      <button class="h-btn" onclick="downloadCompare()">⬇ Descargar imagen</button>
+      <button class="h-btn" onclick="downloadCompare()">${SVG_DL} Descargar imagen</button>
     </div>
     <div class="cmp-radar">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:2px">Radar comparativo</div>
@@ -922,9 +927,10 @@ function downloadCompare(){
 
 // ── TABS ────────────────────────────────────────────────────────────────────
 function switchTab(id,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
   document.getElementById('tab-'+id).classList.add('active');
   if(id==='graficos') initCharts();
   if(id==='evolucion') renderEvolucion();
@@ -1041,7 +1047,7 @@ function renderEvolucion(){
   const evoTh=(y,k,label,cls)=>{
     const on=evoSort.year===y&&evoSort.key===k;
     const ico=on?(evoSort.asc?'▲':'▼'):'⇅';
-    return `<th${cls?' class="'+cls+'"':''} onclick="sortEvo(${y===null?'null':y},'${k}')" style="cursor:pointer${on?';color:var(--accent)':''}">${label}<span style="font-size:7px;margin-left:3px;opacity:${on?1:0.25}">${ico}</span></th>`;
+    return `<th${cls?' class="'+cls+'"':''} onclick="sortEvo(${y===null?'null':y},'${k}')" aria-sort="${on?(evoSort.asc?'ascending':'descending'):'none'}" style="cursor:pointer${on?';color:var(--accent)':''}">${label}<span aria-hidden="true" style="font-size:7px;margin-left:3px;opacity:${on?1:0.25}">${ico}</span></th>`;
   };
 
   const totalThOn=evoSort.key==='total_delta';
@@ -1100,10 +1106,13 @@ function renderEvolucion(){
 }
 
 // ── THEME ────────────────────────────────────────────────────────────────────
+const SVG_SUN=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-.1em" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const SVG_MOON=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-.1em" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const SVG_DL=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-.1em" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
 function initThemeToggle(){
   const btn=document.getElementById('themeBtn');
   const dark=document.documentElement.dataset.theme==='dark';
-  btn.textContent=dark?'☀ Claro':'🌙 Oscuro';
+  btn.innerHTML=dark?`${SVG_SUN} Claro`:`${SVG_MOON} Oscuro`;
   btn.setAttribute('aria-label',dark?'Cambiar a modo claro':'Cambiar a modo oscuro');
 }
 function toggleTheme(){
