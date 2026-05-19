@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-16T11:58:58.956Z",
+  "actualizado": "2026-05-19T01:18:03.809Z",
   "franquicias": [
     {
       "rank": 1,
@@ -263,15 +263,15 @@
     {
       "rank": 8,
       "nombre": "Detroit Pistons",
-      "puntos": 310.22083989356776,
-      "pts_year": 4.028842076539841,
+      "puntos": 315.1878545926647,
+      "pts_year": 4.093348760943697,
       "champ": 3,
       "finals": 4,
       "conf_fin": 10,
-      "conf_sf": 12,
+      "conf_sf": 13,
       "primera_ronda": 14,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 44,
       "pct_80": 0,
@@ -292,10 +292,10 @@
       "wins": 2931,
       "loses": 3231,
       "wl_pct": 0.4756572541382668,
-      "GAMES": 389,
+      "GAMES": 390,
       "WINS": 197,
-      "LOSES": 192,
-      "W-L%": 0.506426735218509
+      "LOSES": 193,
+      "W-L%": 0.5051282051282051
     },
     {
       "rank": 9,
@@ -633,8 +633,8 @@
     {
       "rank": 18,
       "nombre": "Cleveland Cavaliers",
-      "puntos": 181.74118950300522,
-      "pts_year": 3.304385263691004,
+      "puntos": 181.77852845878394,
+      "pts_year": 3.3050641537960717,
       "champ": 1,
       "finals": 4,
       "conf_fin": 3,
@@ -662,10 +662,10 @@
       "wins": 2148,
       "loses": 2369,
       "wl_pct": 0.4755368607482843,
-      "GAMES": 268,
-      "WINS": 143,
+      "GAMES": 269,
+      "WINS": 144,
       "LOSES": 125,
-      "W-L%": 0.5335820895522388
+      "W-L%": 0.5353159851301115
     },
     {
       "rank": 19,
