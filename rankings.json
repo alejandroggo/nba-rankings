@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-26T02:23:01.901Z",
+  "actualizado": "2026-05-27T00:31:31.089Z",
   "franquicias": [
     {
       "rank": 1,
@@ -41,8 +41,8 @@
     {
       "rank": 2,
       "nombre": "Boston Celtics",
-      "puntos": 732.4891184635688,
-      "pts_year": 9.272014157766694,
+      "puntos": 733.4891184635688,
+      "pts_year": 9.284672385614796,
       "champ": 18,
       "finals": 5,
       "conf_fin": 16,
@@ -60,7 +60,7 @@
       "mvp": 10,
       "dpoy": 2,
       "roy": 3,
-      "coy": 3,
+      "coy": 4,
       "A-STAR": 156,
       "A-NBA": 87,
       "anos": 80,
