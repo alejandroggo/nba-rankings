@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-27T00:31:31.089Z",
+  "actualizado": "2026-05-31T03:46:20.410Z",
   "franquicias": [
     {
       "rank": 1,
@@ -152,8 +152,8 @@
     {
       "rank": 5,
       "nombre": "San Antonio Spurs",
-      "puntos": 359.1365776120235,
-      "pts_year": 7.329317910449459,
+      "puntos": 359.1645331519206,
+      "pts_year": 7.329888431671849,
       "champ": 5,
       "finals": 1,
       "conf_fin": 8,
@@ -181,10 +181,10 @@
       "wins": 2401,
       "loses": 1630,
       "wl_pct": 0.5956338377573803,
-      "GAMES": 418,
-      "WINS": 232,
-      "LOSES": 186,
-      "W-L%": 0.5550239234449761
+      "GAMES": 421,
+      "WINS": 234,
+      "LOSES": 187,
+      "W-L%": 0.5558194774346793
     },
     {
       "rank": 6,
@@ -337,15 +337,15 @@
     {
       "rank": 10,
       "nombre": "Oklahoma City Thunder",
-      "puntos": 278.0276925821847,
-      "pts_year": 4.7935809065893915,
+      "puntos": 284.99281580679593,
+      "pts_year": 4.913669238048206,
       "champ": 2,
       "finals": 3,
-      "conf_fin": 6,
+      "conf_fin": 7,
       "conf_sf": 10,
       "primera_ronda": 13,
       "play_in": 1,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 35,
       "pct_80": 1,
@@ -366,10 +366,10 @@
       "wins": 2602,
       "loses": 2168,
       "wl_pct": 0.5454926624737946,
-      "GAMES": 376,
-      "WINS": 196,
-      "LOSES": 180,
-      "W-L%": 0.5212765957446809
+      "GAMES": 379,
+      "WINS": 197,
+      "LOSES": 182,
+      "W-L%": 0.5197889182058048
     },
     {
       "rank": 11,
