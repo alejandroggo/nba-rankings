@@ -201,7 +201,12 @@ td.best-cell .nb,.best-cell .plbl,.best-cell .pnv{color:var(--success)!important
 .evo-table th.left{text-align:left;}
 .evo-table td{padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--border);text-align:center;vertical-align:middle;}
 .evo-table tr:nth-child(even) td{background:var(--surface);}
+/* Primera columna fija en scroll lateral */
+.evo-table th.left,.evo-table td.left{position:sticky;left:0;z-index:2;background:var(--bg);border-right:2px solid var(--border);}
+.evo-table thead th.left{z-index:3;background:var(--surface-2);}
+.evo-table tr:nth-child(even) td.left{background:var(--surface);}
 .evo-table tr:hover td{background:var(--accent-light);}
+.evo-table tr:hover td.left{background:var(--accent-light);}
 .evo-td-pts{font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1;}
 .evo-td-rank{font-size:var(--font-xs);color:var(--text-muted);margin-top:2px;}
 .evo-arrow-up{color:var(--success);font-size:var(--font-xs);font-weight:700;margin-left:var(--space-1);}
