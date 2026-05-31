@@ -1058,7 +1058,6 @@ function renderEvolucion(){
 
   const years=snaps.map(s=>s.year);
   if(!evoActiveYears) evoActiveYears=new Set(years);
-  else years.forEach(y=>{if(!evoActiveYears.has(y)&&evoActiveYears.size===years.length-1) evoActiveYears.add(y);});
   const visibleYears=years.filter(y=>evoActiveYears.has(y));
 
   // Índice: year → map nombre→{puntos,rank}
