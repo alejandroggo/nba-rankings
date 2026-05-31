@@ -336,6 +336,7 @@ td.best-cell .nb,.best-cell .plbl,.best-cell .pnv{color:var(--success)!important
     <a href="https://alejandroggo.github.io/portfolio/" rel="noopener noreferrer">Portfolio</a>
     <a href="https://alejandroggo.github.io/nba-offseason-2026/" rel="noopener noreferrer">Off-Season 2026</a>
     <!-- <a href="https://alejandroggo.github.io/espanoles-nba/" rel="noopener noreferrer">Españoles en la NBA</a> -->
+    <a href="https://alejandroggo.github.io/nba-premios/" rel="noopener noreferrer">Premios NBA</a>
     <a href="https://alejandroggo.github.io/NBA-espanol/" rel="noopener noreferrer">NBA en Español</a>
   </nav>
   <nav class="ag-footer-pubs" aria-label="Publicaciones">
@@ -456,6 +457,7 @@ const DIV_CONF = {'Atlántico':'Este','Central':'Este','Sureste':'Este','Noroest
 let DB=null, sortKey='puntos', sortAsc=false, chartsInited=false, compareChart=null, selectedTeam=null;
 let evoSort={year:null,key:null,asc:true};
 let evoFilterConf=null, evoFilterDiv=null;
+let evoActiveYears=null;
 let filterConf=null, filterDiv=null, showExtinct=false, onlyExtinct=false;
 let chartPO=null, chartCF=null, chartBubble=null;
 const COL_DEFAULTS={};
@@ -1031,6 +1033,13 @@ function sortEvo(year,key){
   renderEvolucion();
 }
 
+function toggleEvoYear(y){
+  if(evoActiveYears.has(y)&&evoActiveYears.size>1) evoActiveYears.delete(y);
+  else evoActiveYears.add(y);
+  if(evoSort.year&&!evoActiveYears.has(evoSort.year)) evoSort={year:null,key:null,asc:true};
+  renderEvolucion();
+}
+
 function renderEvolucion(){
   const el=document.getElementById('evolucionContent');
   if(!DB.historico){el.innerHTML='<div class="ph">No hay datos históricos disponibles</div>';return;}
@@ -1043,6 +1052,9 @@ function renderEvolucion(){
     .sort((a,b)=>a.year-b.year);
 
   const years=snaps.map(s=>s.year);
+  if(!evoActiveYears) evoActiveYears=new Set(years);
+  else years.forEach(y=>{if(!evoActiveYears.has(y)&&evoActiveYears.size===years.length-1) evoActiveYears.add(y);});
+  const visibleYears=years.filter(y=>evoActiveYears.has(y));
 
   // Índice: year → map nombre→{puntos,rank}
   const idx={};
@@ -1060,7 +1072,7 @@ function renderEvolucion(){
     if(evoSort.key==='nombre'){
       teams.sort((a,b)=>evoSort.asc?a.localeCompare(b):b.localeCompare(a));
     } else if(evoSort.key==='delta_rank'){
-      const prevY=years[years.indexOf(evoSort.year)-1]??null;
+      const prevY=visibleYears[visibleYears.indexOf(evoSort.year)-1]??null;
       teams.sort((a,b)=>{
         const getDelta=n=>{const c=idx[evoSort.year]?.[n],p=prevY?idx[prevY]?.[n]:null;return(c&&p)?p.rank-c.rank:null;};
         const va=getDelta(a),vb=getDelta(b);
@@ -1070,7 +1082,7 @@ function renderEvolucion(){
       });
     } else if(evoSort.key==='total_delta'){
       teams.sort((a,b)=>{
-        const getDelta=n=>{const f=idx[years[0]]?.[n],l=idx[years[years.length-1]]?.[n];return(f&&l)?l.puntos-f.puntos:null;};
+        const getDelta=n=>{const f=idx[visibleYears[0]]?.[n],l=idx[visibleYears[visibleYears.length-1]]?.[n];return(f&&l)?l.puntos-f.puntos:null;};
         const va=getDelta(a),vb=getDelta(b);
         if(va===null&&vb===null) return 0;
         if(va===null) return 1; if(vb===null) return -1;
@@ -1111,14 +1123,18 @@ function renderEvolucion(){
 
   const totalThOn=evoSort.key==='total_delta';
   const totalThIco=totalThOn?(evoSort.asc?'▲':'▼'):'⇅';
-  let html=`<div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
+  const yearToggles=years.map(y=>`<button class="cbtn${evoActiveYears.has(y)?' on':''}" onclick="toggleEvoYear(${y})" aria-pressed="${evoActiveYears.has(y)}">${y}</button>`).join('');
+  let html=`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+    <span style="font-size:var(--font-sm);color:var(--text-muted);font-weight:500">Años:</span>${yearToggles}
+  </div>
+  <div style="overflow-x:auto;border:1px solid var(--border)"><table class="evo-table"><thead><tr>
     ${evoTh(null,'nombre','Franquicia','left')}
-    ${years.map((y,i)=>`<th colspan="${i>0?3:2}"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
-    <th rowspan="2" class="evo-year-sep" onclick="sortEvo(null,'total_delta')" aria-sort="${totalThOn?(evoSort.asc?'ascending':'descending'):'none'}" style="cursor:pointer;vertical-align:middle${totalThOn?';color:var(--accent)':''}">Δ Total<br><span style="font-size:8px;opacity:.6">desde ${years[0]}</span><br><span aria-hidden="true" style="font-size:7px;opacity:${totalThOn?1:0.25}">${totalThIco}</span></th>
+    ${visibleYears.map((y,i)=>`<th colspan="${i>0?3:2}"${i>0?' class="evo-year-sep"':''}>${y}</th>`).join('')}
+    <th rowspan="2" class="evo-year-sep" onclick="sortEvo(null,'total_delta')" aria-sort="${totalThOn?(evoSort.asc?'ascending':'descending'):'none'}" style="cursor:pointer;vertical-align:middle${totalThOn?';color:var(--accent)':''}">Δ Total<br><span style="font-size:8px;opacity:.6">desde ${visibleYears[0]}</span><br><span aria-hidden="true" style="font-size:7px;opacity:${totalThOn?1:0.25}">${totalThIco}</span></th>
   </tr>
   <tr>
     <th class="left"></th>
-    ${years.map((y,i)=>i===0
+    ${visibleYears.map((y,i)=>i===0
       ? `${evoTh(y,'puntos','Puntos','')}${evoTh(y,'rank','Posición','')}`
       : `${evoTh(y,'puntos','Puntos','evo-year-sep')}${evoTh(y,'rank','Posición','')}${evoTh(y,'delta_rank','Δ pos','')}`
     ).join('')}
@@ -1130,9 +1146,9 @@ function renderEvolucion(){
         <img style="width:24px;height:24px;object-fit:contain" src="${logo(nombre)}" alt="" onerror="this.style.display='none'">
         <span style="font-weight:500">${nombre}</span>
       </div></td>`;
-    years.forEach((y,i)=>{
+    visibleYears.forEach((y,i)=>{
       const cur=idx[y]?.[nombre];
-      const prev=i>0?idx[years[i-1]]?.[nombre]:null;
+      const prev=i>0?idx[visibleYears[i-1]]?.[nombre]:null;
       if(!cur){
         html+=`<td class="evo-blank${i>0?' evo-year-sep':''}" colspan="${i>0?3:2}">—</td>`;
       } else if(i===0){
@@ -1144,8 +1160,8 @@ function renderEvolucion(){
                <td>${rankDelta(cur,prev)}</td>`;
       }
     });
-    const first=idx[years[0]]?.[nombre];
-    const last=idx[years[years.length-1]]?.[nombre];
+    const first=idx[visibleYears[0]]?.[nombre];
+    const last=idx[visibleYears[visibleYears.length-1]]?.[nombre];
     if(first&&last){
       const d=last.puntos-first.puntos;
       const cls=d>0?'evo-td-delta-pos':'evo-td-delta-neg';
