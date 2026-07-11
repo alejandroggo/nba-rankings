@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-31T03:49:42.966Z",
+  "actualizado": "2026-07-11T02:32:40.169Z",
   "franquicias": [
     {
       "rank": 1,
@@ -152,15 +152,15 @@
     {
       "rank": 5,
       "nombre": "San Antonio Spurs",
-      "puntos": 359.1645331519206,
-      "pts_year": 7.329888431671849,
+      "puntos": 369.0627703024564,
+      "pts_year": 7.531893271478702,
       "champ": 5,
-      "finals": 1,
+      "finals": 2,
       "conf_fin": 8,
       "conf_sf": 11,
       "primera_ronda": 14,
       "play_in": 2,
-      "pend": 1,
+      "pend": null,
       "copa": null,
       "tot_po": 40,
       "pct_80": 1,
@@ -181,23 +181,23 @@
       "wins": 2401,
       "loses": 1630,
       "wl_pct": 0.5956338377573803,
-      "GAMES": 421,
-      "WINS": 234,
-      "LOSES": 187,
-      "W-L%": 0.5558194774346793
+      "GAMES": 426,
+      "WINS": 235,
+      "LOSES": 191,
+      "W-L%": 0.5516431924882629
     },
     {
       "rank": 6,
       "nombre": "New York Knicks",
-      "puntos": 344.5316171023574,
-      "pts_year": 4.361159710156423,
-      "champ": 2,
+      "puntos": 359.6245905363793,
+      "pts_year": 4.552210006789611,
+      "champ": 3,
       "finals": 6,
       "conf_fin": 10,
       "conf_sf": 18,
       "primera_ronda": 10,
       "play_in": null,
-      "pend": 1,
+      "pend": null,
       "copa": 1,
       "tot_po": 47,
       "pct_80": 0,
@@ -218,10 +218,10 @@
       "wins": 3078,
       "loses": 3191,
       "wl_pct": 0.49098739830914023,
-      "GAMES": 436,
-      "WINS": 222,
-      "LOSES": 214,
-      "W-L%": 0.5091743119266054
+      "GAMES": 441,
+      "WINS": 226,
+      "LOSES": 215,
+      "W-L%": 0.5124716553287982
     },
     {
       "rank": 7,
